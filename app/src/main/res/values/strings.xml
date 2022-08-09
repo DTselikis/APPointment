@@ -3,4 +3,5 @@
     <string name="email_verification_txt_msg">A verification email have been send to me@me.com</string>
     <string name="email_verified_btn_txt">Email verified</string>
     <string name="resend_email">Resend email</string>
+    <string name="resend_verification_email_toast">Verification Email send</string>
 </resources>
