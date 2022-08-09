@@ -9,5 +9,15 @@
         android:id="@+id/authFragment"
         android:name="com.homelab.appointment.ui.auth.AuthFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth" />
+        tools:layout="@layout/fragment_auth">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="homelab.page.link" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.homelab.appointment.ui.hub.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
