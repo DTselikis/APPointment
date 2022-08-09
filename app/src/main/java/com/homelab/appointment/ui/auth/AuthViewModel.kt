@@ -15,6 +15,8 @@ class AuthViewModel : ViewModel() {
     private val _userStored = MutableSharedFlow<Boolean>()
     val userStored: SharedFlow<Boolean> = _userStored
 
+    var isNewUser = false
+
     fun storeUserToDb(firebaseUser: FirebaseUser) {
         val user = firebaseUser.toUser()
 

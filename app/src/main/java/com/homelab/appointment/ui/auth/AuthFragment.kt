@@ -26,8 +26,6 @@ class AuthFragment : Fragment() {
     private val viewModel: AuthViewModel by viewModels()
     private lateinit var binding: FragmentAuthBinding
 
-    private var isNewUser = false
-
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
@@ -52,7 +50,11 @@ class AuthFragment : Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (emailVerificationLinkClicked()) {
-            // TODO navigate to hub
+            if (viewModel.isNewUser) {
+                navigateToProfile()
+            } else {
+                // TODO navigate to hub
+            }
         } else {
             if (isUserLoggedIn(user)) {
                 user?.let {
@@ -88,19 +90,20 @@ class AuthFragment : Fragment() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (signInSuccessfully(result)) {
             val user = FirebaseAuth.getInstance().currentUser
-            isNewUser = result.idpResponse!!.isNewUser
+            viewModel.isNewUser = result.idpResponse!!.isNewUser
 
             user?.let {
-                if (isNewUser) {
+                if (viewModel.isNewUser) {
                     viewModel.storeUserToDb(it)
-                }
-
-                if (it.isEmailVerified) {
-                    // TODO navigate to hub
                 } else {
-                    verifyEmail(it)
+                    if (it.isEmailVerified) {
+                        // TODO navigate to hub
+                    } else {
+                        verifyEmail(it)
+                    }
                 }
             }
+
         }
     }
 
@@ -124,10 +127,9 @@ class AuthFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             if (it.isEmailVerified) {
-                if (isNewUser) {
+                if (viewModel.isNewUser) {
                     navigateToProfile()
-                }
-                else {
+                } else {
                     // TODO navigate to profile
                 }
             }
@@ -152,7 +154,15 @@ class AuthFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
                 if (stored) {
-                    navigateToProfile()
+                    val user = FirebaseAuth.getInstance().currentUser
+
+                    user?.let {
+                        if (it.isEmailVerified) {
+                            navigateToProfile()
+                        } else {
+                            verifyEmail(user)
+                        }
+                    }
                 } else {
                     // TODO show message if not stored
                 }
