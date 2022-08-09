@@ -40,6 +40,11 @@ class AuthFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth, null, false)
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            authFragment = this@AuthFragment
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -47,8 +52,8 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        FirebaseAuth.getInstance().signOut()
-//        AuthUI.getInstance().signOut(requireContext())
+        FirebaseAuth.getInstance().signOut()
+        AuthUI.getInstance().signOut(requireContext())
 
         val user = FirebaseAuth.getInstance().currentUser
         if (emailVerificationLinkClicked()) {
@@ -127,13 +132,15 @@ class AuthFragment : Fragment() {
     }
 
     fun checkEmailVerified() {
-        val user = FirebaseAuth.getInstance().currentUser
-        user?.let {
-            if (it.isEmailVerified) {
-                if (isNewUser) {
-                    navigateToProfile()
-                } else {
-                    // TODO navigate to profile
+        FirebaseAuth.getInstance().currentUser?.reload()?.addOnSuccessListener {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                if (user.isEmailVerified) {
+                    if (isNewUser) {
+                        navigateToProfile()
+                    } else {
+                        // TODO navigate to profile
+                    }
                 }
             }
         }
