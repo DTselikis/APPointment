@@ -26,6 +26,8 @@ class AuthFragment : Fragment() {
     private val viewModel: AuthViewModel by viewModels()
     private lateinit var binding: FragmentAuthBinding
 
+    private var isNewUser = false
+
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
@@ -45,12 +47,13 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        FirebaseAuth.getInstance().signOut()
-        AuthUI.getInstance().signOut(requireContext())
+//        FirebaseAuth.getInstance().signOut()
+//        AuthUI.getInstance().signOut(requireContext())
 
         val user = FirebaseAuth.getInstance().currentUser
         if (emailVerificationLinkClicked()) {
-            if (viewModel.isNewUser) {
+            val isNew = extractParameterFromLink()
+            if (isNew) {
                 navigateToProfile()
             } else {
                 // TODO navigate to hub
@@ -61,7 +64,7 @@ class AuthFragment : Fragment() {
                     if (it.isEmailVerified) {
                         // TODO navigate to hub
                     } else {
-                        verifyEmail(it)
+                        verifyEmail(it, false)
                     }
                 }
             } else {
@@ -90,16 +93,16 @@ class AuthFragment : Fragment() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (signInSuccessfully(result)) {
             val user = FirebaseAuth.getInstance().currentUser
-            viewModel.isNewUser = result.idpResponse!!.isNewUser
+            isNewUser = result.idpResponse!!.isNewUser
 
             user?.let {
-                if (viewModel.isNewUser) {
+                if (isNewUser) {
                     viewModel.storeUserToDb(it)
                 } else {
                     if (it.isEmailVerified) {
                         // TODO navigate to hub
                     } else {
-                        verifyEmail(it)
+                        verifyEmail(it, isNewUser)
                     }
                 }
             }
@@ -107,11 +110,11 @@ class AuthFragment : Fragment() {
         }
     }
 
-    private fun verifyEmail(user: FirebaseUser) {
+    private fun verifyEmail(user: FirebaseUser, newUser: Boolean) {
         binding.emailVerificationGroup.visibility = View.VISIBLE
         user.sendEmailVerification(
             ActionCodeSettings.newBuilder()
-                .setUrl("https://homelab.page.link/emailVerified")
+                .setUrl("https://homelab.page.link/emailVerified?isNewUser=$newUser")
                 .setAndroidPackageName("com.homelab.appointment", true, null)
                 .setHandleCodeInApp(true)
                 .setDynamicLinkDomain("homelab.page.link")
@@ -127,7 +130,7 @@ class AuthFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             if (it.isEmailVerified) {
-                if (viewModel.isNewUser) {
+                if (isNewUser) {
                     navigateToProfile()
                 } else {
                     // TODO navigate to profile
@@ -140,7 +143,7 @@ class AuthFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser
 
         user?.let {
-            verifyEmail(it)
+            verifyEmail(it, isNewUser)
         }
 
         Toast.makeText(
@@ -160,7 +163,7 @@ class AuthFragment : Fragment() {
                         if (it.isEmailVerified) {
                             navigateToProfile()
                         } else {
-                            verifyEmail(user)
+                            verifyEmail(user, isNewUser)
                         }
                     }
                 } else {
@@ -168,6 +171,15 @@ class AuthFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun extractParameterFromLink(): Boolean {
+        val link = requireActivity().intent.data
+        link?.let {
+            val url = it.getQueryParameter("continueUrl")
+            return url!!.substring(url.lastIndexOf('=') + 1, url.length).toBoolean()
+        }
+        return false
     }
 
     private fun emailVerificationLinkClicked(): Boolean = requireActivity().intent.extras != null
