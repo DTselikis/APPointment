@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="email_verification_icon, email_verification_text"
+            app:constraint_referenced_ids="email_verification_icon, email_verification_text, email_verification_btn, email_verification_resend"
             tools:visibility="visible" />
 
         <ImageView
@@ -35,11 +35,27 @@
             android:id="@+id/email_verification_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/email_verification_txt_msg"
             app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
             app:layout_constraintStart_toStartOf="@id/email_verification_icon"
-            app:layout_constraintTop_toBottomOf="@id/email_verification_icon"
-            tools:text="A verification email have been send to me@me.com" />
+            app:layout_constraintTop_toBottomOf="@id/email_verification_icon" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/email_verification_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_verified_btn_txt"
+            app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
+            app:layout_constraintStart_toStartOf="@id/email_verification_icon"
+            app:layout_constraintTop_toBottomOf="@id/email_verification_text" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/email_verification_resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resend_email"
+            app:layout_constraintEnd_toStartOf="@id/email_verification_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_verification_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
