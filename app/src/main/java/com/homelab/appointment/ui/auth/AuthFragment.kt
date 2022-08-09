@@ -108,6 +108,15 @@ class AuthFragment : Fragment() {
         )
     }
 
+    fun checkEmailVerified() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            if (it.isEmailVerified) {
+
+            }
+        }
+    }
+
     private fun emailVerificationLinkClicked(): Boolean = requireActivity().intent.extras != null
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =
