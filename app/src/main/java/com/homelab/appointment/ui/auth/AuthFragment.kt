@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentAuthBinding
+import kotlinx.coroutines.flow.collectLatest
 
 class AuthFragment : Fragment() {
 
@@ -60,6 +62,8 @@ class AuthFragment : Fragment() {
                 createSignInIntent()
             }
         }
+
+        observeUserStored()
     }
 
     private fun createSignInIntent() {
@@ -127,6 +131,14 @@ class AuthFragment : Fragment() {
             getString(R.string.resend_verification_email_toast),
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun observeUserStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.userStored.collectLatest { stored ->
+                // TODO show message if not stored
+            }
+        }
     }
 
     private fun emailVerificationLinkClicked(): Boolean = requireActivity().intent.extras != null
