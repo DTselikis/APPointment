@@ -37,7 +37,7 @@ class AuthViewModel : ViewModel() {
         val nickname = defaultNickname(firstname, lastname)
         val phone = this.phoneNumber
         val email = this.email
-        val profilePic = this.photoUrl.toString()
+        val profilePic = if (this.photoUrl != null) this.photoUrl.toString() else null
 
         return User(
             uid = uid,
