@@ -1,16 +1,14 @@
 package com.homelab.appointment.ui.auth
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -22,6 +20,7 @@ import com.homelab.appointment.databinding.FragmentAuthBinding
 
 class AuthFragment : Fragment() {
 
+    private val viewModel: AuthViewModel by viewModels()
     private lateinit var binding: FragmentAuthBinding
 
     private val signInLauncher = registerForActivityResult(
@@ -87,11 +86,10 @@ class AuthFragment : Fragment() {
                 } else {
                     verifyEmail(it)
                 }
-            }
 
-
-
-            if (result.idpResponse!!.isNewUser) {
+                if (result.idpResponse!!.isNewUser) {
+                    viewModel.storeUserToDb(it)
+                }
             }
         }
     }
