@@ -54,7 +54,7 @@ class AuthViewModel : ViewModel() {
     private fun defaultNickname(firstname: String, lastname: String?): String {
         var nickname = firstname
         if (!lastname.isNullOrBlank()) {
-            nickname += lastname
+            nickname += " $lastname"
         }
 
         return nickname
