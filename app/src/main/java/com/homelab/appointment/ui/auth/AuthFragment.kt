@@ -117,6 +117,20 @@ class AuthFragment : Fragment() {
         }
     }
 
+    fun resendEmail() {
+        val user = FirebaseAuth.getInstance().currentUser
+
+        user?.let {
+            verifyEmail(it)
+        }
+
+        Toast.makeText(
+            context,
+            getString(R.string.resend_verification_email_toast),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun emailVerificationLinkClicked(): Boolean = requireActivity().intent.extras != null
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =
