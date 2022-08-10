@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.homelab.appointment.ui.hub.profile.ProfileViewModel" />
+
+        <variable
+            name="profileFragment"
+            type="com.homelab.appointment.ui.hub.profile.ProfileFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/photo_card"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            app:cardElevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/customer_profile_pic"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/ic_launcher_background"
+                    app:civ_circle_background_color="@color/purple_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/female_placeholder_wo_bg" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/customer_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
+                    app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
+                    app:layout_constraintTop_toBottomOf="@id/customer_profile_pic"
+                    app:layout_constraintVertical_bias="0.2"
+                    tools:text="Customer Customer" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/photo_card">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.customer.edit.CustomerProfileEditFragment">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstname_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:hint="@string/firstname_hint"
+                        android:text="@{viewModel.firstname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastname_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/firstname_edit"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:hint="@string/lastname_hint"
+                        android:text="@{viewModel.lastname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nickname_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lastname_edit"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/nickname_hint"
+                        android:text="@={viewModel.nickname}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phone_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nickname_edit"
+                    app:startIconDrawable="@drawable/ic_phone_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_hint"
+                        android:text="@={viewModel.phone}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="6985201472" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phone_edit"
+                    app:startIconDrawable="@drawable/ic_email_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/e_mail_hint"
+                        android:text="@={viewModel.email}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="me@me.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fb_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/email_edit"
+                    app:startIconDrawable="@drawable/ic_account_circle_36">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="@dimen/profile_edit_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fb_profile_hint"
+                        android:text="@={viewModel.fbName}"
+                        android:textSize="@dimen/text_size"
+                        tools:text="Customer Customer" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
