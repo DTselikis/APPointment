@@ -59,4 +59,6 @@ dependencies {
 
     // Firebase UI
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
