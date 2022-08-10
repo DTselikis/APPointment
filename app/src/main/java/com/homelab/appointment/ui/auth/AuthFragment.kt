@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,11 +20,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentAuthBinding
+import com.homelab.appointment.ui.hub.HubSharedViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class AuthFragment : Fragment() {
 
     private val viewModel: AuthViewModel by viewModels()
+    private val sharedViewModel: HubSharedViewModel by activityViewModels()
     private lateinit var binding: FragmentAuthBinding
 
     private var isNewUser = false
@@ -128,6 +131,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
+        sharedViewModel.user = viewModel.user
         findNavController().navigate(R.id.action_authFragment_to_profileFragment)
     }
 

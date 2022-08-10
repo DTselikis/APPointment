@@ -15,12 +15,15 @@ class AuthViewModel : ViewModel() {
     private val _userStored = MutableSharedFlow<Boolean>()
     val userStored: SharedFlow<Boolean> = _userStored
 
+    lateinit var user: User
+
     fun storeUserToDb(firebaseUser: FirebaseUser) {
         val user = firebaseUser.toUser()
 
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
             .set(user)
             .addOnCompleteListener { task ->
+                this.user = user
                 viewModelScope.launch {
                     _userStored.emit(task.isSuccessful)
                 }
