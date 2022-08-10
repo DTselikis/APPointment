@@ -43,6 +43,22 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/female_placeholder_wo_bg" />
 
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/customer_profile_pic"
+                    app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
+                    app:layout_constraintHorizontal_bias="0.79"
+                    app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
+                    app:layout_constraintTop_toTopOf="@id/customer_profile_pic"
+                    app:layout_constraintVertical_bias="0.95">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit_24" />
+                </FrameLayout>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/customer_nickname"
                     android:layout_width="wrap_content"
