@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,6 +21,10 @@ class ProfileFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentProfileBinding
+
+    private val openGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,10 @@ class ProfileFragment : Fragment() {
             viewModel = this@ProfileFragment.viewModel
             profileFragment = this@ProfileFragment
         }
+    }
+
+    fun pickImage() {
+        openGallery.launch("image/*")
     }
 
 }
