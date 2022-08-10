@@ -34,6 +34,7 @@ class ProfileFragment : Fragment() {
             lifecycleScope.launch {
                 try {
                     val compressedFile = Compressor.compress(requireContext(), uri?.toFile()!!)
+                    viewModel.storeImageToFirebase(compressedFile)
                 } catch (e: NoSuchFileException) {
                     Toast.makeText(
                         requireContext(),
