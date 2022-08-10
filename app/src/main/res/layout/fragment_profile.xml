@@ -47,6 +47,7 @@
                     android:id="@+id/customer_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.firstname + ' ' + viewModel.lastname}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
                     app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
@@ -72,50 +73,6 @@
                 tools:context=".ui.customer.edit.CustomerProfileEditFragment">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/firstname_edit"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/profile_items_margin_top"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/ic_account_circle_36">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="@dimen/profile_edit_edit_text_width"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:hint="@string/firstname_hint"
-                        android:text="@{viewModel.firstname}"
-                        android:textSize="@dimen/text_size"
-                        tools:text="Customer" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lastname_edit"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/profile_items_margin_top"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/firstname_edit"
-                    app:startIconDrawable="@drawable/ic_account_circle_36">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="@dimen/profile_edit_edit_text_width"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:hint="@string/lastname_hint"
-                        android:text="@{viewModel.lastname}"
-                        android:textSize="@dimen/text_size"
-                        tools:text="Customer" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/phone_edit"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
@@ -123,7 +80,7 @@
                     android:layout_marginTop="@dimen/profile_items_margin_top"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lastname_edit"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:startIconDrawable="@drawable/ic_phone_36">
 
                     <com.google.android.material.textfield.TextInputEditText
