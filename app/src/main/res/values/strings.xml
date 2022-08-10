@@ -4,4 +4,11 @@
     <string name="email_verified_btn_txt">Email verified</string>
     <string name="resend_email">Resend email</string>
     <string name="resend_verification_email_toast">Verification Email send</string>
+
+    <string name="firstname_hint">Firstname</string>
+    <string name="lastname_hint">Lastname</string>
+    <string name="nickname_hint">Nickname</string>
+    <string name="phone_hint">Phone</string>
+    <string name="e_mail_hint">E-mail</string>
+    <string name="fb_profile_hint">FB Profile</string>
 </resources>
