@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.homelab.appointment.model.User
 
-class ProfileViewModel(user: User) : ViewModel() {
+class ProfileViewModel(val user: User) : ViewModel() {
     val firstname = MutableLiveData<String>(user.firstname)
     val lastname = MutableLiveData<String>(user.lastname)
     val phone = MutableLiveData<String>(user.phone)
