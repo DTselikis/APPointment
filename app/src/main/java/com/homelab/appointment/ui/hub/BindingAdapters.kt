@@ -8,7 +8,7 @@ import com.homelab.appointment.data.Gender
 import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("imgUrl")
-fun bindProfilePic(circleImageView: CircleImageView, user: Pair<String, String>?) {
+fun bindProfilePic(circleImageView: CircleImageView, user: Pair<String?, String?>?) {
     user?.let {
         val placeholder = when (it.second) {
             Gender.FEMALE.code -> R.drawable.female_placeholder_wo_bg
