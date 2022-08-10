@@ -37,7 +37,7 @@
                     android:layout_height="120dp"
                     android:onClick="@{() -> profileFragment.pickImage()}"
                     app:civ_circle_background_color="@color/purple_200"
-                    app:imgUrl="@{viewModel.user}"
+                    app:imgUrl="@{viewModel.profilePic}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

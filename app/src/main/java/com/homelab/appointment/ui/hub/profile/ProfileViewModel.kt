@@ -10,4 +10,5 @@ class ProfileViewModel(val user: User) : ViewModel() {
     val phone = MutableLiveData<String>(user.phone)
     val email = MutableLiveData<String>(user.email)
     val fbName = MutableLiveData<String>(user.fbName)
+    val profilePic = MutableLiveData(Pair(user.profilePic, user.gender))
 }
