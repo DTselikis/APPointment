@@ -17,14 +17,16 @@ class ProfileViewModel(private val user: User) : ViewModel() {
     val fbName = MutableLiveData<String>(user.fbName)
     val profilePic = MutableLiveData(Pair(user.profilePic, user.gender))
 
+    private val _picUploaded = MutableSharedFlow<Boolean>()
+    val picUploaded: SharedFlow<Boolean> = _picUploaded
+
     fun storeImageToFirebase(image: File) {
         Firebase.storage.reference.child("$STORAGE_PROFILE_PIC_DIR/${user.uid}${image.extension}")
             .putFile(Uri.fromFile(image))
-            .addOnSuccessListener { uploadTask ->
-
-            }
-            .addOnFailureListener {
-
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _picUploaded.emit(task.isSuccessful)
+                }
             }
     }
 }

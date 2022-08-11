@@ -11,4 +11,6 @@
     <string name="e_mail_hint">E-mail</string>
     <string name="fb_profile_hint">FB Profile</string>
     <string name="compress_img_err">Error while loading file</string>
+    <string name="profile_pic_saved">Photo saved!</string>
+    <string name="profile_pic__not_saved">Photo not saved!</string>
 </resources>
