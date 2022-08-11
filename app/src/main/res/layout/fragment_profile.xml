@@ -152,6 +152,20 @@
                         tools:text="Customer Customer" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_edits_btn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="@dimen/profile_edit_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:text="@string/save_edits_btn_text"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fb_edit"
+                    tools:visibility="visible" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
