@@ -33,12 +33,14 @@ class ProfileFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var photoUri: Uri
 
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             lifecycleScope.launch {
                 try {
                     val compressedFile = Compressor.compress(requireContext(), uri?.toFile()!!)
+                    photoUri = uri
                     viewModel.storeImageToFirebase(compressedFile)
                 } catch (e: NoSuchFileException) {
                     Toast.makeText(
@@ -84,6 +86,8 @@ class ProfileFragment : Fragment() {
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                     .setBackgroundTint(color)
                     .show()
+
+                viewModel.updateProfilePic(photoUri.toString())
             }
         }
     }
