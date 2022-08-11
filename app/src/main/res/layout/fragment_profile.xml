@@ -123,6 +123,7 @@
                     app:startIconDrawable="@drawable/ic_email_36">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_edit_text"
                         android:layout_width="@dimen/profile_edit_edit_text_width"
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail_hint"

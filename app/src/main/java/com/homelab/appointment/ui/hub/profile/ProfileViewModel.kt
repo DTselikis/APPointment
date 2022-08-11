@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ProfileViewModel(private val user: User) : ViewModel() {
+class ProfileViewModel(val user: User) : ViewModel() {
     val firstname = MutableLiveData<String>(user.firstname)
     val lastname = MutableLiveData<String>(user.lastname)
     val phone = MutableLiveData<String>(user.phone)

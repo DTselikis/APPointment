@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -68,6 +71,14 @@ class ProfileFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ProfileFragment.viewModel
             profileFragment = this@ProfileFragment
+
+            emailEditText.doOnTextChanged { text, _, _, _ ->
+                if (text.toString() != this@ProfileFragment.viewModel.user.email) {
+                    showSaveBtn(emailEdit, fbEdit)
+                } else if (text.toString() == this@ProfileFragment.viewModel.user.email) {
+                    hideSaveBtn(fbEdit, emailEdit)
+                }
+            }
         }
 
         observePicUploaded()
@@ -115,6 +126,28 @@ class ProfileFragment : Fragment() {
         }
 
         return Pair(text, color)
+    }
+
+    private fun showSaveBtn(top: View, below: View?) {
+        binding.saveEditsBtn.apply {
+            updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topToBottom = top.id
+            }
+            visibility = View.VISIBLE
+        }
+
+        below?.let {
+            it.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topToBottom = binding.saveEditsBtn.id
+            }
+        }
+    }
+
+    private fun hideSaveBtn(below: View, top: View) {
+        below.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            topToBottom = top.id
+        }
+        binding.saveEditsBtn.visibility = View.GONE
     }
 
     private fun Uri.toFile(): File? {
