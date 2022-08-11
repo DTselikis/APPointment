@@ -4,9 +4,11 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.homelab.appointment.data.STORAGE_PROFILE_PIC_DIR
+import com.homelab.appointment.data.USERS_COLLECTION
 import com.homelab.appointment.model.User
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,13 +27,39 @@ class ProfileViewModel(private val user: User) : ViewModel() {
     val picUploaded: SharedFlow<Boolean> = _picUploaded
 
     fun storeImageToFirebase(image: File) {
-        Firebase.storage.reference.child("$STORAGE_PROFILE_PIC_DIR/${user.uid}${image.extension}")
-            .putFile(Uri.fromFile(image))
-            .addOnCompleteListener { task ->
-                viewModelScope.launch {
-                    _picUploaded.emit(task.isSuccessful)
+        try {
+            val ref =
+                Firebase.storage.reference.child("$STORAGE_PROFILE_PIC_DIR/${user.uid}${image.extension}")
+            ref.putFile(Uri.fromFile(image))
+                .continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    ref.downloadUrl
                 }
+                .continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    val newUrl = mapOf("profilePic" to task.result.toString())
+
+                    Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+                        .update(newUrl)
+                }
+                .addOnCompleteListener { task ->
+                    viewModelScope.launch {
+                        _picUploaded.emit(task.isSuccessful)
+                    }
+                }
+        } catch (e: Exception) {
+            viewModelScope.launch {
+                _picUploaded.emit(false)
             }
+        }
     }
 
     fun updateProfilePic(path: String) {
