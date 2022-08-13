@@ -92,6 +92,7 @@ class ProfileFragment : Fragment() {
         }
 
         observePicUploaded()
+        observeEmailVerified()
         observeReAuthRequirement()
     }
 
@@ -108,6 +109,28 @@ class ProfileFragment : Fragment() {
                             sharedViewModel.user.email!!
                         )
                     findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun observeEmailVerified() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.emailVerified.collectLatest { verified ->
+                if (verified) {
+                    val color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        resources.getColor(R.color.teal_200, requireActivity().theme)
+                    } else {
+                        ContextCompat.getColor(requireContext(), R.color.teal_200)
+                    }
+                    Snackbar.make(
+                        requireContext(),
+                        binding.emailEdit,
+                        getString(R.string.email_changed),
+                        Snackbar.LENGTH_SHORT
+                    )
+                        .setBackgroundTint(color)
+                        .show()
                 }
             }
         }
