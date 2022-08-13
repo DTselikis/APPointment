@@ -24,5 +24,18 @@
         android:id="@+id/profileFragment"
         android:name="com.homelab.appointment.ui.hub.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_reAuthFragment"
+            app:destination="@id/reAuthFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/reAuthFragment"
+        android:name="com.homelab.appointment.ui.auth.reauth.ReAuthFragment"
+        android:label="ReAuthFragment"
+        tools:layout="@layout/fragment_re_auth">
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </dialog>
 </navigation>
