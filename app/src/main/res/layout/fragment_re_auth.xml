@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="com.homelab.appointment.ui.auth.reauth.ReAuthViewModel" />
+
+        <variable
+            name="fragmentReAuth"
+            type="com.homelab.appointment.ui.auth.reauth.ReAuthFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +20,7 @@
         tools:context=".ui.auth.reauth.ReAuthFragment">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reAuth_password"
+            android:id="@+id/re_auth_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,16 +41,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_edits_btn"
+            android:id="@+id/re_auth_btn"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="@dimen/profile_edit_edit_text_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/profile_items_margin_top"
             android:enabled="@{viewModel.password.empty ? false : true }"
+            android:onClick="@{() -> fragmentReAuth.reAuthenticate()}"
             android:text="@string/reAuth_authenticate_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reAuth_password"
+            app:layout_constraintTop_toBottomOf="@id/re_auth_password"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
