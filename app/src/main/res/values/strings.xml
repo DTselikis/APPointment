@@ -10,9 +10,11 @@
     <string name="phone_hint">Phone</string>
     <string name="e_mail_hint">E-mail</string>
     <string name="fb_profile_hint">FB Profile</string>
+    <string name="password_hint">Password</string>
     <string name="compress_img_err">Error while loading file</string>
     <string name="profile_pic_saved">Photo saved!</string>
     <string name="profile_pic__not_saved">Photo not saved!</string>
     <string name="save_edits_btn_text">Save</string>
     <string name="email_changed">E-mail changed!</string>
+    <string name="reAuth_authenticate_btn">Authenticate</string>
 </resources>
