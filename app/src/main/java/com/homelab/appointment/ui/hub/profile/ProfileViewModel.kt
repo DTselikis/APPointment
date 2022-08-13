@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -25,6 +27,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     private val _picUploaded = MutableSharedFlow<Boolean>()
     val picUploaded: SharedFlow<Boolean> = _picUploaded
+
+    private val _needsReAuth = MutableSharedFlow<Boolean>()
+    val needsReAuth: SharedFlow<Boolean> = _needsReAuth
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -60,6 +65,17 @@ class ProfileViewModel(val user: User) : ViewModel() {
                 _picUploaded.emit(false)
             }
         }
+    }
+
+    fun verifyNewEmail() {
+        FirebaseAuth.getInstance().currentUser?.verifyBeforeUpdateEmail(email.value!!)
+            ?.addOnFailureListener { e ->
+                if (e is FirebaseAuthRecentLoginRequiredException) {
+                    viewModelScope.launch {
+                        _needsReAuth.emit(true)
+                    }
+                }
+            }
     }
 
     fun updateProfilePic(path: String) {

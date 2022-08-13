@@ -17,9 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentProfileBinding
 import com.homelab.appointment.ui.hub.HubSharedViewModel
@@ -84,17 +84,7 @@ class ProfileFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         saveEditsBtn.setOnClickListener {
-                            FirebaseAuth.getInstance().currentUser?.verifyBeforeUpdateEmail(this@ProfileFragment.viewModel.email.value!!)
-                                ?.addOnSuccessListener {
-                                    Snackbar.make(
-                                        requireContext(),
-                                        this,
-                                        context.getString(R.string.email_changed),
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-
-                                    hideSaveBtn(fbEdit, emailEdit)
-                                }
+                            viewModel.verifyNewEmail()
                         }
                     }
                 }
@@ -102,10 +92,25 @@ class ProfileFragment : Fragment() {
         }
 
         observePicUploaded()
+        observeReAuthRequirement()
     }
 
     fun pickImage() {
         openGallery.launch("image/*")
+    }
+
+    private fun observeReAuthRequirement() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.needsReAuth.collectLatest { needsReAuth ->
+                if (needsReAuth) {
+                    val action =
+                        ProfileFragmentDirections.actionProfileFragmentToReAuthFragment(
+                            sharedViewModel.user.email!!
+                        )
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun observePicUploaded() {
