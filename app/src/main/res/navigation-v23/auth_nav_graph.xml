@@ -26,11 +26,11 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_reAuthFragment2"
+            android:id="@+id/action_profileFragment_to_reAuthFragment"
             app:destination="@id/reAuthFragment" />
     </fragment>
     <dialog
-        android:id="@+id/reAuthFragment"
+        android:id="@id/reAuthFragment"
         android:name="com.homelab.appointment.ui.auth.reauth.ReAuthFragment"
         android:label="ReAuthFragment"
         tools:layout="@layout/fragment_re_auth">
