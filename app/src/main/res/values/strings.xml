@@ -17,4 +17,5 @@
     <string name="save_edits_btn_text">Save</string>
     <string name="email_changed">E-mail changed!</string>
     <string name="reAuth_authenticate_btn">Authenticate</string>
+    <string name="authentication_failed">Authentication failed!</string>
 </resources>
