@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -118,18 +119,13 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailVerified.collectLatest { verified ->
                 if (verified) {
-                    val color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        resources.getColor(R.color.teal_200, requireActivity().theme)
-                    } else {
-                        ContextCompat.getColor(requireContext(), R.color.teal_200)
-                    }
                     Snackbar.make(
                         requireContext(),
                         binding.emailEdit,
                         getString(R.string.email_changed),
                         Snackbar.LENGTH_SHORT
                     )
-                        .setBackgroundTint(color)
+                        .setBackgroundTint(getColor(R.color.teal_200))
                         .show()
                 }
             }
@@ -139,7 +135,13 @@ class ProfileFragment : Fragment() {
     private fun observePicUploaded() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.picUploaded.collectLatest { stored ->
-                val (text, color) = getTextAndColor(stored)
+                val (text, color) = when (stored) {
+                    true -> Pair(getString(R.string.profile_pic_saved), getColor(R.color.teal_200))
+                    false -> Pair(
+                        getString(R.string.profile_pic__not_saved),
+                        getColor(R.color.email_red)
+                    )
+                }
 
                 Snackbar.make(binding.fbEdit, text, Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
@@ -149,31 +151,6 @@ class ProfileFragment : Fragment() {
                 viewModel.updateProfilePic(photoUri.toString())
             }
         }
-    }
-
-    private fun getTextAndColor(stored: Boolean): Pair<String, Int> {
-        val text: String
-        val color: Int
-        when (stored) {
-            true -> {
-                text = getString(R.string.profile_pic_saved)
-                color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    resources.getColor(R.color.teal_200, requireActivity().theme)
-                } else {
-                    ContextCompat.getColor(requireContext(), R.color.teal_200)
-                }
-            }
-            false -> {
-                text = getString(R.string.profile_pic__not_saved)
-                color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    resources.getColor(R.color.email_red, requireActivity().theme)
-                } else {
-                    ContextCompat.getColor(requireContext(), R.color.email_red)
-                }
-            }
-        }
-
-        return Pair(text, color)
     }
 
     private fun showSaveBtn(top: View, below: View?) {
@@ -196,6 +173,14 @@ class ProfileFragment : Fragment() {
             topToBottom = top.id
         }
         binding.saveEditsBtn.visibility = View.GONE
+    }
+
+    private fun getColor(@ColorRes color: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColor(color, requireActivity().theme)
+        } else {
+            ContextCompat.getColor(requireContext(), color)
+        }
     }
 
     private fun Uri.toFile(): File? {
