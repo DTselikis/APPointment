@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.homelab.appointment.ui.auth.reauth.ReAuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
+                android:text="@={viewModel.password}"
                 android:textSize="@dimen/text_size"
                 tools:text="123456" />
         </com.google.android.material.textfield.TextInputLayout>
