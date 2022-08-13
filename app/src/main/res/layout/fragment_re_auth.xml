@@ -42,6 +42,7 @@
             android:layout_width="@dimen/profile_edit_edit_text_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/profile_items_margin_top"
+            android:enabled="@{viewModel.password.empty ? false : true }"
             android:text="@string/reAuth_authenticate_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
