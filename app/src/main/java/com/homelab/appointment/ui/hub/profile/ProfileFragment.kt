@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         saveEditsBtn.setOnClickListener {
-                            viewModel.verifyNewEmail()
+                            this@ProfileFragment.viewModel.verifyNewEmail()
                         }
                     }
                 }
