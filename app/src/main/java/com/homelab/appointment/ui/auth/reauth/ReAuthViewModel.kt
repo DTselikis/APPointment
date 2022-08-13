@@ -15,7 +15,7 @@ class ReAuthViewModel : ViewModel() {
     private val _authenticated = MutableSharedFlow<Boolean>()
     val authenticated: SharedFlow<Boolean> = _authenticated
 
-    fun authenticate(email: String) {
+    fun reAuthenticate(email: String) {
         FirebaseAuth.getInstance().currentUser?.reauthenticate(
             EmailAuthProvider.getCredential(
                 email,
