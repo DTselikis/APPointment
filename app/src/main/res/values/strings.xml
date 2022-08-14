@@ -22,4 +22,5 @@
     <string name="verification_dialog_verified_btn_txt">Verified</string>
     <string name="cancel">Cancel</string>
     <string name="verification_dialog_err_txt">Email was not verified. Please try again.</string>
+    <string name="updated_email_store_failure">New email failed to store. 0x2232</string>
 </resources>

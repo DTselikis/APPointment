@@ -99,6 +99,7 @@ class ProfileFragment : Fragment() {
         observeReAuthFinished()
         observeReAuthRequirement()
         observeEmailVerified()
+        observeUpdatedEmailStored()
     }
 
     fun pickImage() {
@@ -152,6 +153,28 @@ class ProfileFragment : Fragment() {
                     }
                     savedStateHandle.remove<Boolean>(EMAIL_VERIFIED_NAV_KEY)
                 }
+        }
+    }
+
+    private fun observeUpdatedEmailStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.updatedEmailStored.collectLatest { stored ->
+                val (text, color) = when (stored) {
+                    true -> Pair(getString(R.string.email_changed), getColor(R.color.teal_200))
+                    false -> Pair(
+                        getString(R.string.updated_email_store_failure),
+                        getColor(R.color.email_red)
+                    )
+                }
+                Snackbar.make(
+                    requireContext(),
+                    binding.emailEdit,
+                    text,
+                    Snackbar.LENGTH_SHORT
+                )
+                    .setBackgroundTint(color)
+                    .show()
+            }
         }
     }
 
