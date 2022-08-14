@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.homelab.appointment.R
+import com.homelab.appointment.data.EMAIL_VERIFIED_NAV_KEY
 import com.homelab.appointment.databinding.FragmentVerificationEmailDialogBinding
 import kotlinx.coroutines.flow.collectLatest
 
@@ -70,12 +71,20 @@ class VerificationEmailDialogFragment : DialogFragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailVerified.collectLatest { verified ->
                 if (verified) {
+                    notifyEmailVerified()
                     closeFragment()
                 } else {
                     setErrorState()
                 }
             }
         }
+    }
+
+    private fun notifyEmailVerified() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            EMAIL_VERIFIED_NAV_KEY,
+            true
+        )
     }
 
     private fun setErrorState() {
