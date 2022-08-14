@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointment.R
+import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentReAuthBinding
 import kotlinx.coroutines.flow.collectLatest
 
@@ -45,6 +46,7 @@ class ReAuthFragment : BottomSheetDialogFragment() {
     }
 
     private fun closeFragment() {
+        notifyReAuthFinished()
         findNavController().navigateUp()
     }
 
@@ -59,6 +61,10 @@ class ReAuthFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    private fun notifyReAuthFinished() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(RE_AUTH_NAV_KEY, true)
     }
 
     private fun showFailureMessage() {

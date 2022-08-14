@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.homelab.appointment.R
+import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentProfileBinding
 import com.homelab.appointment.ui.hub.HubSharedViewModel
 import id.zelory.compressor.Compressor
@@ -94,11 +95,22 @@ class ProfileFragment : Fragment() {
 
         observePicUploaded()
         observeEmailVerified()
+        observeReAuthFinished()
         observeReAuthRequirement()
     }
 
     fun pickImage() {
         openGallery.launch("image/*")
+    }
+
+    private fun observeReAuthFinished() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
+            savedStateHandle.getLiveData<Boolean>(RE_AUTH_NAV_KEY)
+                .observe(viewLifecycleOwner) { reAuthFinished ->
+                    if (reAuthFinished) viewModel.verifyNewEmail()
+                    savedStateHandle.remove<Boolean>(RE_AUTH_NAV_KEY)
+                }
+        }
     }
 
     private fun observeReAuthRequirement() {
