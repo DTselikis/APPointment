@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">APPointment</string>
-    <string name="email_verification_txt_msg">A verification email have been send to me@me.com</string>
+    <string name="email_verification_txt_msg">A verification email have been send to <b>%s</b></string>
     <string name="email_verified_btn_txt">Email verified</string>
     <string name="resend_email">Resend email</string>
     <string name="resend_verification_email_toast">Verification Email send</string>
@@ -18,4 +18,7 @@
     <string name="email_changed">E-mail changed!</string>
     <string name="reAuth_authenticate_btn">Authenticate</string>
     <string name="authentication_failed">Authentication failed!</string>
+    <string name="verification_dialog_title">Verification sent</string>
+    <string name="verification_dialog_verified_btn_txt">Verified</string>
+    <string name="cancel">Cancel</string>
 </resources>
