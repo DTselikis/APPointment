@@ -64,7 +64,7 @@ class VerificationEmailDialogFragment : DialogFragment() {
     }
 
     fun checkEmailVerified() {
-        viewModel.checkEmailVerified()
+        viewModel.checkEmailVerified(args.email)
     }
 
     private fun observeEmailVerified() {

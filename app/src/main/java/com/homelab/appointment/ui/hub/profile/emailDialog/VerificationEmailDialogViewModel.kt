@@ -11,11 +11,11 @@ class VerificationEmailDialogViewModel : ViewModel() {
     private val _emailVerified = MutableSharedFlow<Boolean>()
     val emailVerified: SharedFlow<Boolean> = _emailVerified
 
-    fun checkEmailVerified() {
+    fun checkEmailVerified(newEmail: String) {
         FirebaseAuth.getInstance().currentUser?.reload()
             ?.addOnSuccessListener {
                 viewModelScope.launch {
-                    _emailVerified.emit(FirebaseAuth.getInstance().currentUser?.isEmailVerified!!)
+                    _emailVerified.emit(FirebaseAuth.getInstance().currentUser?.email == newEmail)
                 }
             }
     }
