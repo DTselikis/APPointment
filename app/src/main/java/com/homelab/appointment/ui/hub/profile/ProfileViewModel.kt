@@ -31,8 +31,8 @@ class ProfileViewModel(val user: User) : ViewModel() {
     private val _needsReAuth = MutableSharedFlow<Boolean>()
     val needsReAuth: SharedFlow<Boolean> = _needsReAuth
 
-    private val _emailVerified = MutableSharedFlow<Boolean>()
-    val emailVerified: SharedFlow<Boolean> = _emailVerified
+    private val _verificationEmailSent = MutableSharedFlow<Boolean>()
+    val verificationEmailSent: SharedFlow<Boolean> = _verificationEmailSent
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -74,7 +74,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
         FirebaseAuth.getInstance().currentUser?.verifyBeforeUpdateEmail(email.value!!)
             ?.addOnSuccessListener {
                 viewModelScope.launch {
-                    _emailVerified.emit(true)
+                    _verificationEmailSent.emit(true)
                 }
             }
             ?.addOnFailureListener { e ->

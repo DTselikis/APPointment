@@ -129,7 +129,7 @@ class ProfileFragment : Fragment() {
 
     private fun observeEmailVerified() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.emailVerified.collectLatest { verified ->
+            viewModel.verificationEmailSent.collectLatest { verified ->
                 if (verified) {
                     Snackbar.make(
                         requireContext(),
