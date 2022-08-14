@@ -148,14 +148,7 @@ class ProfileFragment : Fragment() {
             savedStateHandle.getLiveData<Boolean>(EMAIL_VERIFIED_NAV_KEY)
                 .observe(viewLifecycleOwner) { verified ->
                     if (verified) {
-                        Snackbar.make(
-                            requireContext(),
-                            binding.emailEdit,
-                            getString(R.string.email_changed),
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .setBackgroundTint(getColor(R.color.teal_200))
-                            .show()
+                        viewModel.storeUpdatedEmail()
                     }
                     savedStateHandle.remove<Boolean>(EMAIL_VERIFIED_NAV_KEY)
                 }

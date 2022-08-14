@@ -34,6 +34,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
     private val _verificationEmailSent = MutableSharedFlow<Boolean>()
     val verificationEmailSent: SharedFlow<Boolean> = _verificationEmailSent
 
+    private val _updatedEmailStored = MutableSharedFlow<Boolean>()
+    val updatedEmailStored: SharedFlow<Boolean> = _updatedEmailStored
+
     fun storeImageToFirebase(image: File) {
         try {
             val ref =
@@ -82,6 +85,17 @@ class ProfileViewModel(val user: User) : ViewModel() {
                     viewModelScope.launch {
                         _needsReAuth.emit(true)
                     }
+                }
+            }
+    }
+
+    fun storeUpdatedEmail() {
+        val updatedEmail = FirebaseAuth.getInstance().currentUser?.email
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(mapOf("email" to updatedEmail))
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _updatedEmailStored.emit(task.isSuccessful)
                 }
             }
     }
