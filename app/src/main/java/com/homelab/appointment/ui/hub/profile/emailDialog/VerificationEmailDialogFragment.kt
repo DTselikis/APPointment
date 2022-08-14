@@ -52,16 +52,25 @@ class VerificationEmailDialogFragment : DialogFragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             email = args.email
+            fragmentVerificationEmailDialog = this@VerificationEmailDialogFragment
         }
 
         observeEmailVerified()
+    }
+
+    fun closeFragment() {
+        findNavController().navigateUp()
+    }
+
+    fun checkEmailVerified() {
+        viewModel.checkEmailVerified()
     }
 
     private fun observeEmailVerified() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailVerified.collectLatest { verified ->
                 if (verified) {
-                    findNavController().navigateUp()
+                    closeFragment()
                 } else {
                     setErrorState()
                 }

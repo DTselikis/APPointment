@@ -8,6 +8,10 @@
         <variable
             name="email"
             type="String" />
+
+        <variable
+            name="fragmentVerificationEmailDialog"
+            type="com.homelab.appointment.ui.hub.profile.emailDialog.VerificationEmailDialogFragment" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -43,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
+                android:onClick="@{() -> fragmentVerificationEmailDialog.checkEmailVerified()}"
                 android:text="@string/verification_dialog_verified_btn_txt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/verification_dialog_text" />
@@ -51,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
+                android:onClick="@{() -> fragmentVerificationEmailDialog.closeFragment()}"
                 android:text="@string/cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/verification_dialog_verified_btn" />
