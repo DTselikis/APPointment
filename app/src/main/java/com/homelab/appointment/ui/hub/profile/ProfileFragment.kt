@@ -94,7 +94,7 @@ class ProfileFragment : Fragment() {
         }
 
         observePicUploaded()
-        observeEmailVerified()
+        observeVerificationEmailSent()
         observeReAuthFinished()
         observeReAuthRequirement()
     }
@@ -127,18 +127,15 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun observeEmailVerified() {
+    private fun observeVerificationEmailSent() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.verificationEmailSent.collectLatest { verified ->
-                if (verified) {
-                    Snackbar.make(
-                        requireContext(),
-                        binding.emailEdit,
-                        getString(R.string.email_changed),
-                        Snackbar.LENGTH_SHORT
-                    )
-                        .setBackgroundTint(getColor(R.color.teal_200))
-                        .show()
+            viewModel.verificationEmailSent.collectLatest { sent ->
+                if (sent) {
+                    val action =
+                        ProfileFragmentDirections.actionProfileFragmentToVerificationEmailDialogFragment(
+                            viewModel.email.value!!
+                        )
+                    findNavController().navigate(action)
                 }
             }
         }
