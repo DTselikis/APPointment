@@ -1,9 +1,13 @@
 package com.homelab.appointment.ui.hub.profile.emailDialog
 
+import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -58,8 +62,31 @@ class VerificationEmailDialogFragment : DialogFragment() {
             viewModel.emailVerified.collectLatest { verified ->
                 if (verified) {
                     findNavController().navigateUp()
+                } else {
+                    setErrorState()
                 }
             }
         }
     }
+
+    private fun setErrorState() {
+        binding.apply {
+            verificationDialogCard.strokeColor = getColor(R.color.error_stroke)
+            verificationDialogCard.strokeWidth = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                1.1f,
+                resources.displayMetrics
+            ).toInt()
+            verificationDialogText.text = getString(R.string.verification_dialog_err_txt)
+        }
+
+    }
+
+    private fun getColor(@ColorRes color: Int): Int =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColor(color, requireActivity().theme)
+        } else {
+            ContextCompat.getColor(requireContext(), color)
+        }
+
 }

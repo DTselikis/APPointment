@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="email_red">#EA4335</color>
+    <color name="error_stroke">#F73636</color>
 </resources>
