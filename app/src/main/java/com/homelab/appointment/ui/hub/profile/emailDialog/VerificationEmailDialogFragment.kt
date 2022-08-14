@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentVerificationEmailDialogBinding
+import kotlinx.coroutines.flow.collectLatest
 
 class VerificationEmailDialogFragment : DialogFragment() {
     private val args: VerificationEmailDialogFragmentArgs by navArgs<VerificationEmailDialogFragmentArgs>()
+    private val viewModel: VerificationEmailDialogViewModel by viewModels()
+
     private lateinit var binding: FragmentVerificationEmailDialogBinding
 
 //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -42,6 +48,18 @@ class VerificationEmailDialogFragment : DialogFragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             email = args.email
+        }
+
+        observeEmailVerified()
+    }
+
+    private fun observeEmailVerified() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.emailVerified.collectLatest { verified ->
+                if (verified) {
+                    findNavController().navigateUp()
+                }
+            }
         }
     }
 }
