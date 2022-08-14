@@ -19,8 +19,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
 import com.homelab.appointment.data.EMAIL_VERIFIED_NAV_KEY
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
@@ -173,6 +175,17 @@ class ProfileFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 )
                     .setBackgroundTint(color)
+                    .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                        override fun onShown(transientBottomBar: Snackbar?) {
+                            super.onShown(transientBottomBar)
+                        }
+
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            super.onDismissed(transientBottomBar, event)
+                            FirebaseAuth.getInstance().signOut()
+                            AuthUI.getInstance().signOut(requireContext())
+                        }
+                    })
                     .show()
             }
         }
