@@ -107,7 +107,7 @@ class ProfileFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         saveEditsBtn.setOnClickListener {
-                            viewModel.storeUpdatedPhone()
+                            this@ProfileFragment.viewModel.storeUpdatedPhone()
                         }
                     }
                 }
