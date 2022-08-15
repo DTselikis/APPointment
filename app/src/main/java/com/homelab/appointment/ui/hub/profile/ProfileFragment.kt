@@ -95,6 +95,24 @@ class ProfileFragment : Fragment() {
                     }
                 }
             }
+
+            phoneEditText.apply {
+                doOnTextChanged { text, _, _, _ ->
+                    val currentPhone = this@ProfileFragment.viewModel.user.phone
+                    if (text.toString() != currentPhone) {
+                        showSaveBtn(photoCard, emailEdit)
+                    } else if (text.toString() == currentPhone) {
+                        hideSaveBtn(emailEdit, photoCard)
+                    }
+                }
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        saveEditsBtn.setOnClickListener {
+                            viewModel.storeUpdatedPhone()
+                        }
+                    }
+                }
+            }
         }
 
         observePicUploaded()
@@ -103,6 +121,7 @@ class ProfileFragment : Fragment() {
         observeReAuthRequirement()
         observeEmailVerified()
         observeUpdatedEmailStored()
+        observeUpdatedPhoneStored()
     }
 
     fun pickImage() {
@@ -205,6 +224,19 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun observeUpdatedPhoneStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.updatedPhoneStored.collectLatest { stored ->
+                val (text, color) = when (stored) {
+                    true -> Pair(getString(R.string.phone_updated), R.color.teal_200)
+                    else -> Pair(getString(R.string.email_not_updated), R.color.email_red)
+                }
+
+                showSnackBar(text, color)
+            }
+        }
+    }
+
     private fun observePicUploaded() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.picUploaded.collectLatest { stored ->
@@ -224,6 +256,12 @@ class ProfileFragment : Fragment() {
                 viewModel.updateProfilePic(photoUri.toString())
             }
         }
+    }
+
+    private fun showSnackBar(message: String, @ColorRes color: Int) {
+        Snackbar.make(binding.saveEditsBtn, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(getColor(color))
+            .show()
     }
 
     private fun showSaveBtn(top: View, below: View?) {
