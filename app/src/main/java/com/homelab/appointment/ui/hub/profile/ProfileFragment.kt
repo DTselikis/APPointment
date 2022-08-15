@@ -99,9 +99,9 @@ class ProfileFragment : Fragment() {
                 doOnTextChanged { text, _, _, _ ->
                     val currentPhone = this@ProfileFragment.viewModel.user.phone
                     if (text.toString() != currentPhone) {
-                        showSaveBtn(photoCard, emailEdit)
+                        showSaveBtn(phoneEdit, emailEdit)
                     } else if (text.toString() == currentPhone) {
-                        hideSaveBtn(emailEdit, photoCard)
+                        hideSaveBtn(emailEdit, phoneEdit)
                     }
                 }
                 setOnFocusChangeListener { _, hasFocus ->
