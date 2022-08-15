@@ -25,7 +25,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
-import com.homelab.appointment.data.EMAIL_VERIFIED_NAV_KEY
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentProfileBinding
 import com.homelab.appointment.ui.hub.HubSharedViewModel
@@ -119,8 +118,6 @@ class ProfileFragment : Fragment() {
         observeVerificationEmailSent()
         observeReAuthFinished()
         observeReAuthRequirement()
-        observeEmailVerified()
-        observeUpdatedEmailStored()
         observeUpdatedPhoneStored()
     }
 
@@ -176,51 +173,6 @@ class ProfileFragment : Fragment() {
                     dialog.dismiss()
                 }
                 .show()
-        }
-    }
-
-    private fun observeEmailVerified() {
-        findNavController().previousBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
-            savedStateHandle.getLiveData<Boolean>(EMAIL_VERIFIED_NAV_KEY)
-                .observe(viewLifecycleOwner) { verified ->
-                    if (verified) {
-                        viewModel.storeUpdatedEmail()
-                    }
-                    savedStateHandle.remove<Boolean>(EMAIL_VERIFIED_NAV_KEY)
-                }
-        }
-    }
-
-    private fun observeUpdatedEmailStored() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.updatedEmailStored.collectLatest { stored ->
-                val (text, color) = when (stored) {
-                    true -> Pair(getString(R.string.email_changed), getColor(R.color.teal_200))
-                    false -> Pair(
-                        getString(R.string.updated_email_store_failure),
-                        getColor(R.color.email_red)
-                    )
-                }
-                Snackbar.make(
-                    requireContext(),
-                    binding.emailEdit,
-                    text,
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setBackgroundTint(color)
-                    .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        override fun onShown(transientBottomBar: Snackbar?) {
-                            super.onShown(transientBottomBar)
-                        }
-
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            super.onDismissed(transientBottomBar, event)
-                            FirebaseAuth.getInstance().signOut()
-                            AuthUI.getInstance().signOut(requireContext())
-                        }
-                    })
-                    .show()
-            }
         }
     }
 
