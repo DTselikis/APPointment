@@ -1,5 +1,6 @@
 package com.homelab.appointment.ui.hub.profile
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -136,13 +137,26 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.verificationEmailSent.collectLatest { sent ->
                 if (sent) {
-                    val action =
-                        ProfileFragmentDirections.actionProfileFragmentToVerificationEmailDialogFragment(
-                            viewModel.email.value!!
-                        )
-                    findNavController().navigate(action)
+                    informUser()
                 }
             }
+        }
+    }
+
+    private fun informUser() {
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle(getString(R.string.verification_dialog_title))
+                .setMessage(getString(R.string.verification_dialog_verify_email, viewModel.email.value))
+                .setOnDismissListener {
+                    FirebaseAuth.getInstance().signOut()
+                    AuthUI.getInstance().signOut(requireContext())
+                    findNavController().navigate(R.id.action_profileFragment_to_authFragment)
+                }
+                .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 

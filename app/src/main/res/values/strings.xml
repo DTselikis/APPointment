@@ -19,8 +19,9 @@
     <string name="reAuth_authenticate_btn">Authenticate</string>
     <string name="authentication_failed">Authentication failed!</string>
     <string name="verification_dialog_title">Verification sent</string>
-    <string name="verification_dialog_verified_btn_txt">Verified</string>
+    <string name="verification_dialog_verify_email">Please verify %s and sign in again</string>
     <string name="cancel">Cancel</string>
     <string name="verification_dialog_err_txt">Email was not verified. Please try again.</string>
     <string name="updated_email_store_failure">New email failed to store. 0x2232</string>
+    <string name="ok">OK</string>
 </resources>
