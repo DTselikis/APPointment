@@ -29,9 +29,6 @@
             android:id="@+id/action_profileFragment_to_reAuthFragment"
             app:destination="@id/reAuthFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_verificationEmailDialogFragment"
-            app:destination="@id/verificationEmailDialogFragment" />
-        <action
             android:id="@+id/action_profileFragment_to_authFragment"
             app:destination="@id/authFragment"
             app:popUpTo="@id/profileFragment"
@@ -42,14 +39,6 @@
         android:name="com.homelab.appointment.ui.auth.reauth.ReAuthFragment"
         android:label="ReAuthFragment"
         tools:layout="@layout/fragment_re_auth">
-        <argument
-            android:name="email"
-            app:argType="string" />
-    </dialog>
-    <dialog
-        android:id="@+id/verificationEmailDialogFragment"
-        android:name="com.homelab.appointment.ui.hub.profile.emailDialog.VerificationEmailDialogFragment"
-        android:label="VerificationEmailDialogFragment" >
         <argument
             android:name="email"
             app:argType="string" />
