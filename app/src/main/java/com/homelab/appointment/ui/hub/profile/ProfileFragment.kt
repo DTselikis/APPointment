@@ -180,10 +180,13 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.updatedPhoneStored.collectLatest { stored ->
                 val (text, color) = when (stored) {
-                    true -> Pair(getString(R.string.phone_updated), R.color.teal_200)
+                    true -> {
+                        hideSaveBtn(binding.emailEdit, binding.phoneEdit)
+                        Pair(getString(R.string.phone_updated), R.color.teal_200)
+                    }
+
                     else -> Pair(getString(R.string.email_not_updated), R.color.email_red)
                 }
-
                 showSnackBar(text, color)
             }
         }
