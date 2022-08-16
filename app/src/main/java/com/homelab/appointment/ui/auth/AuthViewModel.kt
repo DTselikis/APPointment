@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.data.USERS_COLLECTION
 import com.homelab.appointment.model.User
@@ -15,7 +16,11 @@ class AuthViewModel : ViewModel() {
     private val _userStored = MutableSharedFlow<Boolean>()
     val userStored: SharedFlow<Boolean> = _userStored
 
-    lateinit var user: User
+    private val _userFetched = MutableSharedFlow<Boolean>()
+    val userFetched:SharedFlow<Boolean> = _userFetched
+
+    var user: User? = null
+    private set
 
     fun storeUserToDb(firebaseUser: FirebaseUser) {
         val user = firebaseUser.toUser()
@@ -26,6 +31,18 @@ class AuthViewModel : ViewModel() {
                 this.user = user
                 viewModelScope.launch {
                     _userStored.emit(task.isSuccessful)
+                }
+            }
+    }
+
+    fun fetchUser(uid: String) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(uid)
+            .get()
+            .addOnCompleteListener { doc ->
+                user = doc.result.toObject<User>()
+
+                viewModelScope.launch {
+                    _userFetched.emit(true)
                 }
             }
     }
