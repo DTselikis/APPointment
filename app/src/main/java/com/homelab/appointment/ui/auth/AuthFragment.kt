@@ -18,8 +18,13 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.R
+import com.homelab.appointment.data.USERS_COLLECTION
 import com.homelab.appointment.databinding.FragmentAuthBinding
+import com.homelab.appointment.model.User
 import com.homelab.appointment.ui.hub.HubSharedViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -55,29 +60,21 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        FirebaseAuth.getInstance().signOut()
-        AuthUI.getInstance().signOut(requireContext())
-
         val user = FirebaseAuth.getInstance().currentUser
-        if (emailVerificationLinkClicked()) {
-            val isNew = extractParameterFromLink()
-            if (isNew) {
-                navigateToProfile()
-            } else {
-                // TODO navigate to hub
+        if (isUserLoggedIn(user)) {
+            user?.let {
+                if (it.isEmailVerified) {
+                    Firebase.firestore.collection(USERS_COLLECTION).document(it.uid).get()
+                        .addOnSuccessListener { doc ->
+                            viewModel.user = doc.toObject<User>()!!
+                            navigateToProfile()
+                        }
+                } else {
+                    verifyEmail(it, false)
+                }
             }
         } else {
-            if (isUserLoggedIn(user)) {
-                user?.let {
-                    if (it.isEmailVerified) {
-                        // TODO navigate to hub
-                    } else {
-                        verifyEmail(it, false)
-                    }
-                }
-            } else {
-                createSignInIntent()
-            }
+            createSignInIntent()
         }
 
         observeUserStored()
@@ -183,17 +180,6 @@ class AuthFragment : Fragment() {
             }
         }
     }
-
-    private fun extractParameterFromLink(): Boolean {
-        val link = requireActivity().intent.data
-        link?.let {
-            val url = it.getQueryParameter("continueUrl")
-            return url!!.substring(url.lastIndexOf('=') + 1, url.length).toBoolean()
-        }
-        return false
-    }
-
-    private fun emailVerificationLinkClicked(): Boolean = requireActivity().intent.extras != null
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =
         result.resultCode == Activity.RESULT_OK
