@@ -2,7 +2,6 @@ package com.homelab.appointment.ui.auth.catcher
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class AuthLinkCatcherFragment : Fragment() {
         when (type) {
             LinkType.EMAIL_VERIFICATION ->
                 if (isNewUser(continueUrl)) navigateToProfile()
-                else navigateToHub()
+                else navigateToAuth()
             null -> {}
         }
     }
@@ -50,15 +49,14 @@ class AuthLinkCatcherFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailUpdated.collectLatest { updated ->
                 if (updated) {
-                    navigateToHub()
+                    navigateToAuth()
                 }
             }
         }
     }
 
-    private fun navigateToHub() {
-        // TODO navigate to Hub
-        Log.d("HIT", "navigateToHub: HIT")
+    private fun navigateToAuth() {
+        findNavController().navigate(R.id.action_authLinkCatcherFragment_to_authFragment)
     }
 
     private fun navigateToProfile() {

@@ -53,5 +53,10 @@
             app:destination="@id/profileFragment"
             app:popUpTo="@id/authLinkCatcherFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_authLinkCatcherFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/authLinkCatcherFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
