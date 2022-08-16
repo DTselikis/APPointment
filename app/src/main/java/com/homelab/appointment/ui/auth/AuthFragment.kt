@@ -67,7 +67,12 @@ class AuthFragment : Fragment() {
                     Firebase.firestore.collection(USERS_COLLECTION).document(it.uid).get()
                         .addOnSuccessListener { doc ->
                             viewModel.user = doc.toObject<User>()!!
-                            navigateToProfile()
+                            if (viewModel.user.email != user.email) {
+                                Firebase.firestore.collection(USERS_COLLECTION).document(it.uid)
+                                    .update(mapOf("email" to user.email)).addOnSuccessListener {
+                                        navigateToProfile()
+                                    }
+                            }
                         }
                 } else {
                     verifyEmail(it, false)
