@@ -163,11 +163,14 @@ class ProfileFragment : Fragment() {
         activity?.let {
             AlertDialog.Builder(it)
                 .setTitle(getString(R.string.verification_dialog_title))
-                .setMessage(getString(R.string.verification_dialog_verify_email, viewModel.email.value))
+                .setMessage(
+                    getString(
+                        R.string.verification_dialog_verify_email,
+                        viewModel.email.value
+                    )
+                )
                 .setOnDismissListener {
-                    FirebaseAuth.getInstance().signOut()
-                    AuthUI.getInstance().signOut(requireContext())
-                    findNavController().navigate(R.id.action_profileFragment_to_authFragment)
+                    signOut()
                 }
                 .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
@@ -239,6 +242,12 @@ class ProfileFragment : Fragment() {
             topToBottom = top.id
         }
         binding.saveEditsBtn.visibility = View.GONE
+    }
+
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        AuthUI.getInstance().signOut(requireContext())
+        findNavController().navigate(R.id.action_profileFragment_to_authFragment)
     }
 
     private fun getColor(@ColorRes color: Int): Int {

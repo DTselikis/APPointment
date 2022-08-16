@@ -156,6 +156,19 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_btn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="@dimen/profile_edit_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:onClick="@{() -> profileFragment.signOut()}"
+                    android:text="@string/sign_out"
+                    android:textColor="@color/email_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fb_edit" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/save_edits_btn"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="@dimen/profile_edit_edit_text_width"

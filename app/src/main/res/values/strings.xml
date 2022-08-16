@@ -26,4 +26,5 @@
     <string name="ok">OK</string>
     <string name="phone_updated">Phone updated!</string>
     <string name="email_not_updated">Email not updated.</string>
+    <string name="sign_out">Sign out</string>
 </resources>
