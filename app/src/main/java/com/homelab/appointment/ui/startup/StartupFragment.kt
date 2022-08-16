@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
 import kotlinx.coroutines.flow.collectLatest
@@ -27,11 +28,13 @@ class StartupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firebaseUser?.let {
-            if (it.isEmailVerified) {
+        if (userIsSignedIn()) {
+            if (firebaseUser!!.isEmailVerified) {
                 observeUserFetched()
-                viewModel.fetchUser(it.uid)
+                viewModel.fetchUser(firebaseUser.uid)
             }
+        } else {
+            findNavController().navigate(R.id.action_startupFragment_to_authFragment)
         }
     }
 
@@ -58,5 +61,8 @@ class StartupFragment : Fragment() {
         }
     }
 
-    private fun isStoredAndAuthEmailsTheSame(): Boolean = viewModel.user.email != firebaseUser!!.email
+    private fun isStoredAndAuthEmailsTheSame(): Boolean =
+        viewModel.user.email != firebaseUser!!.email
+
+    private fun userIsSignedIn(): Boolean = firebaseUser == null
 }
