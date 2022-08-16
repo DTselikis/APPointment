@@ -1,5 +1,9 @@
 package com.homelab.appointment.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
     var uid: String? = null,
     val firstname: String? = null,
@@ -12,4 +16,4 @@ data class User(
     val profilePic: String? = null,
     val gender: String? = null,
     val registered: Boolean = false
-)
+) : Parcelable

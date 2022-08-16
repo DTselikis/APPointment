@@ -70,5 +70,19 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/startupFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@id/action_startupFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment"
+            app:popUpTo="@id/startupFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailVerificationFragment"
+        android:name="com.homelab.appointment.ui.auth.verification.EmailVerificationFragment"
+        android:label="EmailVerificationFragment"
+        tools:layout="@layout/fragment_email_verification">
+        <argument
+            android:name="user"
+            app:argType="com.homelab.appointment.model.User" />
     </fragment>
 </navigation>

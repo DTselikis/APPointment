@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
 import kotlinx.coroutines.flow.collectLatest
@@ -29,10 +30,8 @@ class StartupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (userIsSignedIn()) {
-            if (firebaseUser!!.isEmailVerified) {
                 observeUserFetched()
-                viewModel.fetchUser(firebaseUser.uid)
-            }
+                viewModel.fetchUser(firebaseUser!!.uid)
         } else {
             findNavController().navigate(R.id.action_startupFragment_to_authFragment)
         }
@@ -42,9 +41,15 @@ class StartupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userFetched.collectLatest { fetched ->
                 if (fetched) {
-                    if (!isStoredAndAuthEmailsTheSame()) {
-                        observeEmailUpdated()
-                        viewModel.updateEmail(firebaseUser!!.email!!)
+                    if (firebaseUser!!.isEmailVerified) {
+                        if (!isStoredAndAuthEmailsTheSame()) {
+                            observeEmailUpdated()
+                            viewModel.updateEmail(firebaseUser!!.email!!)
+                        }
+                    }
+                    else {
+                        sendVerificationEmail()
+                        navigateToEmailVerification()
                     }
                 }
             }
@@ -59,6 +64,22 @@ class StartupFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun sendVerificationEmail() {
+        firebaseUser!!.sendEmailVerification(
+            ActionCodeSettings.newBuilder()
+                .setUrl("https://homelab.page.link/emailVerified?isNewUser=false")
+                .setAndroidPackageName("com.homelab.appointment", true, null)
+                .setHandleCodeInApp(true)
+                .setDynamicLinkDomain("homelab.page.link")
+                .build()
+        )
+    }
+
+    private fun navigateToEmailVerification() {
+        val action = StartupFragmentDirections.actionStartupFragmentToEmailVerificationFragment(viewModel.user)
+        findNavController().navigate(action)
     }
 
     private fun isStoredAndAuthEmailsTheSame(): Boolean =
