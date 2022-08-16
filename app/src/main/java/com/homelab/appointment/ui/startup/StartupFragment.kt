@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 class StartupFragment : Fragment() {
 
     private val viewModel: StartupViewModel by viewModels()
+    private val firebaseUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +27,6 @@ class StartupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-
         firebaseUser?.let {
             if (it.isEmailVerified) {
                 observeUserFetched()
@@ -39,8 +38,25 @@ class StartupFragment : Fragment() {
     private fun observeUserFetched() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userFetched.collectLatest { fetched ->
-
+                if (fetched) {
+                    if (!isStoredAndAuthEmailsTheSame()) {
+                        observeEmailUpdated()
+                        viewModel.updateEmail(firebaseUser!!.email!!)
+                    }
+                }
             }
         }
     }
+
+    private fun observeEmailUpdated() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.emailUpdated.collectLatest { updated ->
+                if (updated) {
+                    //TODO navigate to hub
+                }
+            }
+        }
+    }
+
+    private fun isStoredAndAuthEmailsTheSame(): Boolean = viewModel.user.email != firebaseUser!!.email
 }

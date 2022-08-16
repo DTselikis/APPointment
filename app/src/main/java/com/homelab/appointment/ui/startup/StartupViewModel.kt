@@ -15,7 +15,11 @@ class StartupViewModel : ViewModel() {
     private val _userFetched = MutableSharedFlow<Boolean>()
     val userFetched: SharedFlow<Boolean> = _userFetched
 
-    private lateinit var user: User
+    private val _emailUpdated = MutableSharedFlow<Boolean>()
+    val emailUpdated: SharedFlow<Boolean> = _emailUpdated
+
+    lateinit var user: User
+    private set
 
     fun fetchUser(uid: String) {
         Firebase.firestore.collection(USERS_COLLECTION).document(uid)
@@ -25,6 +29,16 @@ class StartupViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _userFetched.emit(true)
+                }
+            }
+    }
+
+    fun updateEmail(newEmail: String) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(mapOf("email" to newEmail))
+            .addOnCompleteListener {
+                viewModelScope.launch {
+                    _emailUpdated.emit(true)
                 }
             }
     }
