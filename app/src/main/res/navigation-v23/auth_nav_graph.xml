@@ -10,10 +10,6 @@
         android:name="com.homelab.appointment.ui.auth.AuthFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth">
-        <deepLink
-            android:id="@+id/deepLink"
-            android:autoVerify="true"
-            app:uri="homelab.page.link" />
         <action
             android:id="@+id/action_authFragment_to_profileFragment"
             app:destination="@id/profileFragment"
@@ -43,4 +39,20 @@
             android:name="email"
             app:argType="string" />
     </dialog>
+
+    <fragment
+        android:id="@+id/authLinkCatcherFragment"
+        android:name="com.homelab.appointment.ui.auth.catcher.AuthLinkCatcherFragment"
+        android:label="fragment_auth_link_catcher"
+        tools:layout="@layout/fragment_auth_link_catcher">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="homelab.page.link" />
+        <action
+            android:id="@+id/action_authLinkCatcherFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/authLinkCatcherFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

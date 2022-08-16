@@ -5,3 +5,7 @@ enum class Gender(val code: String) {
     MALE("M"),
     ANY("A")
 }
+
+enum class LinkType(val code: Int) {
+    EMAIL_VERIFICATION(1)
+}
