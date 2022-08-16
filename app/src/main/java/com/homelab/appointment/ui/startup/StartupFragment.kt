@@ -33,7 +33,7 @@ class StartupFragment : Fragment() {
                 observeUserFetched()
                 viewModel.fetchUser(firebaseUser!!.uid)
         } else {
-            findNavController().navigate(R.id.action_startupFragment_to_authFragment)
+            navigateToAuth()
         }
     }
 
@@ -44,7 +44,7 @@ class StartupFragment : Fragment() {
                     if (firebaseUser!!.isEmailVerified) {
                         if (!isStoredAndAuthEmailsTheSame()) {
                             observeEmailUpdated()
-                            viewModel.updateEmail(firebaseUser!!.email!!)
+                            viewModel.updateEmail(firebaseUser.email!!)
                         }
                     }
                     else {
@@ -80,6 +80,10 @@ class StartupFragment : Fragment() {
     private fun navigateToEmailVerification() {
         val action = StartupFragmentDirections.actionStartupFragmentToEmailVerificationFragment(viewModel.user)
         findNavController().navigate(action)
+    }
+
+    private fun navigateToAuth() {
+        findNavController().navigate(R.id.action_startupFragment_to_authFragment)
     }
 
     private fun isStoredAndAuthEmailsTheSame(): Boolean =
