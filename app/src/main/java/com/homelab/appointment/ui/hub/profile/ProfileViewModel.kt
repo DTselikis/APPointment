@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.ktx.firestore
@@ -75,15 +74,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
     }
 
     fun verifyNewEmail() {
-        FirebaseAuth.getInstance().currentUser?.verifyBeforeUpdateEmail(
-            email.value!!,
-            ActionCodeSettings.newBuilder()
-                .setUrl("https://homelab.page.link/emailVerified?isNewUser=false")
-                .setAndroidPackageName("com.homelab.appointment", true, null)
-                .setHandleCodeInApp(true)
-                .setDynamicLinkDomain("homelab.page.link")
-                .build()
-        )
+        FirebaseAuth.getInstance().currentUser?.verifyBeforeUpdateEmail(email.value!!)
             ?.addOnSuccessListener {
                 viewModelScope.launch {
                     _verificationEmailSent.emit(true)
