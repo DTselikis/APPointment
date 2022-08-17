@@ -74,7 +74,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
-        val action = AuthFragmentDirections.actionAuthFragmentToProfileFragment(viewModel.user)
+        val action = AuthFragmentDirections.actionAuthFragmentToProfileFragment(viewModel.user!!)
         findNavController().navigate(action)
     }
 
