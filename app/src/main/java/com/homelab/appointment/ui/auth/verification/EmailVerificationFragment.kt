@@ -84,5 +84,6 @@ class EmailVerificationFragment : Fragment() {
             getString(R.string.resend_verification_email_toast),
             Toast.LENGTH_SHORT
         )
+            .show()
     }
 }
