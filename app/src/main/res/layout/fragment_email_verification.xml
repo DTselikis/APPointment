@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="authFragment"
-            type="com.homelab.appointment.ui.auth.AuthFragment" />
+            name="emailVerificationFragment"
+            type="com.homelab.appointment.ui.auth.verification.EmailVerificationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
             android:id="@+id/email_verification_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> authFragment.checkEmailVerified()}"
+            android:onClick="@{() -> emailVerificationFragment.checkEmailVerified()}"
             android:text="@string/email_verified_btn_txt"
             app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
             app:layout_constraintStart_toStartOf="@id/email_verification_icon"
@@ -57,7 +57,7 @@
             android:id="@+id/email_verification_resend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> authFragment.resendEmail()}"
+            android:onClick="@{() -> emailVerificationFragment.resendEmail()}"
             android:text="@string/resend_email"
             app:layout_constraintEnd_toStartOf="@id/email_verification_btn"
             app:layout_constraintStart_toStartOf="parent"
