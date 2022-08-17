@@ -16,10 +16,10 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentProfileBinding
-import com.homelab.appointment.ui.hub.HubSharedViewModel
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -36,9 +35,9 @@ import java.io.FileOutputStream
 
 class ProfileFragment : Fragment() {
 
-    private val sharedViewModel: HubSharedViewModel by activityViewModels()
+    private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
     private val viewModel: ProfileViewModel by viewModels {
-        ProfileViewModelFactory(sharedViewModel.user)
+        ProfileViewModelFactory(args.user)
     }
 
     private lateinit var binding: FragmentProfileBinding
@@ -141,7 +140,7 @@ class ProfileFragment : Fragment() {
                 if (needsReAuth) {
                     val action =
                         ProfileFragmentDirections.actionProfileFragmentToReAuthFragment(
-                            sharedViewModel.user.email!!
+                            viewModel.user.email!!
                         )
                     findNavController().navigate(action)
                 }
