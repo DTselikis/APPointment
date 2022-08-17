@@ -23,10 +23,10 @@ class AuthViewModel : ViewModel() {
     private set
 
     fun storeUserToDb(firebaseUser: FirebaseUser) {
-        val user = firebaseUser.toUser()
+        user = firebaseUser.toUser()
 
-        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
-            .set(user)
+        Firebase.firestore.collection(USERS_COLLECTION).document(user!!.uid!!)
+            .set(user!!)
             .addOnCompleteListener { task ->
                 this.user = user
                 viewModelScope.launch {

@@ -1,66 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="authFragment"
-            type="com.homelab.appointment.ui.auth.AuthFragment" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.auth.AuthFragment">
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/email_verification_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="email_verification_icon, email_verification_text, email_verification_btn, email_verification_resend"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/email_verification_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mark_email_unread_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.27" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/email_verification_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email_verification_txt_msg"
-            app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
-            app:layout_constraintStart_toStartOf="@id/email_verification_icon"
-            app:layout_constraintTop_toBottomOf="@id/email_verification_icon" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/email_verification_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> authFragment.checkEmailVerified()}"
-            android:text="@string/email_verified_btn_txt"
-            app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
-            app:layout_constraintStart_toStartOf="@id/email_verification_icon"
-            app:layout_constraintTop_toBottomOf="@id/email_verification_text" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/email_verification_resend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> authFragment.resendEmail()}"
-            android:text="@string/resend_email"
-            app:layout_constraintEnd_toStartOf="@id/email_verification_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_verification_btn" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.AuthFragment" />
