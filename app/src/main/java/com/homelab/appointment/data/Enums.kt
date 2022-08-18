@@ -9,3 +9,13 @@ enum class Gender(val code: String) {
 enum class LinkType(val code: Int) {
     EMAIL_VERIFICATION(1)
 }
+
+enum class DayOfWeek(val code: Int) {
+    MONDAY(1),
+    TUESDAY(2),
+    WEDNESDAY(3),
+    THURSDAY(4),
+    FRIDAY(5),
+    SATURDAY(6),
+    SUNDAY(7)
+}
