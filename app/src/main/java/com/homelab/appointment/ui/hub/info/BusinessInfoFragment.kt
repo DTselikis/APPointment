@@ -30,6 +30,7 @@ class InfoFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            openingHoursRv.adapter = OpeningHoursAdapter()
         }
 
         viewModel.fetchBusinessInfo()
