@@ -46,6 +46,9 @@ class StartupFragment : Fragment() {
                             observeEmailUpdated()
                             viewModel.updateEmail(firebaseUser.email!!)
                         }
+                        else {
+                            navigateToBusinessInfo()
+                        }
                     }
                     else {
                         sendVerificationEmail()
@@ -60,7 +63,7 @@ class StartupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailUpdated.collectLatest { updated ->
                 if (updated) {
-                    //TODO navigate to hub
+                    navigateToProfile()
                 }
             }
         }
@@ -84,6 +87,15 @@ class StartupFragment : Fragment() {
 
     private fun navigateToAuth() {
         findNavController().navigate(R.id.action_startupFragment_to_authFragment)
+    }
+
+    private fun navigateToBusinessInfo() {
+        findNavController().navigate(R.id.action_startupFragment_to_businessInfoFragment)
+    }
+
+    private fun navigateToProfile() {
+        val action = StartupFragmentDirections.actionStartupFragmentToProfileFragment(viewModel.user)
+        findNavController().navigate(action)
     }
 
     private fun isStoredAndAuthEmailsTheSame(): Boolean =

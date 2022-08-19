@@ -78,6 +78,10 @@ class AuthFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    private fun navigateToBusinessInfo() {
+        findNavController().navigate(R.id.action_authFragment_to_businessInfoFragment)
+    }
+
     private fun observeUserStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
@@ -91,7 +95,7 @@ class AuthFragment : Fragment() {
     private fun observeUserFetched() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { fetched ->
-                // TODO navigate to hub
+                navigateToBusinessInfo()
             }
         }
     }
