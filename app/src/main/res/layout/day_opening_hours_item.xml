@@ -31,6 +31,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:day="@{dayOpeningHours.order}"
                 tools:text="Monday" />
 
             <LinearLayout
@@ -48,11 +49,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
+                    android:text="@{@string/opening_hours(dayOpeningHours.morning.from, dayOpeningHours.morning.to)}"
                     tools:text="09:00 - 13:00" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{@string/opening_hours(dayOpeningHours.afternoon.from, dayOpeningHours.afternoon.to)}"
                     tools:text="17:00 - 20:00" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

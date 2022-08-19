@@ -11,3 +11,13 @@ val daysOfWeek = mapOf(
     DayOfWeek.SATURDAY to R.string.saturday,
     DayOfWeek.SUNDAY to R.string.sunday
 )
+
+val orderToDayOfWeek = mapOf(
+    1 to DayOfWeek.MONDAY,
+    2 to DayOfWeek.TUESDAY,
+    3 to DayOfWeek.WEDNESDAY,
+    4 to DayOfWeek.TUESDAY,
+    5 to DayOfWeek.FRIDAY,
+    6 to DayOfWeek.SATURDAY,
+    7 to DayOfWeek.SUNDAY
+)
