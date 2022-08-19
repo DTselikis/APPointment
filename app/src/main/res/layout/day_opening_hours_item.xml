@@ -50,16 +50,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_gravity="center"
-                    android:text="@{@string/opening_hours(dayOpeningHours.morning.from, dayOpeningHours.morning.to)}"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    app:hours="@{dayOpeningHours}"
                     tools:text="09:00 - 13:00" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@{@string/opening_hours(dayOpeningHours.afternoon.from, dayOpeningHours.afternoon.to)}"
-                    tools:text="17:00 - 20:00" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
