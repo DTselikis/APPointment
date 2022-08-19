@@ -1,13 +1,8 @@
 package com.homelab.appointment.model.helper
 
-import com.google.firebase.firestore.PropertyName
-
 data class SocialInfo(
-    @PropertyName("fb_page_id")
-    val fbPageId: String? = null,
-    @PropertyName("instagram_profile")
-    val instagramProfile: String? = null,
-    @PropertyName("maps_query")
-    val mapsQuery: String? = null,
+    val fb_page_id: String? = null,
+    val instagram_profile: String? = null,
+    val maps_query: String? = null,
     val phone: String? = null
 )

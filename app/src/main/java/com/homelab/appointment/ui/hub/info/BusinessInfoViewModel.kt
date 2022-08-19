@@ -24,8 +24,8 @@ class BusinessInfoViewModel : ViewModel() {
             .addOnSuccessListener { doc ->
                 val businessInfo = doc.toObject<BusinessInfo>()
 
-                _openingHours.value = businessInfo!!.openingHours!!
-                socialInfo = businessInfo.socialInfo!!
+                _openingHours.value = businessInfo!!.opening_hours!!
+                socialInfo = businessInfo.social_info!!
             }
     }
 }
