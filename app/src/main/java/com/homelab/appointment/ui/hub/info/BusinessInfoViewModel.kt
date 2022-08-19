@@ -3,6 +3,7 @@ package com.homelab.appointment.ui.hub.info
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -11,10 +12,16 @@ import com.homelab.appointment.data.BUSINESS_INFO_COLLECTION
 import com.homelab.appointment.model.BusinessInfo
 import com.homelab.appointment.model.helper.DayOpeningHours
 import com.homelab.appointment.model.helper.SocialInfo
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 
 class BusinessInfoViewModel : ViewModel() {
     private val _openingHours = MutableLiveData<List<DayOpeningHours>>()
     val openingHours:LiveData<List<DayOpeningHours>> = _openingHours
+
+    private val _infoFetched = MutableSharedFlow<Boolean>()
+    val infoFetched: SharedFlow<Boolean> = _infoFetched
 
     private lateinit var socialInfo: SocialInfo
 
@@ -26,6 +33,10 @@ class BusinessInfoViewModel : ViewModel() {
 
                 _openingHours.value = businessInfo!!.opening_hours!!
                 socialInfo = businessInfo.social_info!!
+
+                viewModelScope.launch {
+                    _infoFetched.emit(true)
+                }
             }
     }
 }
