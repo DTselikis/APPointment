@@ -9,12 +9,12 @@ import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.data.BUSINESS_DOCUMENT
 import com.homelab.appointment.data.BUSINESS_INFO_COLLECTION
 import com.homelab.appointment.model.BusinessInfo
-import com.homelab.appointment.model.helper.OpeningHours
+import com.homelab.appointment.model.helper.DayOpeningHours
 import com.homelab.appointment.model.helper.SocialInfo
 
 class BusinessInfoViewModel : ViewModel() {
-    private val _openingHours = MutableLiveData<List<OpeningHours>>()
-    val openingHours:LiveData<List<OpeningHours>> = _openingHours
+    private val _openingHours = MutableLiveData<List<DayOpeningHours>>()
+    val openingHours:LiveData<List<DayOpeningHours>> = _openingHours
 
     private lateinit var socialInfo: SocialInfo
 
