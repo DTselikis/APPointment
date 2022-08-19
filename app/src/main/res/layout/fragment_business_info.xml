@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.homelab.appointment.ui.hub.info.BusinessInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:openingHours="@{viewModel.openingHours}"
             app:spanCount="2"
             tools:listitem="@layout/day_opening_hours_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
