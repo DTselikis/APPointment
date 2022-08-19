@@ -17,15 +17,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/opening_hours_rv"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:openingHours="@{viewModel.openingHours}"
-            app:spanCount="2"
             tools:listitem="@layout/day_opening_hours_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
