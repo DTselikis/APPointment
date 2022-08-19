@@ -101,5 +101,5 @@ class StartupFragment : Fragment() {
     private fun isStoredAndAuthEmailsTheSame(): Boolean =
         viewModel.user.email != firebaseUser!!.email
 
-    private fun userIsSignedIn(): Boolean = firebaseUser == null
+    private fun userIsSignedIn(): Boolean = firebaseUser != null
 }
