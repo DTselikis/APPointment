@@ -1,5 +1,6 @@
 package com.homelab.appointment.ui.hub.info
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.R
-import com.homelab.appointment.data.BUSINESS_DOCUMENT
-import com.homelab.appointment.data.BUSINESS_INFO_COLLECTION
-import com.homelab.appointment.data.BUSINESS_NAME
+import com.homelab.appointment.data.*
 import com.homelab.appointment.model.BusinessInfo
 import com.homelab.appointment.model.ContactProviderInfo
 import com.homelab.appointment.model.helper.DayOpeningHours
@@ -55,6 +54,15 @@ class BusinessInfoViewModel : ViewModel() {
             },
             ContactProviderInfo(R.color.maps_red, R.drawable.ic_place_24, BUSINESS_NAME) {
                 ContactProvider.navigateToBusiness(context, socialInfo.maps_query!!)
+            },
+            ContactProviderInfo(R.color.fb_blue, R.drawable.facebook_logo, FB_PAGE_NAME) {
+                try {
+                    ContactProvider.openFacebookPage(context, socialInfo.fb_page_id!!)
+                } catch (e: ActivityNotFoundException) {
+                    viewModelScope.launch {
+                        _appName.emit(ExtAppName.FACEBOOK.code)
+                    }
+                }
             }
         )
 }

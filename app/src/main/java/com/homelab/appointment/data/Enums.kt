@@ -19,3 +19,7 @@ enum class DayOfWeek(val code: Int) {
     SATURDAY(6),
     SUNDAY(7)
 }
+
+enum class ExtAppName(val code: String) {
+    FACEBOOK("Facebook")
+}
