@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="androidx.core.content.ContextCompat" />
+
         <variable
             name="contactProviderInfo"
             type="com.homelab.appointment.model.ContactProviderInfo" />
