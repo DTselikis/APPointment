@@ -23,7 +23,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/contact_info_rv"
             app:openingHours="@{viewModel.openingHours}"
             tools:listitem="@layout/day_opening_hours_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contact_info_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/opening_hours_rv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/business_contact_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
