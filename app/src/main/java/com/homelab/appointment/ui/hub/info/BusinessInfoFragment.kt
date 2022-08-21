@@ -22,6 +22,8 @@ class InfoFragment : Fragment() {
 
     private lateinit var binding: FragmentBusinessInfoBinding
 
+    private lateinit var contractProvidersAdapter: ContactProvidersAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +37,11 @@ class InfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        contractProvidersAdapter = ContactProvidersAdapter()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             openingHoursRv.adapter = OpeningHoursAdapter()
+            contactInfoRv.adapter = contractProvidersAdapter
             viewModel = this@InfoFragment.viewModel
         }
 
@@ -50,6 +54,7 @@ class InfoFragment : Fragment() {
             viewModel.infoFetched.collectLatest { fetched ->
                 if (fetched) {
                     scrollToCurrentDate()
+                    contractProvidersAdapter.submitList(viewModel.getProvidersList(requireContext()))
                 }
             }
         }

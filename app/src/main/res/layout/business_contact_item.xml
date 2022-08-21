@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="androidx.core.content.ContextCompat" />
         <variable
             name="contactProviderInfo"
             type="com.homelab.appointment.model.ContactProviderInfo" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/phone_card"
+        android:id="@+id/contact_item_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:onClick="@{() -> contactProviderInfo.operation}"
+        android:onClick="@{() -> contactProviderInfo.operation.invoke()}"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@{contactProviderInfo.color}"
+        app:strokeColor="@{ContextCompat.getColor(context, contactProviderInfo.color)}"
         app:strokeWidth="0.5dp"
         tools:strokeColor="@color/phone_green">
 
@@ -32,11 +32,11 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/phone_img"
+                android:id="@+id/contact_item_img"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
-                android:background="@{contactProviderInfo.color}"
-                android:src="@{contactProviderInfo.icon}"
+                android:backgroundResource="@{contactProviderInfo.color}"
+                android:imageResource="@{contactProviderInfo.icon}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -49,16 +49,16 @@
                 android:text="@{contactProviderInfo.text}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/phone_right_divider"
-                app:layout_constraintStart_toEndOf="@id/phone_img"
+                app:layout_constraintEnd_toEndOf="@id/contact_item_right_divider"
+                app:layout_constraintStart_toEndOf="@id/contact_item_img"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="6952147425" />
 
             <View
-                android:id="@+id/phone_right_divider"
+                android:id="@+id/contact_item_right_divider"
                 android:layout_width="6dp"
                 android:layout_height="40dp"
-                android:background="@{contactProviderInfo.color}"
+                android:backgroundResource="@{contactProviderInfo.color}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
