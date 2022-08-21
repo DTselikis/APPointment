@@ -12,4 +12,16 @@ object ContactProvider {
             context.startActivity(phoneIntent)
         }
     }
+
+    fun navigateToBusiness(context: Context, mapsUri: String) {
+        val gmmIntentUri =
+            Uri.parse(
+                "https://www.google.com/maps/dir/?api=1&destination=$mapsUri"
+            )
+
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.resolveActivity(context.packageManager)?.let {
+            context.startActivity(mapIntent)
+        }
+    }
 }

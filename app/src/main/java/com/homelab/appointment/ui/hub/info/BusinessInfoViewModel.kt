@@ -11,6 +11,7 @@ import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.R
 import com.homelab.appointment.data.BUSINESS_DOCUMENT
 import com.homelab.appointment.data.BUSINESS_INFO_COLLECTION
+import com.homelab.appointment.data.BUSINESS_NAME
 import com.homelab.appointment.model.BusinessInfo
 import com.homelab.appointment.model.ContactProviderInfo
 import com.homelab.appointment.model.helper.DayOpeningHours
@@ -48,6 +49,9 @@ class BusinessInfoViewModel : ViewModel() {
         listOf(
             ContactProviderInfo(R.color.phone_green, R.drawable.ic_phone_24, socialInfo.phone!!) {
                 ContactProvider.callBusiness(context, socialInfo.phone!!)
+            },
+            ContactProviderInfo(R.color.maps_red, R.drawable.ic_place_24, BUSINESS_NAME) {
+                ContactProvider.navigateToBusiness(context, socialInfo.maps_query!!)
             }
         )
 }
