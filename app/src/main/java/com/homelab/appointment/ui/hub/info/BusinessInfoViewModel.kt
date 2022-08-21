@@ -63,6 +63,19 @@ class BusinessInfoViewModel : ViewModel() {
                         _appName.emit(ExtAppName.FACEBOOK.code)
                     }
                 }
+            },
+            ContactProviderInfo(
+                R.color.insta_orange,
+                R.drawable.instagram_logo,
+                INSTAGRAM_PROFILE
+            ) {
+                try {
+                    ContactProvider.openInstagramPage(context, socialInfo.instagram_profile!!)
+                } catch (e: ActivityNotFoundException) {
+                    viewModelScope.launch {
+                        _appName.emit(ExtAppName.INSTAGRAM.code)
+                    }
+                }
             }
         )
 }

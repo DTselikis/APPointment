@@ -42,4 +42,20 @@ object ContactProvider {
             context.startActivity(fbIntent)
         }
     }
+
+    fun openInstagramPage(context: Context, instaProfile: String) {
+        val packageManager = context.packageManager
+
+        val instaUri = try {
+            packageManager.getPackageInfo("com.instagram.android", 0)
+            "http://instagram.com/_u/$instaProfile"
+        } catch (e: PackageManager.NameNotFoundException) {
+            "https://www.instagram.com/$instaProfile"
+        }
+
+        val instaIntent = Intent(Intent.ACTION_VIEW, Uri.parse(instaUri))
+        instaIntent.resolveActivity(packageManager)?.let {
+            context.startActivity(instaIntent)
+        }
+    }
 }
