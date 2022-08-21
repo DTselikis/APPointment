@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contactProviderInfo"
+            type="com.homelab.appointment.model.ContactProviderInfo" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/phone_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:onClick="@{() -> contactProviderInfo.operation}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@{contactProviderInfo.color}"
+        app:strokeWidth="0.5dp"
+        tools:strokeColor="@color/phone_green">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/phone_img"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:background="@{contactProviderInfo.color}"
+                android:src="@{contactProviderInfo.icon}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/phone_green"
+                tools:src="@drawable/ic_phone_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{contactProviderInfo.text}"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/phone_right_divider"
+                app:layout_constraintStart_toEndOf="@id/phone_img"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6952147425" />
+
+            <View
+                android:id="@+id/phone_right_divider"
+                android:layout_width="6dp"
+                android:layout_height="40dp"
+                android:background="@{contactProviderInfo.color}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/phone_green" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
