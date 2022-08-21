@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.homelab.appointment.R
+import com.homelab.appointment.data.DayOfWeek
 import com.homelab.appointment.databinding.FragmentBusinessInfoBinding
 import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
+import java.util.*
 
 class InfoFragment : Fragment() {
 
@@ -47,12 +49,29 @@ class InfoFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.infoFetched.collectLatest { fetched ->
                 if (fetched) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        val dayOfWeek = LocalDate.now().dayOfWeek.value
-                        binding.openingHoursRv.scrollToPosition(dayOfWeek - 1)
-                    }
+                    scrollToCurrentDate()
                 }
             }
         }
+    }
+
+    private fun scrollToCurrentDate() {
+        val dayOfWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate.now().dayOfWeek.value
+        } else {
+            Calendar.getInstance(Locale.getDefault()).dayOfWeek()
+        }
+
+        binding.openingHoursRv.smoothScrollToPosition(dayOfWeek - 1)
+    }
+
+    private fun Calendar.dayOfWeek(): Int = when (this.get(Calendar.DAY_OF_WEEK)) {
+        Calendar.MONDAY -> DayOfWeek.MONDAY.code
+        Calendar.TUESDAY -> DayOfWeek.TUESDAY.code
+        Calendar.WEDNESDAY -> DayOfWeek.WEDNESDAY.code
+        Calendar.THURSDAY -> DayOfWeek.THURSDAY.code
+        Calendar.FRIDAY -> DayOfWeek.FRIDAY.code
+        Calendar.SATURDAY -> DayOfWeek.SATURDAY.code
+        else -> DayOfWeek.SUNDAY.code
     }
 }
