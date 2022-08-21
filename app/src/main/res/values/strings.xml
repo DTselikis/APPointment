@@ -38,4 +38,7 @@
 
     <string name="opening_hours">%s - %s</string>
     <string name="store_closed">Closed</string>
+    
+    <string name="opening_ext_app_problem">App %s not found</string>
+    <string name="dismiss_dialog">Dismiss</string>
 </resources>

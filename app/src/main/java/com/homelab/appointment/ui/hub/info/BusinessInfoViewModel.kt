@@ -28,6 +28,9 @@ class BusinessInfoViewModel : ViewModel() {
     private val _infoFetched = MutableSharedFlow<Boolean>()
     val infoFetched: SharedFlow<Boolean> = _infoFetched
 
+    private val _appName = MutableSharedFlow<String>()
+    val appName: SharedFlow<String> = _appName
+
     private lateinit var socialInfo: SocialInfo
 
     fun fetchBusinessInfo() {

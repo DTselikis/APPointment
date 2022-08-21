@@ -1,5 +1,6 @@
 package com.homelab.appointment.ui.hub.info
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,6 +48,7 @@ class InfoFragment : Fragment() {
 
         observeInfoFetched()
         viewModel.fetchBusinessInfo()
+        observeExtAppNotFound()
     }
 
     private fun observeInfoFetched() {
@@ -60,6 +62,14 @@ class InfoFragment : Fragment() {
         }
     }
 
+    private fun observeExtAppNotFound() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.appName.collectLatest { appName ->
+                showWarningDialog(appName)
+            }
+        }
+    }
+
     private fun scrollToCurrentDate() {
         val dayOfWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.now().dayOfWeek.value
@@ -68,6 +78,17 @@ class InfoFragment : Fragment() {
         }
 
         binding.openingHoursRv.smoothScrollToPosition(dayOfWeek - 1)
+    }
+
+    private fun showWarningDialog(appName: String) {
+        val builder: AlertDialog.Builder? = activity?.let {
+            AlertDialog.Builder(it)
+        }
+        builder?.setMessage(getString(R.string.opening_ext_app_problem, appName))
+            ?.setPositiveButton(getString(R.string.dismiss_dialog)) { dialog, id ->
+                dialog.dismiss()
+            }
+            ?.create()?.show()
     }
 
     private fun Calendar.dayOfWeek(): Int = when (this.get(Calendar.DAY_OF_WEEK)) {
