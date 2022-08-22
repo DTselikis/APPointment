@@ -7,6 +7,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.data.USERS_COLLECTION
+import com.homelab.appointment.data.USER_DOCUMENT_TOKEN_FIELD
 import com.homelab.appointment.model.User
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,6 +19,9 @@ class AuthViewModel : ViewModel() {
 
     private val _userFetched = MutableSharedFlow<Boolean>()
     val userFetched:SharedFlow<Boolean> = _userFetched
+
+    private val _fcmStored = MutableSharedFlow<Boolean>()
+    val fcmStored:SharedFlow<Boolean> = _fcmStored
 
     var user: User? = null
     private set
@@ -43,6 +47,16 @@ class AuthViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _userFetched.emit(true)
+                }
+            }
+    }
+
+    fun storeFcmToken(token: String) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(user!!.uid!!)
+            .update(mapOf(USER_DOCUMENT_TOKEN_FIELD to token))
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _fcmStored.emit(task.isSuccessful)
                 }
             }
     }

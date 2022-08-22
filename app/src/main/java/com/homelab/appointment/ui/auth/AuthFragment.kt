@@ -1,6 +1,7 @@
 package com.homelab.appointment.ui.auth
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
+import com.homelab.appointment.data.SHARED_PREF_FCM_KEY
+import com.homelab.appointment.data.SHARED_PREF_NAME
 import kotlinx.coroutines.flow.collectLatest
 
 class AuthFragment : Fragment() {
@@ -86,7 +89,7 @@ class AuthFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
                 if (stored) {
-                    navigateToProfile()
+                    storeFcmTokenIfNotStored { navigateToProfile() }
                 }
             }
         }
@@ -95,9 +98,27 @@ class AuthFragment : Fragment() {
     private fun observeUserFetched() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { fetched ->
-                navigateToBusinessInfo()
+                storeFcmTokenIfNotStored { navigateToBusinessInfo() }
             }
         }
+    }
+
+    private fun observeFcmTokenStored(navigate: () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.fcmStored.collectLatest { stored ->
+                navigate()
+            }
+        }
+    }
+
+    private fun storeFcmTokenIfNotStored(navigate: () -> Unit) {
+        requireActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            .getString(
+                SHARED_PREF_FCM_KEY, null
+            )?.let { token ->
+                observeFcmTokenStored(navigate)
+                viewModel.storeFcmToken(token)
+            }
     }
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =
