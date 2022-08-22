@@ -120,13 +120,16 @@ class AuthFragment : Fragment() {
     }
 
     private fun storeFcmTokenIfNotStored(navigate: () -> Unit) {
-        requireActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val token = requireActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             .getString(
                 SHARED_PREF_FCM_KEY, null
-            )?.let { token ->
-                observeFcmTokenStored(navigate)
-                viewModel.storeFcmToken(token)
-            }
+            )
+        if (token != null) {
+            observeFcmTokenStored(navigate)
+            viewModel.storeFcmToken(token)
+        } else {
+            navigate()
+        }
     }
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =
