@@ -9,6 +9,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.homelab.appointment.data.SHARED_PREF_FCM_KEY
 import com.homelab.appointment.data.SHARED_PREF_NAME
 import com.homelab.appointment.data.USERS_COLLECTION
+import com.homelab.appointment.data.USER_DOCUMENT_TOKEN_FIELD
 
 class CloudMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
@@ -25,7 +26,7 @@ class CloudMessagingService : FirebaseMessagingService() {
 
     private fun storeFcmTokenToDb(firebaseUser: FirebaseUser, token: String) {
         Firebase.firestore.collection(USERS_COLLECTION).document(firebaseUser.uid)
-            .update(mapOf("token" to token))
+            .update(mapOf(USER_DOCUMENT_TOKEN_FIELD to token))
             .addOnFailureListener {
                 storeFcmTokenToSharedPref(token)
             }
