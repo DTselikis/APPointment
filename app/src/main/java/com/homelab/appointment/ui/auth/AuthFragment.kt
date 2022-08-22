@@ -97,7 +97,7 @@ class AuthFragment : Fragment() {
 
     private fun observeUserFetched() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.userStored.collectLatest { fetched ->
+            viewModel.userFetched.collectLatest { fetched ->
                 storeFcmTokenIfNotStored { navigateToBusinessInfo() }
             }
         }
