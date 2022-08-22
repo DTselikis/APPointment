@@ -106,6 +106,14 @@ class AuthFragment : Fragment() {
     private fun observeFcmTokenStored(navigate: () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.fcmStored.collectLatest { stored ->
+                with(
+                    requireActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                        .edit()
+                ) {
+                    remove(SHARED_PREF_FCM_KEY)
+                    apply()
+                }
+
                 navigate()
             }
         }
