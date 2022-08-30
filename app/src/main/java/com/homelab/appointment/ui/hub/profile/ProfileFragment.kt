@@ -23,6 +23,7 @@ import androidx.navigation.fragment.navArgs
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
@@ -83,7 +84,12 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onSuccess(result: LoginResult) {
-                TODO("Not yet implemented")
+                GraphRequest.newMeRequest(result.accessToken) { obj, _ ->
+
+                }.apply {
+                    parameters = Bundle().apply { putString("fields", "id,name") }
+                    executeAsync()
+                }
             }
 
         })
