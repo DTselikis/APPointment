@@ -3,7 +3,7 @@
 
 
     <string name="facebook_app_id">***REMOVED***</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="fb_login_protocol_scheme">fb***REMOVED***</string>
     <string name="facebook_client_token">***REMOVED***</string>
 
 
