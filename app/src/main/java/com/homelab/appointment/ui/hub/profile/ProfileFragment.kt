@@ -280,6 +280,7 @@ class ProfileFragment : Fragment() {
     fun signOut() {
         FirebaseAuth.getInstance().signOut()
         AuthUI.getInstance().signOut(requireContext())
+        LoginManager.getInstance().logOut()
         findNavController().navigate(R.id.action_profileFragment_to_authFragment)
     }
 
