@@ -20,6 +20,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -43,6 +48,8 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var photoUri: Uri
 
+    private lateinit var callbackManager: CallbackManager
+
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             lifecycleScope.launch {
@@ -59,6 +66,26 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        LoginManager.getInstance().registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult> {
+            override fun onCancel() {
+                showSnackBar(getString(R.string.fb_login_canceled), getColor(R.color.email_red))
+            }
+
+            override fun onError(error: FacebookException) {
+                showSnackBar(getString(R.string.fb_login_err), getColor(R.color.email_red))
+            }
+
+            override fun onSuccess(result: LoginResult) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,6 +139,8 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+
+        callbackManager = CallbackManager.Factory.create()
 
         observePicUploaded()
         observeVerificationEmailSent()
