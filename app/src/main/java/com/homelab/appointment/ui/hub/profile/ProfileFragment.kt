@@ -295,7 +295,7 @@ class ProfileFragment : Fragment() {
 
     fun fbLogin() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(requireActivity(), listOf("public_profile"))
+            .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
     }
 
     fun signOut() {
