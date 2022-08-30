@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">APPointment</string>
+
+
+    <string name="facebook_app_id">***REMOVED***</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">***REMOVED***</string>
+
+
     <string name="email_verification_txt_msg">A verification email have been send to <b>%s</b></string>
     <string name="email_verified_btn_txt">Email verified</string>
     <string name="resend_email">Resend email</string>
