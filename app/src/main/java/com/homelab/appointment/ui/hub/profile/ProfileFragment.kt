@@ -70,6 +70,8 @@ class ProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        callbackManager = CallbackManager.Factory.create()
+
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onCancel() {
@@ -139,8 +141,6 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
-        callbackManager = CallbackManager.Factory.create()
 
         observePicUploaded()
         observeVerificationEmailSent()
@@ -270,6 +270,11 @@ class ProfileFragment : Fragment() {
             topToBottom = top.id
         }
         binding.saveEditsBtn.visibility = View.GONE
+    }
+
+    fun fbLogin() {
+        LoginManager.getInstance()
+            .logInWithReadPermissions(requireActivity(), listOf("public_profile"))
     }
 
     fun signOut() {
