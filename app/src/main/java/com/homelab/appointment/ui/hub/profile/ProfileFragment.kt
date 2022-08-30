@@ -76,11 +76,11 @@ class ProfileFragment : Fragment() {
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onCancel() {
-                showSnackBar(getString(R.string.fb_login_canceled), getColor(R.color.email_red))
+                showSnackBar(getString(R.string.fb_login_canceled), R.color.email_red)
             }
 
             override fun onError(error: FacebookException) {
-                showSnackBar(getString(R.string.fb_login_err), getColor(R.color.email_red))
+                showSnackBar(getString(R.string.fb_login_err), R.color.email_red)
             }
 
             override fun onSuccess(result: LoginResult) {
@@ -255,9 +255,9 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.fbProfileInfoStored.collectLatest { stored ->
                 val (text, color) = if (stored) {
-                    Pair(getString(R.string.fb_login_success), getColor(R.color.teal_200))
+                    Pair(getString(R.string.fb_login_success), R.color.teal_200)
                 } else {
-                    Pair(getString(R.string.fb_login_err), getColor(R.color.email_red))
+                    Pair(getString(R.string.fb_login_err), R.color.email_red)
                 }
 
                 showSnackBar(text, color)
