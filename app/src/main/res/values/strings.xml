@@ -52,4 +52,5 @@
     <string name="notification_channel_descr">General notifications</string>
     <string name="fb_login_canceled">Facebook login canceled</string>
     <string name="fb_login_err">Error logging in to Facebook</string>
+    <string name="fb_login_success">Successfully logged in!</string>
 </resources>

@@ -153,6 +153,7 @@ class ProfileFragment : Fragment() {
         observeReAuthFinished()
         observeReAuthRequirement()
         observeUpdatedPhoneStored()
+        observeFbProfileInfoStored()
     }
 
     fun pickImage() {
@@ -250,6 +251,20 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun observeFbProfileInfoStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.fbProfileInfoStored.collectLatest { stored ->
+                val (text, color) = if (stored) {
+                    Pair(getString(R.string.fb_login_success), getColor(R.color.teal_200))
+                } else {
+                    Pair(getString(R.string.fb_login_err), getColor(R.color.email_red))
+                }
+
+                showSnackBar(text, color)
+            }
+        }
+    }
+
     private fun showSnackBar(message: String, @ColorRes color: Int) {
         Snackbar.make(binding.saveEditsBtn, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(getColor(color))
@@ -312,5 +327,4 @@ class ProfileFragment : Fragment() {
 
         return null
     }
-
 }
