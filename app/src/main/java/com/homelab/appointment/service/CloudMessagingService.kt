@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import androidx.core.app.NotificationCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
@@ -14,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.homelab.appointment.R
 import com.homelab.appointment.data.*
+import kotlin.random.Random
 
 class CloudMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
@@ -32,6 +34,20 @@ class CloudMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         createNotificationChannel()
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+
+        val notificationId = Random.nextInt()
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(message.data["title"])
+            .setContentText(message.data["message"])
+            .setSmallIcon(R.drawable.salon_litsa_app_icon)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message.data["message"]))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        notificationManager.notify(notificationId, notification)
     }
 
     private fun storeFcmTokenToDb(firebaseUser: FirebaseUser, token: String) {
