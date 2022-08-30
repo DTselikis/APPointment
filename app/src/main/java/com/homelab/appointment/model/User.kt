@@ -12,6 +12,7 @@ data class User(
     val phone: String? = null,
     val email: String? = null,
     val fbName: String? = null,
+    val fbProfileId: String? = null,
     val token: String? = null,
     val profilePic: String? = null,
     val gender: String? = null,
