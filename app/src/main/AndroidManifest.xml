@@ -4,6 +4,11 @@
     package="com.homelab.appointment">
 
     <uses-permission android:name="com.google.android.c2dm.permissin.RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+
 
     <application
         android:allowBackup="true"
@@ -27,7 +32,8 @@
             android:value="false" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value"/>
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
