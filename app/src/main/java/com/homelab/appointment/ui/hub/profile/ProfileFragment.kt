@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
 
             override fun onSuccess(result: LoginResult) {
                 GraphRequest.newMeRequest(result.accessToken) { obj, _ ->
-
+                    viewModel.storeFBProfileInfo(obj!!.getString("id"), obj.getString("name"))
                 }.apply {
                     parameters = Bundle().apply { putString("fields", "id,name") }
                     executeAsync()

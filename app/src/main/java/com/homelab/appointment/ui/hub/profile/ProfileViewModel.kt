@@ -22,7 +22,6 @@ class ProfileViewModel(val user: User) : ViewModel() {
     val lastname = MutableLiveData<String>(user.lastname)
     val phone = MutableLiveData<String>(user.phone)
     val email = MutableLiveData<String>(user.email)
-    val fbName = MutableLiveData<String>(user.fbName)
     val profilePic = MutableLiveData(Pair(user.profilePic, user.gender))
 
     private val _picUploaded = MutableSharedFlow<Boolean>()
@@ -36,6 +35,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     private val _updatedPhoneStored = MutableSharedFlow<Boolean>()
     val updatedPhoneStored: SharedFlow<Boolean> = _updatedPhoneStored
+
+    private val _loggedInWithFacebook = MutableSharedFlow<Boolean>()
+    val loggedInWithFacebook: SharedFlow<Boolean> = _loggedInWithFacebook
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -95,6 +97,16 @@ class ProfileViewModel(val user: User) : ViewModel() {
             .addOnCompleteListener { task ->
                 viewModelScope.launch {
                     _updatedPhoneStored.emit(task.isSuccessful)
+                }
+            }
+    }
+
+    fun storeFBProfileInfo(id: String, name: String) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(mapOf("fbName" to name, "fbProfileId" to id))
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _loggedInWithFacebook.emit(task.isSuccessful)
                 }
             }
     }
