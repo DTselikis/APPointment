@@ -22,6 +22,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/black" />
 
+        <meta-data
+            android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="false" />
+
         <service
             android:name=".service.CloudMessagingService"
             android:exported="false">
