@@ -170,6 +170,7 @@ class ProfileFragment : Fragment() {
         observeFbProfileInfoStored()
         observeFacebookAccountLinked()
         observeAccountUnlinked()
+        observeFacebookAccountIsLinked()
     }
 
     fun pickImage() {
@@ -288,6 +289,16 @@ class ProfileFragment : Fragment() {
                     if (linked) getString(R.string.fb_login_account_linked) else getString(R.string.fb_login_account_not_linked)
 
                 Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun observeFacebookAccountIsLinked() {
+        viewModel.isFacebookAccountLinked.observe(viewLifecycleOwner) { linked ->
+            if (linked) {
+                binding.fbBtn.setOnClickListener { fbLogout() }
+            } else {
+                binding.fbBtn.setOnClickListener { fbLogin() }
             }
         }
     }
