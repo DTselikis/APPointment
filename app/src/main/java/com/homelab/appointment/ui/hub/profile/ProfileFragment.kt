@@ -345,6 +345,8 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+            ?.create()
+            ?.show()
     }
 
     private fun openPlayStore(packageName: String) {
