@@ -154,7 +154,11 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        viewModel.checkFacebookAccountLinked()
+        if (viewModel.checkFacebookAccountLinked())
+            binding.fbBtn.setOnClickListener { fbLogout() }
+        else
+            binding.fbBtn.setOnClickListener { fbLogin() }
+
         observePicUploaded()
         observeVerificationEmailSent()
         observeReAuthFinished()
@@ -312,13 +316,18 @@ class ProfileFragment : Fragment() {
         binding.saveEditsBtn.visibility = View.GONE
     }
 
-    fun fbLogin() {
+    private fun fbLogin() {
         if (isFacebookAppInstalled()) {
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
         } else {
             showFacebookAppMissingDialog()
         }
+    }
+
+    private fun fbLogout() {
+        viewModel.unlinkFacebookAccount()
+        LoginManager.getInstance().logOut()
     }
 
     fun signOut() {

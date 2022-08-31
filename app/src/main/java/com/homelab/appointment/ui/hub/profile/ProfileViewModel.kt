@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.homelab.appointment.data.FB_PROFILE_ID_FIELD
+import com.homelab.appointment.data.FB_PROFILE_NAME_FIELD
 import com.homelab.appointment.data.STORAGE_PROFILE_PIC_DIR
 import com.homelab.appointment.data.USERS_COLLECTION
 import com.homelab.appointment.model.User
@@ -46,6 +48,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     private val _fbProfileLinked = MutableSharedFlow<Boolean>()
     val fbProfileLinked: SharedFlow<Boolean> = _fbProfileLinked
+
+    private val _accountUnlinked = MutableSharedFlow<Boolean>()
+    val accountUnlinked: SharedFlow<Boolean> = _accountUnlinked
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -129,12 +134,33 @@ class ProfileViewModel(val user: User) : ViewModel() {
             }
     }
 
-    fun checkFacebookAccountLinked() {
+    fun checkFacebookAccountLinked(): Boolean {
         FirebaseAuth.getInstance().currentUser?.providerData
             ?.find { it.providerId == FacebookAuthProvider.PROVIDER_ID }
             ?.let { _isFacebookAccountLinked.value = true }
 
+        return _isFacebookAccountLinked.value!!
     }
+
+    fun unlinkFacebookAccount() {
+        FirebaseAuth.getInstance().currentUser?.unlink(FacebookAuthProvider.PROVIDER_ID)
+            ?.addOnSuccessListener {
+                deleteSocialProviderInfoFromFirebase(FacebookAuthProvider.PROVIDER_ID)
+            }
+    }
+
+    fun deleteSocialProviderInfoFromFirebase(provider: String) {
+        val changes = mapOf(FB_PROFILE_NAME_FIELD to null, FB_PROFILE_ID_FIELD to null)
+
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(changes)
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _accountUnlinked.emit(task.isSuccessful)
+                }
+            }
+    }
+
 
     fun updateProfilePic(path: String) {
         profilePic.value = Pair(path, user.gender)
