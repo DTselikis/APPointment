@@ -338,10 +338,8 @@ class ProfileFragment : Fragment() {
                 setIcon(R.drawable.facebook_logo)
                 setPositiveButton(getString(R.string.fb_login_install_app)) { dialog, _ ->
                     openPlayStore(FB_PACKAGE_NAME)
-                    dialog.dismiss()
                 }
-                setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                    dialog.dismiss()
+                setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 }
             }
         }
