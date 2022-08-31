@@ -137,6 +137,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
         val credential = FacebookAuthProvider.getCredential(token)
         FirebaseAuth.getInstance().currentUser!!.linkWithCredential(credential)
             .addOnCompleteListener { task ->
+                _isFacebookAccountLinked.value = true
                 viewModelScope.launch {
                     _fbProfileLinked.emit(task.isSuccessful)
                 }
