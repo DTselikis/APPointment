@@ -34,6 +34,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.R
+import com.homelab.appointment.data.FB_PACKAGE_NAME
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentProfileBinding
 import id.zelory.compressor.Compressor
@@ -322,7 +323,7 @@ class ProfileFragment : Fragment() {
 
     private fun isFacebookAppInstalled(): Boolean {
         return try {
-            context?.packageManager?.getPackageInfo("com.facebook.katana", 0)
+            context?.packageManager?.getPackageInfo(FB_PACKAGE_NAME, 0)
             true
         } catch (e: PackageManager.NameNotFoundException) {
             false
@@ -336,7 +337,7 @@ class ProfileFragment : Fragment() {
                 setMessage(getString(R.string.fb_login_install_app_msg))
                 setIcon(R.drawable.facebook_logo)
                 setPositiveButton(getString(R.string.fb_login_install_app)) { dialog, _ ->
-                    openPlayStore("com.facebook.katana")
+                    openPlayStore(FB_PACKAGE_NAME)
                     dialog.dismiss()
                 }
                 setNegativeButton(getString(R.string.cancel)) { dialog, _ ->

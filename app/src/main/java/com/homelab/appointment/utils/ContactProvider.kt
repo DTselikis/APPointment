@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import com.homelab.appointment.data.FB_PACKAGE_NAME
 
 object ContactProvider {
     fun callBusiness(context: Context, phone: String) {
@@ -31,7 +32,7 @@ object ContactProvider {
 
         // TODO fb lite
         val fbUri = try {
-            packageManager.getPackageInfo("com.facebook.katana", 0)
+            packageManager.getPackageInfo(FB_PACKAGE_NAME, 0)
             "fb://page/$pageId"
         } catch (e: PackageManager.NameNotFoundException) {
             "https://www.facebook.com/$pageId"
