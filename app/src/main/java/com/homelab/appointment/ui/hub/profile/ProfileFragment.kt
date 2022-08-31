@@ -94,7 +94,8 @@ class ProfileFragment : Fragment() {
                     val url = obj.getJSONObject("picture").getJSONObject("data").getString("url")
                     askToUseFacebookProfilePic(url)
                 }.apply {
-                    parameters = Bundle().apply { putString("fields", "id,name,picture") }
+                    parameters =
+                        Bundle().apply { putString("fields", "id,name,picture.height(2048)") }
                     executeAsync()
                 }
 
