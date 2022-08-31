@@ -163,6 +163,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
             .update(changes)
             .addOnCompleteListener { task ->
+                _isFacebookAccountLinked.value = false
                 viewModelScope.launch {
                     _accountUnlinked.emit(task.isSuccessful)
                 }

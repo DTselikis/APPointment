@@ -62,6 +62,8 @@
     <string name="fb_login_account_not_linked">Account not linked</string>
     <string name="fb_login_link_account">Link account</string>
     <string name="fb_login_unlink_account">Unlink account</string>
+    <string name="fb_login_account_unlink_success">Account unlinked</string>
+    <string name="fb_login_account_unlink_failure">Account not unlinked</string>
     <string name="fb_login_profile_pic_title">Facebook profile photo</string>
     <string name="fb_login_profile_pic_msg">Do you want to use Facebook\'s profile photo as your profile photo?</string>
 </resources>

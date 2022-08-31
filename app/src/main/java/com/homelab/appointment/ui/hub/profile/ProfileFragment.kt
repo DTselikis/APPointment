@@ -169,6 +169,7 @@ class ProfileFragment : Fragment() {
         observeUpdatedPhoneStored()
         observeFbProfileInfoStored()
         observeFacebookAccountLinked()
+        observeAccountUnlinked()
     }
 
     fun pickImage() {
@@ -287,6 +288,19 @@ class ProfileFragment : Fragment() {
                     if (linked) getString(R.string.fb_login_account_linked) else getString(R.string.fb_login_account_not_linked)
 
                 Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun observeAccountUnlinked() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.accountUnlinked.collectLatest { unliked ->
+                val text =
+                    if (unliked) getString(R.string.fb_login_account_unlink_success) else getString(
+                        R.string.fb_login_account_unlink_failure
+                    )
+
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             }
         }
     }
