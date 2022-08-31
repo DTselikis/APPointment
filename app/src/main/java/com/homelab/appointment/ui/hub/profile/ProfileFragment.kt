@@ -94,6 +94,8 @@ class ProfileFragment : Fragment() {
                     parameters = Bundle().apply { putString("fields", "id,name") }
                     executeAsync()
                 }
+
+                viewModel.linkFacebookAccount(result.accessToken.token)
             }
 
         })
@@ -158,6 +160,7 @@ class ProfileFragment : Fragment() {
         observeReAuthRequirement()
         observeUpdatedPhoneStored()
         observeFbProfileInfoStored()
+        observeFacebookAccountLinked()
     }
 
     fun pickImage() {
@@ -265,6 +268,17 @@ class ProfileFragment : Fragment() {
                 }
 
                 showSnackBar(text, color)
+            }
+        }
+    }
+
+    private fun observeFacebookAccountLinked() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.fbProfileLinked.collectLatest { linked ->
+                val text =
+                    if (linked) getString(R.string.fb_login_account_linked) else getString(R.string.fb_login_account_not_linked)
+
+                Toast.makeText(context, text, Toast.LENGTH_LONG).show()
             }
         }
     }

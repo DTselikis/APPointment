@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.ktx.firestore
@@ -38,6 +39,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     private val _fbProfileInfoStored = MutableSharedFlow<Boolean>()
     val fbProfileInfoStored: SharedFlow<Boolean> = _fbProfileInfoStored
+
+    private val _fbProfileLinked = MutableSharedFlow<Boolean>()
+    val fbProfileLinked:SharedFlow<Boolean> = _fbProfileLinked
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -107,6 +111,16 @@ class ProfileViewModel(val user: User) : ViewModel() {
             .addOnCompleteListener { task ->
                 viewModelScope.launch {
                     _fbProfileInfoStored.emit(task.isSuccessful)
+                }
+            }
+    }
+
+    fun linkFacebookAccount(token: String) {
+        val credential = FacebookAuthProvider.getCredential(token)
+        FirebaseAuth.getInstance().currentUser!!.linkWithCredential(credential)
+            .addOnCompleteListener { task ->
+                viewModelScope.launch {
+                    _fbProfileLinked.emit(task.isSuccessful)
                 }
             }
     }

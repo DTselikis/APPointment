@@ -56,4 +56,6 @@
     <string name="fb_login_app_missing_title">Facebook app is not installed</string>
     <string name="fb_login_install_app_msg">Please install Facebook app and try again.</string>
     <string name="fb_login_install_app">Install</string>
+    <string name="fb_login_account_linked">Account linked</string>
+    <string name="fb_login_account_not_linked">Account not linked</string>
 </resources>
