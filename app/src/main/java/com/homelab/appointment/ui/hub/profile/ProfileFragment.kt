@@ -121,9 +121,9 @@ class ProfileFragment : Fragment() {
             emailEditText.apply {
                 doOnTextChanged { text, _, _, _ ->
                     if (text.toString() != this@ProfileFragment.viewModel.user.email) {
-                        showSaveBtn(emailEdit, fbEdit)
+                        showSaveBtn(emailEdit, fbBtn)
                     } else if (text.toString() == this@ProfileFragment.viewModel.user.email) {
-                        hideSaveBtn(fbEdit, emailEdit)
+                        hideSaveBtn(fbBtn, emailEdit)
                     }
                 }
                 setOnFocusChangeListener { _, hasFocus ->
@@ -248,7 +248,7 @@ class ProfileFragment : Fragment() {
                     )
                 }
 
-                Snackbar.make(binding.fbEdit, text, Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.fbBtn, text, Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                     .setBackgroundTint(color)
                     .show()
