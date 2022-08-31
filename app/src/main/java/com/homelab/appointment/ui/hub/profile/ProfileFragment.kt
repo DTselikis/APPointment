@@ -154,6 +154,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        viewModel.checkFacebookAccountLinked()
         observePicUploaded()
         observeVerificationEmailSent()
         observeReAuthFinished()

@@ -1,6 +1,7 @@
 package com.homelab.appointment.ui.hub.profile
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,6 +26,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
     val email = MutableLiveData<String>(user.email)
     val profilePic = MutableLiveData(Pair(user.profilePic, user.gender))
 
+    private val _isFacebookAccountLinked = MutableLiveData<Boolean>(false)
+    val isFacebookAccountLinked: LiveData<Boolean> = _isFacebookAccountLinked
+
     private val _picUploaded = MutableSharedFlow<Boolean>()
     val picUploaded: SharedFlow<Boolean> = _picUploaded
 
@@ -41,7 +45,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
     val fbProfileInfoStored: SharedFlow<Boolean> = _fbProfileInfoStored
 
     private val _fbProfileLinked = MutableSharedFlow<Boolean>()
-    val fbProfileLinked:SharedFlow<Boolean> = _fbProfileLinked
+    val fbProfileLinked: SharedFlow<Boolean> = _fbProfileLinked
 
     fun storeImageToFirebase(image: File) {
         try {
@@ -123,6 +127,13 @@ class ProfileViewModel(val user: User) : ViewModel() {
                     _fbProfileLinked.emit(task.isSuccessful)
                 }
             }
+    }
+
+    fun checkFacebookAccountLinked() {
+        FirebaseAuth.getInstance().currentUser?.providerData
+            ?.find { it.providerId == FacebookAuthProvider.PROVIDER_ID }
+            ?.let { _isFacebookAccountLinked.value = true }
+
     }
 
     fun updateProfilePic(path: String) {
