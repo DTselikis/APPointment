@@ -393,7 +393,7 @@ class ProfileFragment : Fragment() {
                 setTitle(getString(R.string.fb_login_profile_pic_title))
                 setMessage(getString(R.string.fb_login_profile_pic_msg))
                 setPositiveButton(getString(R.string.yes)) { _, _ ->
-
+                    viewModel.storeProfilePicToFirebase(url)
                 }
                 setNegativeButton(getString(R.string.no)) { _, _ ->
 

@@ -11,10 +11,7 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.homelab.appointment.data.FB_PROFILE_ID_FIELD
-import com.homelab.appointment.data.FB_PROFILE_NAME_FIELD
-import com.homelab.appointment.data.STORAGE_PROFILE_PIC_DIR
-import com.homelab.appointment.data.USERS_COLLECTION
+import com.homelab.appointment.data.*
 import com.homelab.appointment.model.User
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -71,7 +68,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
                             throw it
                         }
                     }
-                    val newUrl = mapOf("profilePic" to task.result.toString())
+                    val newUrl = mapOf(PROFILE_PIC_FIELD to task.result.toString())
 
                     Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
                         .update(newUrl)
@@ -116,10 +113,21 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     fun storeFBProfileInfo(id: String, name: String) {
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
-            .update(mapOf("fbName" to name, "fbProfileId" to id))
+            .update(mapOf(FB_PROFILE_NAME_FIELD to name, FB_PROFILE_ID_FIELD to id))
             .addOnCompleteListener { task ->
                 viewModelScope.launch {
                     _fbProfileInfoStored.emit(task.isSuccessful)
+                }
+            }
+    }
+
+    fun storeProfilePicToFirebase(url: String) {
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(mapOf(PROFILE_PIC_FIELD to url))
+            .addOnCompleteListener { task ->
+                updateProfilePic(url)
+                viewModelScope.launch {
+                    _picUploaded.emit(task.isSuccessful)
                 }
             }
     }
