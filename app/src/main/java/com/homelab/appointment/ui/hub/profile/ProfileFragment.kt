@@ -294,8 +294,12 @@ class ProfileFragment : Fragment() {
     }
 
     fun fbLogin() {
-        LoginManager.getInstance()
-            .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
+        if (isFacebookAppInstalled()) {
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
+        } else {
+
+        }
     }
 
     fun signOut() {
@@ -312,6 +316,17 @@ class ProfileFragment : Fragment() {
             ContextCompat.getColor(requireContext(), color)
         }
     }
+
+    private fun isFacebookAppInstalled(): Boolean {
+        return try {
+            context?.packageManager?.getPackageInfo("com.facebook.katana", 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+
 
     private fun Uri.toFile(): File? {
         requireActivity().contentResolver.openInputStream(this)?.let { inputSteam ->
