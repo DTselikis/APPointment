@@ -160,12 +160,17 @@ class ProfileViewModel(val user: User) : ViewModel() {
     }
 
     fun deleteSocialProviderInfoFromFirebase(provider: String) {
-        val changes = mapOf(FB_PROFILE_NAME_FIELD to null, FB_PROFILE_ID_FIELD to null)
+        val changes = mapOf(
+            FB_PROFILE_NAME_FIELD to null,
+            FB_PROFILE_ID_FIELD to null,
+            PROFILE_PIC_FIELD to null
+        )
 
         Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
             .update(changes)
             .addOnCompleteListener { task ->
                 _isFacebookAccountLinked.value = false
+                updateProfilePic("")
                 viewModelScope.launch {
                     _accountUnlinked.emit(task.isSuccessful)
                 }
