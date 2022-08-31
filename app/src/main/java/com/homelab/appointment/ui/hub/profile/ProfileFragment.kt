@@ -1,6 +1,9 @@
 package com.homelab.appointment.ui.hub.profile
 
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -298,7 +301,7 @@ class ProfileFragment : Fragment() {
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
         } else {
-
+            showFacebookAppMissingDialog()
         }
     }
 
@@ -326,7 +329,35 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun showFacebookAppMissingDialog() {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle(getString(R.string.fb_login_app_missing_title))
+                setMessage(getString(R.string.fb_login_install_app_msg))
+                setIcon(R.drawable.facebook_logo)
+                setPositiveButton(getString(R.string.fb_login_install_app)) { dialog, _ ->
+                    openPlayStore("com.facebook.katana")
+                    dialog.dismiss()
+                }
+                setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            }
+        }
+    }
 
+    private fun openPlayStore(packageName: String) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+        } catch (e: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                )
+            )
+        }
+    }
 
     private fun Uri.toFile(): File? {
         requireActivity().contentResolver.openInputStream(this)?.let { inputSteam ->

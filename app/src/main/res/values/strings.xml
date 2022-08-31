@@ -53,4 +53,7 @@
     <string name="fb_login_canceled">Facebook login canceled</string>
     <string name="fb_login_err">Error logging in to Facebook</string>
     <string name="fb_login_success">Successfully logged in!</string>
+    <string name="fb_login_app_missing_title">Facebook app is not installed</string>
+    <string name="fb_login_install_app_msg">Please install Facebook app and try again.</string>
+    <string name="fb_login_install_app">Install</string>
 </resources>
