@@ -74,6 +74,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
                         .update(newUrl)
                 }
                 .addOnCompleteListener { task ->
+                    updateProfilePic(image.path)
                     viewModelScope.launch {
                         _picUploaded.emit(task.isSuccessful)
                     }

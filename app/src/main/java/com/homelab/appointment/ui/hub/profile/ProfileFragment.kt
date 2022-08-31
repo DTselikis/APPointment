@@ -262,8 +262,6 @@ class ProfileFragment : Fragment() {
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
                     .setBackgroundTint(color)
                     .show()
-
-                viewModel.updateProfilePic(photoUri.toString())
             }
         }
     }
