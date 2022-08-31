@@ -90,8 +90,11 @@ class ProfileFragment : Fragment() {
             override fun onSuccess(result: LoginResult) {
                 GraphRequest.newMeRequest(result.accessToken) { obj, _ ->
                     viewModel.storeFBProfileInfo(obj!!.getString("id"), obj.getString("name"))
+
+                    val url = obj.getJSONObject("picture").getJSONObject("data").getString("url")
+                    askToUseFacebookProfilePic(url)
                 }.apply {
-                    parameters = Bundle().apply { putString("fields", "id,name") }
+                    parameters = Bundle().apply { putString("fields", "id,name,link") }
                     executeAsync()
                 }
 
@@ -381,6 +384,21 @@ class ProfileFragment : Fragment() {
                     Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
                 )
             )
+        }
+    }
+
+    private fun askToUseFacebookProfilePic(url: String) {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle(getString(R.string.fb_login_profile_pic_title))
+                setMessage(getString(R.string.fb_login_profile_pic_msg))
+                setPositiveButton(getString(R.string.yes)) { _, _ ->
+
+                }
+                setNegativeButton(getString(R.string.no)) { _, _ ->
+
+                }
+            }
         }
     }
 

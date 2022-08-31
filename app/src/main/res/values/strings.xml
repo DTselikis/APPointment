@@ -31,6 +31,8 @@
     <string name="verification_dialog_err_txt">Email was not verified. Please try again.</string>
     <string name="updated_email_store_failure">New email failed to store. 0x2232</string>
     <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="phone_updated">Phone updated!</string>
     <string name="email_not_updated">Email not updated.</string>
     <string name="sign_out">Sign out</string>
@@ -60,4 +62,6 @@
     <string name="fb_login_account_not_linked">Account not linked</string>
     <string name="fb_login_link_account">Link account</string>
     <string name="fb_login_unlink_account">Unlink account</string>
+    <string name="fb_login_profile_pic_title">Facebook profile photo</string>
+    <string name="fb_login_profile_pic_msg">Do you want to use Facebook\'s profile photo as your profile photo?</string>
 </resources>
