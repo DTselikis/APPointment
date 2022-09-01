@@ -31,7 +31,12 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_notifications, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_manage_notifications,
+            container,
+            false
+        )
 
         return binding.root
     }
@@ -41,6 +46,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            notificationsRv.adapter = NotificationsAdapter(this@ManageNotificationsFragment)
             viewModel = this@ManageNotificationsFragment.viewModel
         }
 

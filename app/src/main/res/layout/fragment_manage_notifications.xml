@@ -16,6 +16,7 @@
         tools:context=".ui.hub.profile.notification.ManageNotificationsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notifications_rv"
             notifications="@{viewModel.notificationsForDisplay}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
