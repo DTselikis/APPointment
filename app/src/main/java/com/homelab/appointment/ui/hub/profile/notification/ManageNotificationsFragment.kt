@@ -3,6 +3,7 @@ package com.homelab.appointment.ui.hub.profile.notification
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,6 +86,12 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
                     binding.expandCollapseArrow.rotation = slideOffset * 180
                 }
             })
+            peekHeight = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                220f,
+                resources.displayMetrics
+            ).toInt()
+            saveFlags = BottomSheetBehavior.SAVE_ALL
         }
 
 
