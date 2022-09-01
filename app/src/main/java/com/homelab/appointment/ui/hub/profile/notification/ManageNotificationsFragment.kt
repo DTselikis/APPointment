@@ -33,6 +33,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            viewModel = this@ManageNotificationsFragment.viewModel
         }
 
         viewModel.fetchNotifications(args.uid)

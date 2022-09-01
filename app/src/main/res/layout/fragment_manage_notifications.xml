@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.homelab.appointment.ui.hub.profile.notification.ManageNotificationsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +16,7 @@
         tools:context=".ui.hub.profile.notification.ManageNotificationsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            notifications="@{viewModel.notificationsForDisplay}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
