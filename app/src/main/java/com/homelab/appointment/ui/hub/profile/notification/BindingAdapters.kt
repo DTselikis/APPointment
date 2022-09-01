@@ -17,13 +17,14 @@ fun bindNotifications(recyclerView: RecyclerView, notifications: List<Notificati
     }
 }
 
-private const val SAME_DATE = 0
-
 @BindingAdapter("date")
 fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
     timestamp?.let {
-        val pattern = if (it.compareTo(Timestamp.now()) == SAME_DATE) "HH:mm" else "MM dd"
+        val pattern = if (it.isSameDate(Timestamp.now())) "HH:mm" else "MMM d"
         materialTextView.text =
             SimpleDateFormat(pattern, Locale.getDefault()).format(timestamp.toDate())
     }
 }
+
+private fun Timestamp.isSameDate(today: Timestamp): Boolean =
+    (this.toDate().time - today.toDate().time) / (24 * 60 * 60 * 1000) <= 0
