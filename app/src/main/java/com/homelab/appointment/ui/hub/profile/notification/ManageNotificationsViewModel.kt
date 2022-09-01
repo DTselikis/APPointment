@@ -21,7 +21,11 @@ class ManageNotificationsViewModel : ViewModel() {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                notifications.addAll(doc.toObject<NotificationsList>()!!.notifications!!.map { it })
+                notifications.addAll(
+                    doc.toObject<NotificationsList>()!!.notifications!!
+                        .map { it }
+                        .sortedByDescending { it.timestamp!!.seconds }
+                )
                 _notificationsForDisplay.value = notifications.toList()
             }
             .addOnFailureListener {
