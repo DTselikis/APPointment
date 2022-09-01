@@ -178,6 +178,12 @@ class ProfileFragment : Fragment() {
         openGallery.launch("image/*")
     }
 
+    fun openNotificationsBottomSheet() {
+        val action =
+            ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(args.user.uid!!)
+        findNavController().navigate(action)
+    }
+
     private fun observeReAuthFinished() {
         findNavController().previousBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
             savedStateHandle.getLiveData<Boolean>(RE_AUTH_NAV_KEY)
