@@ -1,9 +1,12 @@
 package com.homelab.appointment.ui.hub.profile.notification
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -13,6 +16,11 @@ import com.homelab.appointment.databinding.FragmentManageNotificationsBinding
 
 
 class ManageNotificationsFragment : BottomSheetDialogFragment() {
+
+    enum class NotificationType(val code: Int) {
+        CANCELLATION(0),
+        CUSTOM(1)
+    }
 
     private val args: ManageNotificationsFragmentArgs by navArgs()
     private val viewModel: ManageNotificationsViewModel by viewModels()
@@ -37,5 +45,13 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         }
 
         viewModel.fetchNotifications(args.uid)
+    }
+
+    fun getColor(@ColorRes color: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColor(color, requireActivity().theme)
+        } else {
+            ContextCompat.getColor(requireContext(), color)
+        }
     }
 }

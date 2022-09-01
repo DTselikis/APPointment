@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.homelab.appointment.R
 import com.homelab.appointment.databinding.NotificationItemBinding
 import com.homelab.appointment.model.Notification
+import com.homelab.appointment.ui.hub.profile.notification.ManageNotificationsFragment.NotificationType
 
-class NotificationsAdapter :
+class NotificationsAdapter(private val fragment: ManageNotificationsFragment) :
     ListAdapter<Notification, NotificationsAdapter.NotificationViewHolder>(DiffCallback) {
 
     inner class NotificationViewHolder(
@@ -16,6 +18,14 @@ class NotificationsAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(notification: Notification) {
             binding.notification = notification
+
+            val indicatorColor = when (notification.type) {
+                NotificationType.CANCELLATION.code -> R.color.email_red
+                NotificationType.CUSTOM.code -> R.color.insta_orange
+                else -> R.color.fb_blue
+            }
+
+            binding.indicatorColor = fragment.getColor(indicatorColor)
         }
     }
 

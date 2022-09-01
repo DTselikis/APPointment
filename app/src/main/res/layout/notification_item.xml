@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="indicatorColor"
+            type="int" />
+
+        <variable
             name="notification"
             type="com.homelab.appointment.model.Notification" />
     </data>
@@ -20,6 +24,7 @@
             android:layout_height="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
+            app:cardBackgroundColor="@{indicatorColor}"
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
