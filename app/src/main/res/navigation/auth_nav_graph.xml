@@ -37,6 +37,9 @@
         <argument
             android:name="user"
             app:argType="com.homelab.appointment.model.User" />
+        <action
+            android:id="@+id/action_profileFragment_to_manageNotificationsFragment"
+            app:destination="@id/manageNotificationsFragment" />
     </fragment>
     <dialog
         android:id="@+id/reAuthFragment"
@@ -107,4 +110,13 @@
         android:name="com.homelab.appointment.ui.hub.info.InfoFragment"
         android:label="BusinessInfoFragment"
         tools:layout="@layout/fragment_business_info"/>
+    <dialog
+        android:id="@+id/manageNotificationsFragment"
+        android:name="com.homelab.appointment.ui.hub.profile.notification.ManageNotificationsFragment"
+        android:label="ManageNotificationsFragment"
+        tools:layout="@layout/fragment_manage_notifications">
+        <argument
+            android:name="uid"
+            app:argType="string" />
+    </dialog>
 </navigation>

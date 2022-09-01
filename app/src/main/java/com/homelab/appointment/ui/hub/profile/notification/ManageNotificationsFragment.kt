@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentManageNotificationsBinding
 
 
 class ManageNotificationsFragment : BottomSheetDialogFragment() {
+
+    private val args: ManageNotificationsFragmentArgs by navArgs()
+    private val viewModel: ManageNotificationsViewModel by viewModels()
 
     private lateinit var binding: FragmentManageNotificationsBinding
 
@@ -29,6 +34,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
         }
-    }
 
+        viewModel.fetchNotifications(args.uid)
+    }
 }
