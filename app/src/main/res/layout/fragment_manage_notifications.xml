@@ -24,6 +24,14 @@
             android:layout_height="40dp"
             app:cardElevation="5dp">
 
+            <ImageView
+                android:id="@+id/expand_collapse_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_arrow_upward_24" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
