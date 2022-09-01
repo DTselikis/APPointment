@@ -17,6 +17,19 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         tools:context=".ui.hub.profile.notification.ManageNotificationsFragment">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notifications_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:cardElevation="2dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/notifications_title" />
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notifications_rv"
             notifications="@{viewModel.notificationsForDisplay}"

@@ -66,4 +66,5 @@
     <string name="fb_login_account_unlink_failure">Account not unlinked</string>
     <string name="fb_login_profile_pic_title">Facebook profile photo</string>
     <string name="fb_login_profile_pic_msg">Do you want to use Facebook\'s profile photo as your profile photo?</string>
+    <string name="notifications_title">Notifications</string>
 </resources>
