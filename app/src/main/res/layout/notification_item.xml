@@ -15,6 +15,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notification_item_type_indicator"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginTop="12dp"
@@ -46,6 +47,16 @@
             app:layout_constraintStart_toStartOf="@id/notification_item_title"
             app:layout_constraintTop_toBottomOf="@id/notification_item_title"
             tools:text="Your appointment have been canceled" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:date="@{notification.timestamp}"
+            app:layout_constraintEnd_toStartOf="@id/notification_item_type_indicator"
+            app:layout_constraintHorizontal_bias="0.89"
+            app:layout_constraintStart_toEndOf="@id/notification_item_title"
+            app:layout_constraintTop_toTopOf="@id/notification_item_title"
+            tools:text="14:25" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
