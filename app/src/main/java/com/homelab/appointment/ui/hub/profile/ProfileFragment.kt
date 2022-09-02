@@ -122,6 +122,8 @@ class ProfileFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ProfileFragment.viewModel
             profileFragment = this@ProfileFragment
+            if (this@ProfileFragment.viewModel.user.activeNotifications!! > 0)
+                notificationBadge.visibility = View.VISIBLE
 
             emailEditText.apply {
                 doOnTextChanged { text, _, _, _ ->
@@ -181,7 +183,9 @@ class ProfileFragment : Fragment() {
 
     fun openNotificationsBottomSheet() {
         val action =
-            ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(sharedViewModel.user.uid!!)
+            ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(
+                sharedViewModel.user.uid!!
+            )
         findNavController().navigate(action)
     }
 
