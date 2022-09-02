@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ActionCodeSettings
@@ -57,7 +58,7 @@ class EmailVerificationFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.emailVerified.collectLatest { verified ->
                 if (verified) {
-                    // TODO navigate to hub
+                    findNavController().navigate(R.id.action_emailVerificationFragment_to_profileFragment)
                 } else {
                     Snackbar.make(
                         binding.emailVerificationIcon,

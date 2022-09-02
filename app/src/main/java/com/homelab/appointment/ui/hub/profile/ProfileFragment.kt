@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -33,6 +33,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
 import com.homelab.appointment.data.FB_PACKAGE_NAME
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
@@ -45,9 +46,9 @@ import java.io.FileOutputStream
 
 class ProfileFragment : Fragment() {
 
-    private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
+    private val sharedViewModel: NavViewModel by navGraphViewModels(R.id.auth_nav_graph)
     private val viewModel: ProfileViewModel by viewModels {
-        ProfileViewModelFactory(args.user)
+        ProfileViewModelFactory(sharedViewModel.user)
     }
 
     private lateinit var binding: FragmentProfileBinding
@@ -180,7 +181,7 @@ class ProfileFragment : Fragment() {
 
     fun openNotificationsBottomSheet() {
         val action =
-            ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(args.user.uid!!)
+            ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(sharedViewModel.user.uid!!)
         findNavController().navigate(action)
     }
 

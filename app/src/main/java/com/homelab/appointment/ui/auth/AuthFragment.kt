@@ -10,16 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
 import com.homelab.appointment.data.SHARED_PREF_FCM_KEY
 import com.homelab.appointment.data.SHARED_PREF_NAME
 import kotlinx.coroutines.flow.collectLatest
 
 class AuthFragment : Fragment() {
+    private val sharedViewModel: NavViewModel by navGraphViewModels(R.id.auth_nav_graph)
     private val viewModel: AuthViewModel by viewModels()
 
     private var isNewUser = false
@@ -77,8 +80,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
-        val action = AuthFragmentDirections.actionAuthFragmentToProfileFragment(viewModel.user!!)
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_authFragment_to_profileFragment)
     }
 
     private fun navigateToBusinessInfo() {
@@ -86,6 +88,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun observeUserStored() {
+        sharedViewModel.user = viewModel.user!!
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
                 if (stored) {
@@ -96,6 +99,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun observeUserFetched() {
+        sharedViewModel.user = viewModel.user!!
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userFetched.collectLatest { fetched ->
                 storeFcmTokenIfNotStored { navigateToBusinessInfo() }

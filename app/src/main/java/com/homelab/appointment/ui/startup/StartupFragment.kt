@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
+import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
 import kotlinx.coroutines.flow.collectLatest
 
 class StartupFragment : Fragment() {
 
+    private val sharedViewModel: NavViewModel by navGraphViewModels(R.id.auth_nav_graph)
     private val viewModel: StartupViewModel by viewModels()
     private val firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -41,6 +44,8 @@ class StartupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userFetched.collectLatest { fetched ->
                 if (fetched) {
+                    sharedViewModel.user = viewModel.user
+
                     if (firebaseUser!!.isEmailVerified) {
                         if (!isStoredAndAuthEmailsTheSame()) {
                             observeEmailUpdated()
@@ -94,8 +99,7 @@ class StartupFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
-        val action = StartupFragmentDirections.actionStartupFragmentToProfileFragment(viewModel.user)
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_startupFragment_to_profileFragment)
     }
 
     private fun isStoredAndAuthEmailsTheSame(): Boolean =
