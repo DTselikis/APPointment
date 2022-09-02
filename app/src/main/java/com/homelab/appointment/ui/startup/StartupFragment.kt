@@ -96,13 +96,13 @@ class StartupFragment : Fragment() {
 
     private fun navigateToBusinessInfo() {
         activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.notifications!!
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.activeNotifications!!
         findNavController().navigate(R.id.action_startupFragment_to_businessInfoFragment)
     }
 
     private fun navigateToProfile() {
         activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.notifications!!
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.activeNotifications!!
         findNavController().navigate(R.id.action_startupFragment_to_profileFragment)
     }
 

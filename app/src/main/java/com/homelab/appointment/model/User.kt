@@ -14,7 +14,7 @@ data class User(
     val fbName: String? = null,
     val fbProfileId: String? = null,
     val token: String? = null,
-    val notifications: Int? = null,
+    val activeNotifications: Int? = null,
     val profilePic: String? = null,
     val gender: String? = null,
     val registered: Boolean = false
