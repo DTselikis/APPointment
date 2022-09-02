@@ -23,7 +23,7 @@ class ManageNotificationsViewModel : ViewModel() {
 
     private val notifications = mutableListOf<Notification>()
 
-    private lateinit var notificationsRemaining: List<Notification>
+    private lateinit var remainingNotifications: List<Notification>
 
     fun fetchNotifications(uid: String) {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
@@ -37,7 +37,7 @@ class ManageNotificationsViewModel : ViewModel() {
                 _notificationsForDisplay.value = notifications.toList()
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    notificationsRemaining = notifications.olderThan(1)
+                    remainingNotifications = notifications.olderThan(1)
                 }
             }
             .addOnFailureListener {
@@ -47,10 +47,10 @@ class ManageNotificationsViewModel : ViewModel() {
 
     fun deleteOldNotifications(uid: String) {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid).apply {
-            if (notificationsRemaining.isEmpty()) {
+            if (remainingNotifications.isEmpty()) {
                 delete()
             } else {
-                set(mapOf(NOTIFICATION_FIELD to notificationsRemaining), SetOptions.merge())
+                set(mapOf(NOTIFICATION_FIELD to remainingNotifications), SetOptions.merge())
             }
         }
 
