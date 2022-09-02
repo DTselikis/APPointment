@@ -113,8 +113,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
             ColorDrawable(Color.RED),
         ) { position ->
             adapter.notifyItemRemoved(position)
-
-
+            viewModel.deleteNotification(adapter.getItemAtPosition(position))
         }
 
         ItemTouchHelper(swipeListener).attachToRecyclerView(binding.notificationsRv)

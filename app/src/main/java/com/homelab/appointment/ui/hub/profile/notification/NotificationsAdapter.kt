@@ -55,4 +55,6 @@ class NotificationsAdapter(private val fragment: ManageNotificationsFragment) :
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun getItemAtPosition(position: Int): Notification = getItem(position)
 }
