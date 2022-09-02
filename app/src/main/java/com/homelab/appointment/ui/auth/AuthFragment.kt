@@ -14,6 +14,7 @@ import androidx.navigation.navGraphViewModels
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
@@ -80,10 +81,14 @@ class AuthFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user!!.notifications!!
         findNavController().navigate(R.id.action_authFragment_to_profileFragment)
     }
 
     private fun navigateToBusinessInfo() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user!!.notifications!!
         findNavController().navigate(R.id.action_authFragment_to_businessInfoFragment)
     }
 

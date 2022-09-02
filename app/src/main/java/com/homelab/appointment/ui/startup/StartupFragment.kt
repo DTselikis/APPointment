@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.NavViewModel
@@ -33,8 +34,8 @@ class StartupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (userIsSignedIn()) {
-                observeUserFetched()
-                viewModel.fetchUser(firebaseUser!!.uid)
+            observeUserFetched()
+            viewModel.fetchUser(firebaseUser!!.uid)
         } else {
             navigateToAuth()
         }
@@ -50,12 +51,10 @@ class StartupFragment : Fragment() {
                         if (!isStoredAndAuthEmailsTheSame()) {
                             observeEmailUpdated()
                             viewModel.updateEmail(firebaseUser.email!!)
-                        }
-                        else {
+                        } else {
                             navigateToBusinessInfo()
                         }
-                    }
-                    else {
+                    } else {
                         sendVerificationEmail()
                         navigateToEmailVerification()
                     }
@@ -86,7 +85,8 @@ class StartupFragment : Fragment() {
     }
 
     private fun navigateToEmailVerification() {
-        val action = StartupFragmentDirections.actionStartupFragmentToEmailVerificationFragment(viewModel.user)
+        val action =
+            StartupFragmentDirections.actionStartupFragmentToEmailVerificationFragment(viewModel.user)
         findNavController().navigate(action)
     }
 
@@ -95,10 +95,14 @@ class StartupFragment : Fragment() {
     }
 
     private fun navigateToBusinessInfo() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.notifications!!
         findNavController().navigate(R.id.action_startupFragment_to_businessInfoFragment)
     }
 
     private fun navigateToProfile() {
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            ?.getOrCreateBadge(R.id.profileFragment)?.number = viewModel.user.notifications!!
         findNavController().navigate(R.id.action_startupFragment_to_profileFragment)
     }
 
