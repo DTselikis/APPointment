@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.homelab.appointment.R
 import com.homelab.appointment.databinding.FragmentManageNotificationsBinding
 import com.homelab.appointment.listener.RecyclerViewItemSwipeListener
+import kotlin.math.roundToInt
 
 
 class ManageNotificationsFragment : BottomSheetDialogFragment() {
@@ -91,11 +92,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
                     binding.expandCollapseArrow.rotation = slideOffset * 180
                 }
             })
-            peekHeight = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                220f,
-                resources.displayMetrics
-            ).toInt()
+            peekHeight = 220.dp
             saveFlags = BottomSheetBehavior.SAVE_ALL
         }
 
@@ -119,4 +116,10 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
 
         ItemTouchHelper(swipeListener).attachToRecyclerView(binding.notificationsRv)
     }
+
+    private val Int.dp
+        get() = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            toFloat(), resources.displayMetrics
+        ).roundToInt()
 }
