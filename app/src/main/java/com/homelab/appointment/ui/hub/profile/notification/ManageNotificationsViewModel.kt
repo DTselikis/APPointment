@@ -65,6 +65,8 @@ class ManageNotificationsViewModel : ViewModel() {
         val simpleDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         val today = Date()
         val (_, remaining) = this.partition {
+            it.status = ManageNotificationsFragment.NotificationStatus.READ.code
+
             simpleDateFormat.format(today)
                 .compareTo(simpleDateFormat.format(it.timestamp!!.toDate())) > days
         }

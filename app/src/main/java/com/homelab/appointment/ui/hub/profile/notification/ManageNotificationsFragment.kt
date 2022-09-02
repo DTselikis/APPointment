@@ -31,6 +31,11 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         CUSTOM(1)
     }
 
+    enum class NotificationStatus(val code: Int) {
+        SENT(0),
+        READ(1)
+    }
+
     private val args: ManageNotificationsFragmentArgs by navArgs()
     private val viewModel: ManageNotificationsViewModel by viewModels()
 
