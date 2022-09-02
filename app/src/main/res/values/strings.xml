@@ -68,4 +68,6 @@
     <string name="fb_login_profile_pic_msg">Do you want to use Facebook\'s profile photo as your profile photo?</string>
     <string name="notifications_title">Notifications</string>
     <string name="no_notifications">There are no notifications</string>
+    <string name="menu_store_item_title">Info</string>
+    <string name="menu_account_item_title">Account</string>
 </resources>

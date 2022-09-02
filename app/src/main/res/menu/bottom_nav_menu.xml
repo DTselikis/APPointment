@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/businessInfoFragment"
+        android:icon="@drawable/ic_store_24"
+        android:title="@string/menu_store_item_title" />
+
+    <item
+        android:id="@id/profileFragment"
+        android:icon="@drawable/ic_account_circle_white_24"
+        android:title="@string/menu_account_item_title" />
+
+</menu>
