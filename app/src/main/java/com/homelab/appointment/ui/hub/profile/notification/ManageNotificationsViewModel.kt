@@ -21,7 +21,7 @@ class ManageNotificationsViewModel : ViewModel() {
 
     private val notifications = mutableListOf<Notification>()
 
-    private lateinit var notificationsToBeDeleted: List<Notification>
+    private lateinit var notificationsRemaining: List<Notification>
 
     fun fetchNotifications(uid: String) {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
@@ -35,7 +35,7 @@ class ManageNotificationsViewModel : ViewModel() {
                 _notificationsForDisplay.value = notifications.toList()
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    notificationsToBeDeleted = notifications.olderThan(1)
+                    notificationsRemaining = notifications.olderThan(1)
                 }
             }
             .addOnFailureListener {
@@ -45,10 +45,10 @@ class ManageNotificationsViewModel : ViewModel() {
 
     private fun List<Notification>.olderThan(days: Int): List<Notification> {
         val today = Timestamp.now().toDate()
-        val (toBeDeleted, remaining) = this.partition {
+        val (_, remaining) = this.partition {
             it.timestamp!!.toDate().time - today.time >= days
         }
 
-        return toBeDeleted
+        return remaining
     }
 }
