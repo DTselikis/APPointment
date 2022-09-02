@@ -58,6 +58,7 @@ class ManageNotificationsViewModel : ViewModel() {
 
     fun deleteNotification(notification: Notification) {
         remainingNotifications?.remove(notification)
+        _notificationsForDisplay.value = remainingNotifications?.toList()
     }
 
     private fun List<Notification>.newerThan(days: Int): MutableList<Notification> {

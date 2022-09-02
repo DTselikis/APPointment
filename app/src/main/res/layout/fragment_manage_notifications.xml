@@ -30,17 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
-                android:src="@drawable/ic_arrow_upward_24"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:id="@+id/collapse_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="12dp"
-                android:src="@drawable/ic_arrow_upward_24"
-                android:rotation="180"/>
+                android:src="@drawable/ic_arrow_upward_24" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -63,6 +53,7 @@
             notifications="@{viewModel.notificationsForDisplay}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="150dp"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

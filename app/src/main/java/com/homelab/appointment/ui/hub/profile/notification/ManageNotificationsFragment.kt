@@ -74,9 +74,6 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
             expandCollapseArrow.setOnClickListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
-            collapseArrow.setOnClickListener {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            }
         }
 
         bottomSheetBehavior.apply {
@@ -127,12 +124,15 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
     private fun observeNotificationsForDisplay() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.notificationsForDisplay.observe(viewLifecycleOwner) { notifications ->
-                if (notifications.isNotEmpty()) {
-                    binding.apply {
+                binding.apply {
+                    if (notifications.isNotEmpty()) {
                         noNotificationsMsg.visibility = View.GONE
-                        collapseArrow.visibility = View.GONE
                         expandCollapseArrow.visibility = View.VISIBLE
                         notificationsRv.visibility = View.VISIBLE
+
+                    } else {
+                        noNotificationsMsg.visibility = View.VISIBLE
+                        expandCollapseArrow.animate().rotation(180f)
                     }
                 }
             }
