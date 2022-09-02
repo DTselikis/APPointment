@@ -23,7 +23,7 @@ class ManageNotificationsViewModel : ViewModel() {
 
     private val notifications = mutableListOf<Notification>()
 
-    private lateinit var remainingNotifications: List<Notification>
+    private lateinit var remainingNotifications: MutableList<Notification>
 
     fun fetchNotifications(uid: String) {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
@@ -53,15 +53,18 @@ class ManageNotificationsViewModel : ViewModel() {
                 set(mapOf(NOTIFICATION_FIELD to remainingNotifications), SetOptions.merge())
             }
         }
-
     }
 
-    private fun List<Notification>.olderThan(days: Int): List<Notification> {
+    fun deleteNotification(notification: Notification) {
+        remainingNotifications.remove(notification)
+    }
+
+    private fun List<Notification>.olderThan(days: Int): MutableList<Notification> {
         val today = Timestamp.now().toDate()
         val (_, remaining) = this.partition {
             it.timestamp!!.toDate().time - today.time >= days
         }
 
-        return remaining
+        return remaining.toMutableList()
     }
 }

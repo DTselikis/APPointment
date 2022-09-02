@@ -38,7 +38,7 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
     private lateinit var bottomSheetDialog: BottomSheetDialog
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
 
-    private lateinit var swipeHelper: ItemTouchHelper
+    private lateinit var adapter: NotificationsAdapter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -64,9 +64,10 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = NotificationsAdapter(this@ManageNotificationsFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            notificationsRv.adapter = NotificationsAdapter(this@ManageNotificationsFragment)
+            notificationsRv.adapter = this@ManageNotificationsFragment.adapter
             viewModel = this@ManageNotificationsFragment.viewModel
             // Set initial behaviour because listener not triggers when sheet is opening
             expandCollapseArrow.setOnClickListener {
@@ -110,7 +111,9 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
             RecyclerViewItemSwipeListener.SWIPE_BOTH_WAYS,
             deleteIcon!!,
             ColorDrawable(Color.RED),
-        ) {
+        ) { position ->
+            adapter.notifyItemRemoved(position)
+
 
         }
 

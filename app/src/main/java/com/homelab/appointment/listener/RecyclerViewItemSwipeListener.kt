@@ -13,7 +13,7 @@ class RecyclerViewItemSwipeListener(
     swipeDirection: Int = SWIPE_BOTH_WAYS,
     private val icon: Drawable,
     private val backgroundColor: ColorDrawable = ColorDrawable(Color.RED),
-    private val onSwipe: () -> Unit
+    private val onSwipe: (position: Int) -> Unit
 ) : ItemTouchHelper.SimpleCallback(policy, swipeDirection) {
     companion object {
         const val SEPARATE_SWIPE_FROM_DRAG = 0
@@ -27,7 +27,7 @@ class RecyclerViewItemSwipeListener(
     ): Boolean = true
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        onSwipe.invoke()
+        onSwipe(viewHolder.adapterPosition)
     }
 
     // Code from https://medium.com/getpowerplay/understanding-swipe-and-drag-gestures-in-recyclerview-cb3136beff20
