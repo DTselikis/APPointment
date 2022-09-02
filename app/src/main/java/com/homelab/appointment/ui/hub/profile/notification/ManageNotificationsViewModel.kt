@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.data.NOTIFICATIONS_COLLECTION
+import com.homelab.appointment.data.NOTIFICATION_FIELD
 import com.homelab.appointment.model.Notification
 import com.homelab.appointment.model.helper.NotificationsList
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +43,17 @@ class ManageNotificationsViewModel : ViewModel() {
             .addOnFailureListener {
                 Log.i("Notifications", "fetchNotifications: There are no notifications")
             }
+    }
+
+    fun deleteOldNotifications(uid: String) {
+        Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid).apply {
+            if (notificationsRemaining.isEmpty()) {
+                delete()
+            } else {
+                set(mapOf(NOTIFICATION_FIELD to notificationsRemaining), SetOptions.merge())
+            }
+        }
+
     }
 
     private fun List<Notification>.olderThan(days: Int): List<Notification> {
