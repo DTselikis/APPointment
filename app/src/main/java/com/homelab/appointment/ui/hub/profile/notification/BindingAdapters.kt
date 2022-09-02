@@ -27,4 +27,6 @@ fun bindDate(materialTextView: MaterialTextView, timestamp: Timestamp?) {
 }
 
 private fun Timestamp.isSameDate(today: Timestamp): Boolean =
-    (today.toDate().time - this.toDate().time) / (24 * 60 * 60 * 1000) >= 1
+    SimpleDateFormat("yyyyMMdd", Locale.getDefault()).let {
+        it.format(today.toDate()).equals(it.format(this.toDate()))
+    }

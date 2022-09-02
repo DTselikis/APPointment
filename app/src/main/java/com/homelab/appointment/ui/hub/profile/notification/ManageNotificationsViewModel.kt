@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -16,6 +15,8 @@ import com.homelab.appointment.model.Notification
 import com.homelab.appointment.model.helper.NotificationsList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ManageNotificationsViewModel : ViewModel() {
     private val _notificationsForDisplay = MutableLiveData<List<Notification>>()
@@ -60,9 +61,11 @@ class ManageNotificationsViewModel : ViewModel() {
     }
 
     private fun List<Notification>.newerThan(days: Int): MutableList<Notification> {
-        val today = Timestamp.now().toDate().time
+        val simpleDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val today = Date()
         val (_, remaining) = this.partition {
-            (today - it.timestamp!!.toDate().time) / (24 * 60 * 60 * 1000) >= days
+            simpleDateFormat.format(today)
+                .compareTo(simpleDateFormat.format(it.timestamp!!.toDate())) > days
         }
 
         return remaining.toMutableList()
