@@ -7,7 +7,7 @@ data class Notification(
     val title: String? = null,
     val message: String? = null,
     val type: Int? = null,
-    val status: Int? = null,
+    var status: Int? = null,
     @ServerTimestamp
     val timestamp: Timestamp? = null
 )
