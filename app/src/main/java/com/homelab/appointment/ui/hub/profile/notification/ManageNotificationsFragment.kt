@@ -3,15 +3,12 @@ package com.homelab.appointment.ui.hub.profile.notification
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -120,13 +117,5 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         }
 
         ItemTouchHelper(swipeListener).attachToRecyclerView(binding.notificationsRv)
-    }
-
-    fun getColor(@ColorRes color: Int): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            resources.getColor(color, requireActivity().theme)
-        } else {
-            ContextCompat.getColor(requireContext(), color)
-        }
     }
 }

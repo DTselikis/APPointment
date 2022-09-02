@@ -2,6 +2,7 @@ package com.homelab.appointment.ui.hub.profile.notification
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +26,12 @@ class NotificationsAdapter(private val fragment: ManageNotificationsFragment) :
                 else -> R.color.fb_blue
             }
 
-            binding.indicatorColor = fragment.getColor(indicatorColor)
+
+            binding.indicatorColor = ResourcesCompat.getColor(
+                fragment.resources,
+                indicatorColor,
+                fragment.requireActivity().theme
+            )
         }
     }
 
