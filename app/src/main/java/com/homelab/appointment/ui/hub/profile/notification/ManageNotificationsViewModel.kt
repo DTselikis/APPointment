@@ -37,7 +37,7 @@ class ManageNotificationsViewModel : ViewModel() {
                 _notificationsForDisplay.value = notifications.toList()
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    remainingNotifications = notifications.olderThan(1)
+                    remainingNotifications = notifications.newerThan(0)
                 }
             }
             .addOnFailureListener {
@@ -59,10 +59,10 @@ class ManageNotificationsViewModel : ViewModel() {
         remainingNotifications.remove(notification)
     }
 
-    private fun List<Notification>.olderThan(days: Int): MutableList<Notification> {
-        val today = Timestamp.now().toDate()
+    private fun List<Notification>.newerThan(days: Int): MutableList<Notification> {
+        val today = Timestamp.now().toDate().time
         val (_, remaining) = this.partition {
-            it.timestamp!!.toDate().time - today.time >= days
+            (today - it.timestamp!!.toDate().time) / (24 * 60 * 60 * 1000) >= days
         }
 
         return remaining.toMutableList()
