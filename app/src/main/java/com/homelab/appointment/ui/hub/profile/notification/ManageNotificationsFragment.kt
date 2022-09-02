@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -117,6 +118,21 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
         }
 
         ItemTouchHelper(swipeListener).attachToRecyclerView(binding.notificationsRv)
+        observeNotificationsForDisplay()
+    }
+
+    private fun observeNotificationsForDisplay() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.notificationsForDisplay.observe(viewLifecycleOwner) { notifications ->
+                if (notifications.isNotEmpty()) {
+                    binding.apply {
+                        noNotificationsMsg.visibility = View.GONE
+                        notificationsRv.visibility = View.VISIBLE
+                    }
+
+                }
+            }
+        }
     }
 
     private val Int.dp

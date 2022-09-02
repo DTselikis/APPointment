@@ -39,13 +39,24 @@
                 android:text="@string/notifications_title" />
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_notifications_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_notifications"
+            tools:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notifications_rv"
             notifications="@{viewModel.notificationsForDisplay}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/notification_item" />
+            tools:listitem="@layout/notification_item"
+            tools:visibility="visible" />
     </LinearLayout>
 </layout>
