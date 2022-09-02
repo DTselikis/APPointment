@@ -1,6 +1,5 @@
 package com.homelab.appointment.ui.hub.profile.notification
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,19 +29,18 @@ class ManageNotificationsViewModel : ViewModel() {
         Firebase.firestore.collection(NOTIFICATIONS_COLLECTION).document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                notifications.addAll(
-                    doc.toObject<NotificationsList>()!!.notifications!!
-                        .map { it }
-                        .sortedByDescending { it.timestamp!!.seconds }
-                )
-                _notificationsForDisplay.value = notifications.toList()
+                doc.data?.let {
+                    notifications.addAll(
+                        doc.toObject<NotificationsList>()!!.notifications!!
+                            .map { it }
+                            .sortedByDescending { it.timestamp!!.seconds }
+                    )
+                    _notificationsForDisplay.value = notifications.toList()
 
-                viewModelScope.launch(Dispatchers.IO) {
-                    remainingNotifications = notifications.newerThan(0)
+                    viewModelScope.launch(Dispatchers.IO) {
+                        remainingNotifications = notifications.newerThan(0)
+                    }
                 }
-            }
-            .addOnFailureListener {
-                Log.i("Notifications", "fetchNotifications: There are no notifications")
             }
     }
 
