@@ -30,6 +30,7 @@ import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -187,6 +188,10 @@ class ProfileFragment : Fragment() {
                 sharedViewModel.user.uid!!
             )
         findNavController().navigate(action)
+
+        activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+            ?.removeBadge(R.id.profileFragment)
+        binding.notificationBadge.visibility = View.GONE
     }
 
     private fun observeReAuthFinished() {
