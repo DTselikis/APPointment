@@ -190,4 +190,12 @@ class ProfileViewModel(val user: User) : ViewModel() {
     fun updateProfilePic(path: String) {
         profilePic.value = Pair(path, user.gender)
     }
+
+    fun getUpdatedUser(): User = user.copy(
+        email = email.value,
+        phone = phone.value,
+        fbProfileId = fbProfileId,
+        fbName = fbName,
+        profilePic = profilePic.value?.first
+    )
 }

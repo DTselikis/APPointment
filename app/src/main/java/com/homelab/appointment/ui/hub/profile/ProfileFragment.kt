@@ -178,6 +178,12 @@ class ProfileFragment : Fragment() {
         observeFacebookAccountIsLinked()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        sharedViewModel.user = viewModel.getUpdatedUser()
+    }
+
     fun pickImage() {
         openGallery.launch("image/*")
     }
