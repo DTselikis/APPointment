@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -16,10 +17,12 @@ import com.homelab.appointment.model.Notification
 import com.homelab.appointment.model.helper.NotificationsList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ManageNotificationsViewModel : ViewModel() {
+    companion object {
+        private const val ONE_DAY = 86400
+    }
+
     private val _notificationsForDisplay = MutableLiveData<List<Notification>>()
     val notificationsForDisplay: LiveData<List<Notification>> = _notificationsForDisplay
 
@@ -40,7 +43,7 @@ class ManageNotificationsViewModel : ViewModel() {
                     _notificationsForDisplay.value = notifications.toList()
 
                     viewModelScope.launch(Dispatchers.IO) {
-                        remainingNotifications = notifications.newerThan(0)
+                        remainingNotifications = notifications.newerThan(ONE_DAY)
                     }
                 }
             }
@@ -76,13 +79,11 @@ class ManageNotificationsViewModel : ViewModel() {
     }
 
     private fun List<Notification>.newerThan(days: Int): MutableList<Notification> {
-        val simpleDateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-        val today = Date()
+        val now = Timestamp.now().seconds
         val (_, remaining) = this.partition {
             it.status = ManageNotificationsFragment.NotificationStatus.READ.code
 
-            simpleDateFormat.format(today)
-                .compareTo(simpleDateFormat.format(it.timestamp!!.toDate())) > days
+            now - it.timestamp!!.seconds > days
         }
 
         return remaining.toMutableList()
