@@ -185,7 +185,7 @@ class ProfileFragment : Fragment() {
     fun openNotificationsBottomSheet() {
         val action =
             ProfileFragmentDirections.actionProfileFragmentToManageNotificationsFragment(
-                sharedViewModel.user.uid!!
+                viewModel.user.uid!!
             )
         findNavController().navigate(action)
 
