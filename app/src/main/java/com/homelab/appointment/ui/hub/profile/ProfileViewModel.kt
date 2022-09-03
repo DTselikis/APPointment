@@ -25,6 +25,9 @@ class ProfileViewModel(val user: User) : ViewModel() {
     val email = MutableLiveData<String>(user.email)
     val profilePic = MutableLiveData(Pair(user.profilePic, user.gender))
 
+    private var fbName: String? = user.fbName
+    private var fbProfileId: String? = user.fbProfileId
+
     private val _isFacebookAccountLinked = MutableLiveData<Boolean>(false)
     val isFacebookAccountLinked: LiveData<Boolean> = _isFacebookAccountLinked
 
@@ -117,6 +120,10 @@ class ProfileViewModel(val user: User) : ViewModel() {
             .update(mapOf(FB_PROFILE_NAME_FIELD to name, FB_PROFILE_ID_FIELD to id))
             .addOnCompleteListener { task ->
                 viewModelScope.launch {
+                    if (task.isSuccessful) {
+                        fbName = name
+                        fbProfileId = id
+                    }
                     _fbProfileInfoStored.emit(task.isSuccessful)
                 }
             }
@@ -155,6 +162,8 @@ class ProfileViewModel(val user: User) : ViewModel() {
     fun unlinkFacebookAccount() {
         FirebaseAuth.getInstance().currentUser?.unlink(FacebookAuthProvider.PROVIDER_ID)
             ?.addOnSuccessListener {
+                fbName = null
+                fbProfileId = null
                 deleteSocialProviderInfoFromFirebase(FacebookAuthProvider.PROVIDER_ID)
             }
     }
