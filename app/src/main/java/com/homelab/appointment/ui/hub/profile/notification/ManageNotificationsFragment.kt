@@ -91,7 +91,6 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
                         BottomSheetBehavior.STATE_COLLAPSED -> binding.expandCollapseArrow.setOnClickListener {
                             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                         }
-                        BottomSheetBehavior.STATE_HIDDEN -> viewModel.deleteOldNotifications(args.uid)
                     }
                 }
 
@@ -142,6 +141,12 @@ class ManageNotificationsFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        viewModel.deleteOldNotifications(args.uid)
     }
 
     private val Int.dp
