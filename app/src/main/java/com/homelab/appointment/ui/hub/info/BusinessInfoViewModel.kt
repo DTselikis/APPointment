@@ -1,6 +1,5 @@
 package com.homelab.appointment.ui.hub.info
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,9 +25,6 @@ class BusinessInfoViewModel : ViewModel() {
 
     private val _infoFetched = MutableSharedFlow<Boolean>()
     val infoFetched: SharedFlow<Boolean> = _infoFetched
-
-    private val _appName = MutableSharedFlow<String>()
-    val appName: SharedFlow<String> = _appName
 
     private lateinit var socialInfo: SocialInfo
 
@@ -56,26 +52,14 @@ class BusinessInfoViewModel : ViewModel() {
                 ContactProvider.navigateToBusiness(context, socialInfo.maps_query!!)
             },
             ContactProviderInfo(R.color.fb_blue, R.drawable.facebook_logo, FB_PAGE_NAME) {
-                try {
-                    ContactProvider.openFacebookPage(context, socialInfo.fb_page_id!!)
-                } catch (e: ActivityNotFoundException) {
-                    viewModelScope.launch {
-                        _appName.emit(ExtAppName.FACEBOOK.code)
-                    }
-                }
+                ContactProvider.openFacebookPage(context, socialInfo.fb_page_id!!)
             },
             ContactProviderInfo(
                 R.color.insta_orange,
                 R.drawable.instagram_logo,
                 INSTAGRAM_PROFILE
             ) {
-                try {
-                    ContactProvider.openInstagramPage(context, socialInfo.instagram_profile!!)
-                } catch (e: ActivityNotFoundException) {
-                    viewModelScope.launch {
-                        _appName.emit(ExtAppName.INSTAGRAM.code)
-                    }
-                }
+                ContactProvider.openInstagramPage(context, socialInfo.instagram_profile!!)
             },
             ContactProviderInfo(
                 R.color.fb_messenger_blue,

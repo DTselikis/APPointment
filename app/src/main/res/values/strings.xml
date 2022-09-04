@@ -48,7 +48,6 @@
     <string name="opening_hours">%s - %s</string>
     <string name="store_closed">Closed</string>
 
-    <string name="opening_ext_app_problem">Error while loading $s. App not found or you are not signed in</string>
     <string name="dismiss_dialog">Dismiss</string>
     <string name="notification_channe_name">Notifications</string>
     <string name="notification_channel_descr">General notifications</string>
