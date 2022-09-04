@@ -9,7 +9,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.homelab.appointment.R
-import com.homelab.appointment.data.*
+import com.homelab.appointment.data.BUSINESS_DOCUMENT
+import com.homelab.appointment.data.BUSINESS_INFO_COLLECTION
 import com.homelab.appointment.model.BusinessInfo
 import com.homelab.appointment.model.ContactProviderInfo
 import com.homelab.appointment.model.helper.DayOpeningHours
@@ -43,31 +44,62 @@ class BusinessInfoViewModel : ViewModel() {
             }
     }
 
-    fun getProvidersList(context: Context): List<ContactProviderInfo> =
-        listOf(
-            ContactProviderInfo(R.color.phone_green, R.drawable.ic_phone_24, socialInfo.phone!!) {
-                ContactProvider.callBusiness(context, socialInfo.phone!!)
-            },
-            ContactProviderInfo(R.color.maps_red, R.drawable.ic_place_24, BUSINESS_NAME) {
-                ContactProvider.navigateToBusiness(context, socialInfo.maps_query!!)
-            },
-            ContactProviderInfo(R.color.fb_blue, R.drawable.facebook_logo, FB_PAGE_NAME) {
-                ContactProvider.openFacebookPage(context, socialInfo.fb_page_id!!)
-            },
-            ContactProviderInfo(
+    fun getProvidersList(context: Context): List<ContactProviderInfo> {
+        val contactProviders = mutableListOf<ContactProviderInfo>()
+
+        socialInfo.phone?.let {
+            contactProviders.add(ContactProviderInfo(
+                R.color.phone_green,
+                R.drawable.ic_phone_24,
+                it
+            ) {
+                ContactProvider.callBusiness(context, it)
+            })
+        }
+
+        socialInfo.maps_query?.let {
+            contactProviders.add(ContactProviderInfo(
+                R.color.maps_red,
+                R.drawable.ic_place_24,
+                socialInfo.mapsName!!
+            )
+            {
+                ContactProvider.navigateToBusiness(context, it)
+            })
+        }
+
+        socialInfo.fb_page_id?.let {
+            contactProviders.add(ContactProviderInfo(
+                R.color.fb_blue,
+                R.drawable.facebook_logo,
+                socialInfo.fbPageName!!
+            )
+            {
+                ContactProvider.openFacebookPage(context, it)
+            })
+            contactProviders.add(
+                ContactProviderInfo(
+                    R.color.fb_messenger_blue,
+                    R.drawable.fb_messenger_logo,
+                    socialInfo.fbPageName!!
+                )
+                {
+                    ContactProvider.chatOnFacebook(context, it)
+                }
+            )
+        }
+
+        socialInfo.instagram_profile?.let {
+            contactProviders.add(ContactProviderInfo(
                 R.color.insta_orange,
                 R.drawable.instagram_logo,
-                INSTAGRAM_PROFILE
-            ) {
-                ContactProvider.openInstagramPage(context, socialInfo.instagram_profile!!)
-            },
-            ContactProviderInfo(
-                R.color.fb_messenger_blue,
-                R.drawable.fb_messenger_logo,
-                socialInfo.fb_page_id!!
-            ) {
-                ContactProvider.chatOnFacebook(context, socialInfo.fb_page_id!!)
-            }
+                "@$it"
+            )
+            {
+                ContactProvider.openInstagramPage(context, it)
+            })
+        }
 
-        )
+        return contactProviders.toList()
+    }
 }
