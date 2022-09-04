@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import com.homelab.appointment.data.FB_MESSENGER_LITE_PACKAGE_NAME
+import com.homelab.appointment.data.FB_MESSENGER_PACKAGE_NAME
 import com.homelab.appointment.data.FB_PACKAGE_NAME
 
 object ContactProvider {
@@ -57,6 +59,27 @@ object ContactProvider {
         val instaIntent = Intent(Intent.ACTION_VIEW, Uri.parse(instaUri))
         instaIntent.resolveActivity(packageManager)?.let {
             context.startActivity(instaIntent)
+        }
+    }
+
+    fun chatOnFacebook(context: Context, fbProfileId: String) {
+        val packageManager = context.packageManager
+
+        val installedApps = packageManager.getInstalledPackages(0)
+
+        val messengerUri = when (installedApps.find {
+            it.packageName == FB_MESSENGER_PACKAGE_NAME ||
+                    it.packageName == FB_MESSENGER_LITE_PACKAGE_NAME
+        }?.packageName) {
+            FB_MESSENGER_PACKAGE_NAME -> "fb-messenger://user/"
+            FB_MESSENGER_LITE_PACKAGE_NAME -> "fb-messenger-lite://user/"
+            else -> "https://www.messenger.com/t/"
+        }
+
+        Intent(Intent.ACTION_VIEW, Uri.parse(messengerUri + fbProfileId)).apply {
+            resolveActivity(packageManager)?.let {
+                context.startActivity(this)
+            }
         }
     }
 }

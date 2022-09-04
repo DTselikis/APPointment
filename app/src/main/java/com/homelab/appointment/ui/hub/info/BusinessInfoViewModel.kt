@@ -76,6 +76,14 @@ class BusinessInfoViewModel : ViewModel() {
                         _appName.emit(ExtAppName.INSTAGRAM.code)
                     }
                 }
+            },
+            ContactProviderInfo(
+                R.color.fb_messenger_blue,
+                R.drawable.fb_messenger_logo,
+                socialInfo.fb_page_id!!
+            ) {
+                ContactProvider.chatOnFacebook(context, socialInfo.fb_page_id!!)
             }
+
         )
 }
