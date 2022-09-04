@@ -99,10 +99,10 @@ class AuthFragment : Fragment() {
     }
 
     private fun observeUserStored() {
-        sharedViewModel.user = viewModel.user!!
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
                 if (stored) {
+                    sharedViewModel.user = viewModel.user!!
                     storeFcmTokenIfNotStored { navigateToProfile() }
                 }
             }
@@ -110,9 +110,9 @@ class AuthFragment : Fragment() {
     }
 
     private fun observeUserFetched() {
-        sharedViewModel.user = viewModel.user!!
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userFetched.collectLatest { fetched ->
+                sharedViewModel.user = viewModel.user!!
                 storeFcmTokenIfNotStored { navigateToBusinessInfo() }
             }
         }
