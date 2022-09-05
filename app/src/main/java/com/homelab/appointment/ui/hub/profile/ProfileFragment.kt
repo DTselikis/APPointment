@@ -59,17 +59,19 @@ class ProfileFragment : Fragment() {
 
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            lifecycleScope.launch {
-                try {
-                    val compressedFile = Compressor.compress(requireContext(), uri?.toFile()!!)
-                    photoUri = uri
-                    viewModel.storeImageToFirebase(compressedFile)
-                } catch (e: NoSuchFileException) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.compress_img_err),
-                        Toast.LENGTH_SHORT
-                    ).show()
+            uri?.let {
+                lifecycleScope.launch {
+                    try {
+                        val compressedFile = Compressor.compress(requireContext(), it.toFile()!!)
+                        photoUri = uri
+                        viewModel.storeImageToFirebase(compressedFile)
+                    } catch (e: NoSuchFileException) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.compress_img_err),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
