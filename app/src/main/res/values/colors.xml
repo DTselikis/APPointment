@@ -15,4 +15,13 @@
     <color name="fb_blue">#1877F2</color>
     <color name="fb_messenger_blue">#00B2FF</color>
     <color name="insta_orange">#F77737</color>
+
+    <color name="primaryColor">#d9ba75</color>
+    <color name="primaryLightColor">#ffeca5</color>
+    <color name="primaryDarkColor">#a68a48</color>
+    <color name="secondaryColor">#f4eccd</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#c1ba9c</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
 </resources>
