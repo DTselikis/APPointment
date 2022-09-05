@@ -24,47 +24,46 @@
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@{ContextCompat.getColor(context, contactProviderInfo.color)}"
-        app:strokeWidth="0.5dp"
-        tools:strokeColor="@color/phone_green">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:background="@{contactProviderInfo}"
+            tools:background="@color/phone_green">
 
             <ImageView
                 android:id="@+id/contact_item_img"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
-                android:backgroundResource="@{contactProviderInfo.color}"
-                android:imageResource="@{contactProviderInfo.icon}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:background="@color/phone_green"
+                android:imageResource="@{contactProviderInfo.icon}"
                 tools:src="@drawable/ic_phone_24" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_marginBottom="0.5dp"
+                android:background="@color/white"
+                android:gravity="center"
                 android:text="@{contactProviderInfo.text}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/contact_item_right_divider"
+                app:layout_constraintEnd_toStartOf="@id/contact_item_right_divider"
                 app:layout_constraintStart_toEndOf="@id/contact_item_img"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="6952147425" />
 
-            <View
+            <ImageView
                 android:id="@+id/contact_item_right_divider"
                 android:layout_width="6dp"
                 android:layout_height="40dp"
-                android:backgroundResource="@{contactProviderInfo.color}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="@color/phone_green" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

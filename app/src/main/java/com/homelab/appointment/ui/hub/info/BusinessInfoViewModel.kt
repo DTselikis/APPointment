@@ -1,6 +1,7 @@
 package com.homelab.appointment.ui.hub.info
 
 import android.content.Context
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -81,7 +82,8 @@ class BusinessInfoViewModel : ViewModel() {
                 ContactProviderInfo(
                     R.color.fb_messenger_blue,
                     R.drawable.fb_messenger_logo,
-                    socialInfo.fbPageName!!
+                    socialInfo.fbPageName!!,
+                    AppCompatResources.getDrawable(context, R.drawable.fb_messenger_background)
                 )
                 {
                     ContactProvider.chatOnFacebook(context, it)
@@ -93,7 +95,8 @@ class BusinessInfoViewModel : ViewModel() {
             contactProviders.add(ContactProviderInfo(
                 R.color.insta_orange,
                 R.drawable.instagram_logo,
-                "@$it"
+                "@$it",
+                AppCompatResources.getDrawable(context, R.drawable.instagram_background)
             )
             {
                 ContactProvider.openInstagramPage(context, it)

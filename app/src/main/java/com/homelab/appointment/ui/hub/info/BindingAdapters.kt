@@ -1,11 +1,13 @@
 package com.homelab.appointment.ui.hub.info
 
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.homelab.appointment.R
 import com.homelab.appointment.data.daysOfWeek
 import com.homelab.appointment.data.orderToDayOfWeek
+import com.homelab.appointment.model.ContactProviderInfo
 import com.homelab.appointment.model.helper.DayOpeningHours
 
 @BindingAdapter("openingHours")
@@ -19,7 +21,7 @@ fun bindOpeningHours(recyclerView: RecyclerView, openingHours: List<DayOpeningHo
 
 @BindingAdapter("day")
 fun bindDate(materialTextView: MaterialTextView, day: Int?) {
-   val dayOfWeek = orderToDayOfWeek[day]
+    val dayOfWeek = orderToDayOfWeek[day]
 
     materialTextView.text = materialTextView.resources.getString(daysOfWeek[dayOfWeek]!!)
 }
@@ -42,5 +44,16 @@ fun bindHours(materialTextView: MaterialTextView, dayOpeningHours: DayOpeningHou
         resources.getString(R.string.store_closed)
     } else {
         "${morningHours ?: ""}\n${afternoonHours ?: ""}"
+    }
+}
+
+@BindingAdapter("background")
+fun bindBackground(constraintLayout: ConstraintLayout, contactProviderInfo: ContactProviderInfo?) {
+    contactProviderInfo?.let {
+        if (it.background == null) {
+            constraintLayout.setBackgroundResource(it.color)
+        } else {
+            constraintLayout.background = it.background
+        }
     }
 }
