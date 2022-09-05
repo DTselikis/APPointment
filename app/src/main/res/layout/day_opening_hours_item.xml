@@ -17,7 +17,7 @@
         android:minWidth="170dp"
         android:minHeight="100dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="15dp">
+        app:cardElevation="7dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
