@@ -59,6 +59,7 @@ class AuthFragment : Fragment() {
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
             .setTheme(R.style.Theme_APPointment)
+            .setLogo(R.drawable.salon_litsa_logo)
             .build()
         signInLauncher.launch(intent)
     }
