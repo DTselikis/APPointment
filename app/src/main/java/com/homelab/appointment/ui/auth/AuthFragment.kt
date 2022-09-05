@@ -58,6 +58,7 @@ class AuthFragment : Fragment() {
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
+            .setTheme(R.style.Theme_APPointment)
             .build()
         signInLauncher.launch(intent)
     }
