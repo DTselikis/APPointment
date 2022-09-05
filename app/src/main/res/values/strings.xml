@@ -69,4 +69,5 @@
     <string name="no_notifications">There are no notifications</string>
     <string name="menu_store_item_title">Info</string>
     <string name="menu_account_item_title">Account</string>
+    <string name="re_auth_title">You need to authenticate in order to complete this action</string>
 </resources>
