@@ -27,6 +27,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
 
     private var fbName: String? = user.fbName
     private var fbProfileId: String? = user.fbProfileId
+    var gender = user.gender
 
     private val _isFacebookAccountLinked = MutableLiveData<Boolean>(false)
     val isFacebookAccountLinked: LiveData<Boolean> = _isFacebookAccountLinked
@@ -186,9 +187,17 @@ class ProfileViewModel(val user: User) : ViewModel() {
             }
     }
 
-
     fun updateProfilePic(path: String) {
         profilePic.value = Pair(path, user.gender)
+    }
+
+    fun updateGender(gender: Gender, callback: (updated: Boolean) -> Unit) {
+        this.gender = gender.code
+        Firebase.firestore.collection(USERS_COLLECTION).document(user.uid!!)
+            .update(mapOf(GENDER_FIELD to gender.code))
+            .addOnCompleteListener { task ->
+                callback(task.isSuccessful)
+            }
     }
 
     fun getUpdatedUser(): User = user.copy(
@@ -196,6 +205,7 @@ class ProfileViewModel(val user: User) : ViewModel() {
         phone = phone.value,
         fbProfileId = fbProfileId,
         fbName = fbName,
-        profilePic = profilePic.value?.first
+        profilePic = profilePic.value?.first,
+        gender = gender
     )
 }

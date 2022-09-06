@@ -158,6 +158,40 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/gender_group"
+                    android:layout_width="@dimen/profile_edit_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/email_edit"
+                    app:selectionRequired="true"
+                    app:singleSelection="true" >
+
+                    <Button
+                        android:id="@+id/gender_female"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female_gender_btn" />
+
+                    <Button
+                        android:id="@+id/gender_male"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male_gender_btn" />
+
+                    <Button
+                        android:id="@+id/gender_any"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/any_gender_btn" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fb_btn"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -168,7 +202,7 @@
                     app:icon="@drawable/facebook_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/email_edit"
+                    app:layout_constraintTop_toBottomOf="@id/gender_group"
                     app:startIconDrawable="@drawable/ic_account_circle_36"
                     tools:text="Link account" />
 

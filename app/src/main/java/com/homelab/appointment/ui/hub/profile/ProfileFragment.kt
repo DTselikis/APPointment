@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
 import com.homelab.appointment.data.FB_PACKAGE_NAME
+import com.homelab.appointment.data.Gender
 import com.homelab.appointment.data.RE_AUTH_NAV_KEY
 import com.homelab.appointment.databinding.FragmentProfileBinding
 import id.zelory.compressor.Compressor
@@ -162,12 +163,41 @@ class ProfileFragment : Fragment() {
                     }
                 }
             }
+
+            genderGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (isChecked) {
+                    val gender = when (checkedId) {
+                        R.id.gender_female ->
+                            Gender.FEMALE
+                        R.id.gender_male ->
+                            Gender.MALE
+                        else ->
+                            Gender.ANY
+                    }
+
+                    if (gender.code != this@ProfileFragment.viewModel.gender) {
+                        this@ProfileFragment.viewModel.updateGender(gender) { updated ->
+                            val field = getString(R.string.gender)
+                            val message = if (updated) getString(
+                                R.string.value_updated,
+                                field
+                            ) else getString(R.string.value_not_updated, field)
+
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
 
         if (viewModel.checkFacebookAccountLinked())
             binding.fbBtn.setOnClickListener { fbLogout() }
         else
             binding.fbBtn.setOnClickListener { fbLogin() }
+
+        viewModel.gender?.let {
+            checkGenderButton(it)
+        }
 
         observePicUploaded()
         observeVerificationEmailSent()
@@ -447,6 +477,18 @@ class ProfileFragment : Fragment() {
                 }
             }
                 .show()
+        }
+    }
+
+    private fun checkGenderButton(genderCode: String) {
+        binding.apply {
+            val id = when (genderCode) {
+                Gender.FEMALE.code -> R.id.gender_female
+                Gender.MALE.code -> R.id.gender_male
+                else -> R.id.gender_any
+            }
+
+            genderGroup.check(id)
         }
     }
 

@@ -70,4 +70,11 @@
     <string name="menu_store_item_title">Info</string>
     <string name="menu_account_item_title">Account</string>
     <string name="re_auth_title">You need to authenticate in order to complete this action</string>
+    <string name="value_updated">%s updated!</string>
+    <string name="value_not_updated">%s not updated!</string>
+    <string name="gender">Gender</string>
+
+    <string name="female_gender_btn">Female</string>
+    <string name="male_gender_btn">Male</string>
+    <string name="any_gender_btn">Any</string>
 </resources>
