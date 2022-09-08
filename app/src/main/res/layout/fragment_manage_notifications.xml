@@ -33,6 +33,7 @@
                 android:src="@drawable/ic_arrow_upward_24" />
 
             <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,6 +42,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/no_notifications_msg"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_gravity="center"
