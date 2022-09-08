@@ -28,6 +28,9 @@ class BusinessInfoViewModel : ViewModel() {
     private val _infoFetched = MutableSharedFlow<Boolean>()
     val infoFetched: SharedFlow<Boolean> = _infoFetched
 
+    private val _textToCopy = MutableSharedFlow<String>()
+    val textToCopy: SharedFlow<String> = _textToCopy
+
     private lateinit var socialInfo: SocialInfo
 
     fun fetchBusinessInfo() {
@@ -49,45 +52,47 @@ class BusinessInfoViewModel : ViewModel() {
         val contactProviders = mutableListOf<ContactProviderInfo>()
 
         socialInfo.phone?.let {
-            contactProviders.add(ContactProviderInfo(
-                R.color.phone_green,
-                R.drawable.ic_phone_24,
-                it
-            ) {
-                ContactProvider.callBusiness(context, it)
-            })
+            contactProviders.add(
+                ContactProviderInfo(
+                    R.color.phone_green,
+                    R.drawable.ic_phone_24,
+                    it,
+                    null,
+                    { setTextToBeCopied(it) }
+                ) { ContactProvider.callBusiness(context, it) }
+            )
         }
 
         socialInfo.maps_query?.let {
-            contactProviders.add(ContactProviderInfo(
-                R.color.maps_red,
-                R.drawable.ic_place_24,
-                socialInfo.mapsName!!
+            contactProviders.add(
+                ContactProviderInfo(
+                    R.color.maps_red,
+                    R.drawable.ic_place_24,
+                    socialInfo.mapsName!!,
+                    null,
+                    { setTextToBeCopied(it) }
+                ) { ContactProvider.navigateToBusiness(context, it) }
             )
-            {
-                ContactProvider.navigateToBusiness(context, it)
-            })
         }
 
         socialInfo.fb_page_id?.let {
-            contactProviders.add(ContactProviderInfo(
-                R.color.fb_blue,
-                R.drawable.facebook_logo,
-                socialInfo.fbPageName!!
+            contactProviders.add(
+                ContactProviderInfo(
+                    R.color.fb_blue,
+                    R.drawable.facebook_logo,
+                    socialInfo.fbPageName!!,
+                    null,
+                    { setTextToBeCopied(socialInfo.fbPageUniqueName!!) }
+                ) { ContactProvider.openFacebookPage(context, it) }
             )
-            {
-                ContactProvider.openFacebookPage(context, it)
-            })
             contactProviders.add(
                 ContactProviderInfo(
                     R.color.fb_messenger_blue,
                     R.drawable.fb_messenger_logo,
                     socialInfo.fbPageName!!,
-                    AppCompatResources.getDrawable(context, R.drawable.fb_messenger_background)
-                )
-                {
-                    ContactProvider.chatOnFacebook(context, it)
-                }
+                    AppCompatResources.getDrawable(context, R.drawable.fb_messenger_background),
+                    { setTextToBeCopied(socialInfo.fbPageUniqueName!!) }
+                ) { ContactProvider.chatOnFacebook(context, it) }
             )
         }
 
@@ -96,13 +101,20 @@ class BusinessInfoViewModel : ViewModel() {
                 R.color.insta_orange,
                 R.drawable.instagram_logo,
                 "@$it",
-                AppCompatResources.getDrawable(context, R.drawable.instagram_background)
+                AppCompatResources.getDrawable(context, R.drawable.instagram_background),
+                { setTextToBeCopied(it) }
+            ) { ContactProvider.openInstagramPage(context, it) }
             )
-            {
-                ContactProvider.openInstagramPage(context, it)
-            })
         }
 
         return contactProviders.toList()
+    }
+
+    private fun setTextToBeCopied(text: String): Boolean {
+        viewModelScope.launch {
+            _textToCopy.emit(text)
+        }
+
+        return true
     }
 }

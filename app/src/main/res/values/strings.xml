@@ -77,4 +77,5 @@
     <string name="female_gender_btn">Female</string>
     <string name="male_gender_btn">Male</string>
     <string name="any_gender_btn">Any</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
 </resources>

@@ -20,6 +20,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:onClick="@{() -> contactProviderInfo.operation.invoke()}"
+        android:onLongClick="@{() -> contactProviderInfo.copyText.invoke()}"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,10 +37,10 @@
                 android:id="@+id/contact_item_img"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
+                android:imageResource="@{contactProviderInfo.icon}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:imageResource="@{contactProviderInfo.icon}"
                 tools:src="@drawable/ic_phone_24" />
 
             <com.google.android.material.textview.MaterialTextView

@@ -1,10 +1,14 @@
 package com.homelab.appointment.ui.hub.info
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,8 +52,9 @@ class InfoFragment : Fragment() {
             viewModel = this@InfoFragment.viewModel
         }
 
-        observeInfoFetched()
         viewModel.fetchBusinessInfo()
+        observeInfoFetched()
+        observeTextToCopy()
     }
 
     private fun observeInfoFetched() {
@@ -64,6 +69,22 @@ class InfoFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun observeTextToCopy() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.textToCopy.collectLatest { text ->
+                val clipboard =
+                    requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                clipboard.setPrimaryClip(ClipData.newPlainText("social info", text))
+
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.copied_to_clipboard),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
