@@ -87,11 +87,11 @@ class ProfileFragment : Fragment() {
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onCancel() {
-                showSnackBar(getString(R.string.fb_login_canceled), R.color.email_red)
+                showSnackBar(getString(R.string.fb_login_canceled), R.color.md_theme_dark_errorContainer)
             }
 
             override fun onError(error: FacebookException) {
-                showSnackBar(getString(R.string.fb_login_err), R.color.email_red)
+                showSnackBar(getString(R.string.fb_login_err), R.color.md_theme_dark_errorContainer)
             }
 
             override fun onSuccess(result: LoginResult) {
@@ -294,10 +294,10 @@ class ProfileFragment : Fragment() {
                 val (text, color) = when (stored) {
                     true -> {
                         hideSaveBtn(binding.emailEdit, binding.phoneEdit)
-                        Pair(getString(R.string.phone_updated), R.color.teal_200)
+                        Pair(getString(R.string.phone_updated), R.color.md_theme_dark_secondary)
                     }
 
-                    else -> Pair(getString(R.string.email_not_updated), R.color.email_red)
+                    else -> Pair(getString(R.string.email_not_updated), R.color.md_theme_dark_errorContainer)
                 }
                 showSnackBar(text, color)
             }
@@ -308,12 +308,12 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.picUploaded.collectLatest { stored ->
                 binding.profilePicProgress.hide()
-
+                
                 val (text, color) = when (stored) {
-                    true -> Pair(getString(R.string.profile_pic_saved), getColor(R.color.teal_200))
+                    true -> Pair(getString(R.string.profile_pic_saved), getColor(R.color.md_theme_dark_secondary))
                     false -> Pair(
                         getString(R.string.profile_pic__not_saved),
-                        getColor(R.color.email_red)
+                        getColor(R.color.md_theme_dark_errorContainer)
                     )
                 }
 
@@ -329,9 +329,9 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.fbProfileInfoStored.collectLatest { stored ->
                 val (text, color) = if (stored) {
-                    Pair(getString(R.string.fb_login_success), R.color.teal_200)
+                    Pair(getString(R.string.fb_login_success), R.color.md_theme_dark_secondary)
                 } else {
-                    Pair(getString(R.string.fb_login_err), R.color.email_red)
+                    Pair(getString(R.string.fb_login_err), R.color.md_theme_dark_errorContainer)
                 }
 
                 showSnackBar(text, color)
