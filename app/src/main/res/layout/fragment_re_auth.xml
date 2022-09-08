@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:text="@string/re_auth_title"
             app:layout_constraintBottom_toTopOf="@id/re_auth_password"
             app:layout_constraintEnd_toEndOf="parent"
