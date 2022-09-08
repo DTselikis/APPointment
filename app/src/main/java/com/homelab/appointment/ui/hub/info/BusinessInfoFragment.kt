@@ -12,7 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import com.homelab.appointment.R
 import com.homelab.appointment.data.DayOfWeek
 import com.homelab.appointment.databinding.FragmentBusinessInfoBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
@@ -53,8 +56,13 @@ class InfoFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.infoFetched.collectLatest { fetched ->
                 if (fetched) {
-                    scrollToCurrentDate()
                     contractProvidersAdapter.submitList(viewModel.getProvidersList(requireContext()))
+                    lifecycleScope.launchWhenStarted {
+                        launch(Dispatchers.Default) {
+                            delay(150)
+                            scrollToCurrentDate()
+                        }
+                    }
                 }
             }
         }
