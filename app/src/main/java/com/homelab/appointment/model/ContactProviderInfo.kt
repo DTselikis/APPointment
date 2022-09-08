@@ -11,5 +11,6 @@ data class ContactProviderInfo(
     val icon: Int,
     val text: String,
     val background: Drawable? = null,
+    val copyText: () -> Unit,
     val operation: () -> Unit
 )
