@@ -75,7 +75,7 @@ class InfoFragment : Fragment() {
             Calendar.getInstance(Locale.getDefault()).dayOfWeek()
         }
 
-        binding.openingHoursRv.smoothScrollToPosition(dayOfWeek - 1)
+        binding.openingHoursRv.smoothScrollToPosition(dayOfWeek)
     }
 
     private fun Calendar.dayOfWeek(): Int = when (this.get(Calendar.DAY_OF_WEEK)) {
