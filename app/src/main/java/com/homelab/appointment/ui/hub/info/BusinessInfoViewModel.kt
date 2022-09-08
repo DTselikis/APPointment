@@ -70,7 +70,7 @@ class BusinessInfoViewModel : ViewModel() {
                     R.drawable.ic_place_24,
                     socialInfo.mapsName!!,
                     null,
-                    { setTextToBeCopied(it) }
+                    { setTextToBeCopied(socialInfo.mapsCoordinates ?: it) }
                 ) { ContactProvider.navigateToBusiness(context, it) }
             )
         }
