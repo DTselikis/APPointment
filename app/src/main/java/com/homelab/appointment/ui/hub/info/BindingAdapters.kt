@@ -43,13 +43,13 @@ fun bindHours(materialTextView: MaterialTextView, dayOpeningHours: DayOpeningHou
 
     var afternoonHours: String? = null
     dayOpeningHours.afternoon?.let {
-        afternoonHours = resources.getString(R.string.opening_hours, it.from, it.to)
+        afternoonHours = "\n${resources.getString(R.string.opening_hours, it.from, it.to)}"
     }
 
     materialTextView.text = if (morningHours == null && afternoonHours == null) {
         resources.getString(R.string.store_closed)
     } else {
-        "${morningHours ?: ""}\n${afternoonHours ?: ""}"
+        "${morningHours ?: ""}${afternoonHours ?: ""}"
     }
 }
 
