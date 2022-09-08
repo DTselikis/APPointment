@@ -3,16 +3,20 @@ package com.homelab.appointment.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.homelab.appointment.MainActivity
 import com.homelab.appointment.R
 import com.homelab.appointment.data.*
 import kotlin.random.Random
@@ -37,6 +41,17 @@ class CloudMessagingService : FirebaseMessagingService() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val resultIntent = Intent(this, MainActivity::class.java)
+        val resultPendingIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(resultIntent)
+
+            var flags = PendingIntent.FLAG_UPDATE_CURRENT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags = flags or PendingIntent.FLAG_IMMUTABLE
+            }
+
+            getPendingIntent(0, flags)
+        }
 
         val notificationId = Random.nextInt()
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -45,6 +60,8 @@ class CloudMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.salon_litsa_app_icon)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message.data["message"]))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(resultPendingIntent)
+            .setAutoCancel(true)
             .build()
 
         notificationManager.notify(notificationId, notification)
