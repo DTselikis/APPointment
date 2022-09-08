@@ -47,6 +47,7 @@ class ReAuthFragment : BottomSheetDialogFragment() {
 
     private fun closeFragment() {
         notifyReAuthFinished()
+        binding.reAuthProgress.hide()
         findNavController().navigateUp()
     }
 
@@ -85,6 +86,7 @@ class ReAuthFragment : BottomSheetDialogFragment() {
     }
 
     fun reAuthenticate() {
+        binding.reAuthProgress.show()
         binding.reAuthBtn.isEnabled = false
         viewModel.reAuthenticate(args.email)
     }
