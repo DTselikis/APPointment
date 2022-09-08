@@ -16,9 +16,9 @@
         android:layout_margin="8dp"
         android:minWidth="170dp"
         android:minHeight="100dp"
+        app:background="@{dayOpeningHours.order}"
         app:cardCornerRadius="16dp"
-        app:cardElevation="7dp"
-        app:background="@{dayOpeningHours.order}">
+        app:cardElevation="7dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,19 +28,19 @@
             <ImageView
                 android:layout_width="110dp"
                 android:layout_height="90dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:alpha="0.15"
                 android:src="@drawable/salon_litsa_logo"
-                android:alpha="0.3" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/name_of_day"
+                style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                style="@style/TextAppearance.Material3.TitleMedium"
                 app:day="@{dayOpeningHours.order}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,12 +48,12 @@
                 tools:text="Monday" />
 
             <LinearLayout
+                style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical"
-                style="@style/TextAppearance.Material3.BodyMedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,8 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="8dp"
                     app:hours="@{dayOpeningHours}"
                     tools:text="09:00 - 13:00" />
             </LinearLayout>
