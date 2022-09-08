@@ -85,11 +85,28 @@
                         android:src="@drawable/ic_edit_24" />
                 </FrameLayout>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/customer_nickname"
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/customer_profile_pic"
+                    app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
+                    app:layout_constraintStart_toStartOf="@id/customer_profile_pic"
+                    app:layout_constraintTop_toTopOf="@id/customer_profile_pic">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/profile_pic_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </FrameLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/customer_nickname"
                     style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@{viewModel.firstname + ' ' + viewModel.lastname}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/customer_profile_pic"
@@ -169,7 +186,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/email_edit"
                     app:selectionRequired="true"
-                    app:singleSelection="true" >
+                    app:singleSelection="true">
 
                     <Button
                         android:id="@+id/gender_female"

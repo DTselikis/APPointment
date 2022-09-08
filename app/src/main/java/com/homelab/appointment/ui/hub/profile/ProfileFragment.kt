@@ -61,6 +61,8 @@ class ProfileFragment : Fragment() {
     private val openGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
+                binding.profilePicProgress.show()
+
                 lifecycleScope.launch {
                     try {
                         val compressedFile = Compressor.compress(requireContext(), it.toFile()!!)
@@ -305,6 +307,8 @@ class ProfileFragment : Fragment() {
     private fun observePicUploaded() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.picUploaded.collectLatest { stored ->
+                binding.profilePicProgress.hide()
+
                 val (text, color) = when (stored) {
                     true -> Pair(getString(R.string.profile_pic_saved), getColor(R.color.teal_200))
                     false -> Pair(
