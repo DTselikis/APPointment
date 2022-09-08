@@ -47,7 +47,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="0.5dp"
                 android:layout_marginBottom="0.5dp"
-                android:background="@color/white"
+                android:background="@color/md_theme_dark_onPrimary"
                 android:gravity="center"
                 android:text="@{contactProviderInfo.text}"
                 android:textSize="20sp"
