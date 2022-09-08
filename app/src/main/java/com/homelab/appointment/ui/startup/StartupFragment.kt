@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +15,11 @@ import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
+import com.homelab.appointment.databinding.FragmentStartupBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class StartupFragment : Fragment() {
 
@@ -22,22 +27,37 @@ class StartupFragment : Fragment() {
     private val viewModel: StartupViewModel by viewModels()
     private val firebaseUser = FirebaseAuth.getInstance().currentUser
 
+    private lateinit var binding: FragmentStartupBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_startup, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_startup, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (userIsSignedIn()) {
-            observeUserFetched()
-            viewModel.fetchUser(firebaseUser!!.uid)
-        } else {
-            navigateToAuth()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launch(Dispatchers.Default) {
+                delay(100)
+                binding.businessLogo.animate().translationYBy(-650f).apply {
+                    duration = 750
+                    withEndAction {
+                        binding.loadingIndicator.show()
+
+                        if (userIsSignedIn()) {
+                            observeUserFetched()
+                            viewModel.fetchUser(firebaseUser!!.uid)
+                        } else {
+                            navigateToAuth()
+                        }
+                    }
+                }
+            }
         }
     }
 
