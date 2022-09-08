@@ -142,6 +142,8 @@ class ProfileFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         saveEditsBtn.setOnClickListener {
+                            binding.generalProgress.show()
+
                             this@ProfileFragment.viewModel.verifyNewEmail()
                         }
                     }
@@ -160,6 +162,8 @@ class ProfileFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         saveEditsBtn.setOnClickListener {
+                            binding.generalProgress.show()
+
                             this@ProfileFragment.viewModel.storeUpdatedPhone()
                         }
                     }
@@ -178,7 +182,11 @@ class ProfileFragment : Fragment() {
                     }
 
                     if (gender.code != this@ProfileFragment.viewModel.gender) {
+                        binding.generalProgress.show()
+
                         this@ProfileFragment.viewModel.updateGender(gender) { updated ->
+                            binding.generalProgress.hide()
+
                             val field = getString(R.string.gender)
                             val message = if (updated) getString(
                                 R.string.value_updated,
@@ -291,6 +299,8 @@ class ProfileFragment : Fragment() {
     private fun observeUpdatedPhoneStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.updatedPhoneStored.collectLatest { stored ->
+                binding.generalProgress.hide()
+
                 val (text, color) = when (stored) {
                     true -> {
                         hideSaveBtn(binding.emailEdit, binding.phoneEdit)
@@ -328,6 +338,8 @@ class ProfileFragment : Fragment() {
     private fun observeFbProfileInfoStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.fbProfileInfoStored.collectLatest { stored ->
+                binding.generalProgress.hide()
+
                 val (text, color) = if (stored) {
                     Pair(getString(R.string.fb_login_success), R.color.md_theme_dark_secondary)
                 } else {
@@ -474,6 +486,8 @@ class ProfileFragment : Fragment() {
                 setTitle(getString(R.string.fb_login_profile_pic_title))
                 setMessage(getString(R.string.fb_login_profile_pic_msg))
                 setPositiveButton(getString(R.string.yes)) { _, _ ->
+                    binding.generalProgress.show()
+
                     viewModel.storeProfilePicToFirebase(url)
                 }
                 setNegativeButton(getString(R.string.no)) { _, _ ->
