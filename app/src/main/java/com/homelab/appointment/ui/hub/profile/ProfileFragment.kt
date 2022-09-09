@@ -1,7 +1,6 @@
 package com.homelab.appointment.ui.hub.profile
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -87,7 +86,10 @@ class ProfileFragment : Fragment() {
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onCancel() {
-                showSnackBar(getString(R.string.fb_login_canceled), R.color.md_theme_dark_errorContainer)
+                showSnackBar(
+                    getString(R.string.fb_login_canceled),
+                    R.color.md_theme_dark_errorContainer
+                )
             }
 
             override fun onError(error: FacebookException) {
@@ -307,7 +309,10 @@ class ProfileFragment : Fragment() {
                         Pair(getString(R.string.phone_updated), R.color.md_theme_dark_secondary)
                     }
 
-                    else -> Pair(getString(R.string.email_not_updated), R.color.md_theme_dark_errorContainer)
+                    else -> Pair(
+                        getString(R.string.email_not_updated),
+                        R.color.md_theme_dark_errorContainer
+                    )
                 }
                 showSnackBar(text, color)
             }
@@ -318,9 +323,12 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.picUploaded.collectLatest { stored ->
                 binding.profilePicProgress.hide()
-                
+
                 val (text, color) = when (stored) {
-                    true -> Pair(getString(R.string.profile_pic_saved), getColor(R.color.md_theme_dark_secondary))
+                    true -> Pair(
+                        getString(R.string.profile_pic_saved),
+                        getColor(R.color.md_theme_dark_secondary)
+                    )
                     false -> Pair(
                         getString(R.string.profile_pic__not_saved),
                         getColor(R.color.md_theme_dark_errorContainer)
@@ -468,16 +476,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun openPlayStore(packageName: String) {
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
-        } catch (e: ActivityNotFoundException) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
-                )
+        val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$packageName"
             )
+            setPackage(packageName)
         }
+
+        startActivity(playStoreIntent)
     }
 
     private fun askToUseFacebookProfilePic(url: String) {
