@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
@@ -42,12 +44,14 @@ class StartupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch(Dispatchers.Default) {
+            launch(Dispatchers.Main) {
                 delay(100)
                 binding.businessLogo.animate().translationYBy(-650f).apply {
                     duration = 750
                     withEndAction {
                         binding.loadingIndicator.show()
+
+                        isGooglePlayServicesAvailable()
 
                         if (userIsSignedIn()) {
                             observeUserFetched()
@@ -136,4 +140,17 @@ class StartupFragment : Fragment() {
         viewModel.user.email == firebaseUser!!.email
 
     private fun userIsSignedIn(): Boolean = firebaseUser != null
+
+    private fun isGooglePlayServicesAvailable() {
+        GoogleApiAvailability.getInstance().also {
+            val status = it.isGooglePlayServicesAvailable(requireContext())
+            if (status != ConnectionResult.SUCCESS) {
+                if (it.isUserResolvableError(status)) {
+                    it.getErrorDialog(requireParentFragment(), status, 1234) {}
+                }
+            }
+        }
+    }
+
+
 }
