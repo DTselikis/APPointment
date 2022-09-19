@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.homelab.appointment.NavViewModel
 import com.homelab.appointment.R
@@ -92,6 +93,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun navigateToEmailVerification() {
+        sendVerificationEmail()
         val action = AuthFragmentDirections.actionAuthFragmentToEmailVerificationFragment(viewModel.user!!)
         findNavController().navigate(action)
     }
@@ -143,6 +145,17 @@ class AuthFragment : Fragment() {
         } else {
             navigate()
         }
+    }
+
+    private fun sendVerificationEmail() {
+        FirebaseAuth.getInstance().currentUser?.sendEmailVerification(
+            ActionCodeSettings.newBuilder()
+                .setUrl("https://homelab.page.link/emailVerified?isNewUser=false")
+                .setAndroidPackageName("com.homelab.appointment", true, null)
+                .setHandleCodeInApp(true)
+                .setDynamicLinkDomain("homelab.page.link")
+                .build()
+        )
     }
 
     private fun signInSuccessfully(result: FirebaseAuthUIAuthenticationResult): Boolean =

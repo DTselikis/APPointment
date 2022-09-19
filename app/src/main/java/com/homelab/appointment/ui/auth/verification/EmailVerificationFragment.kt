@@ -47,7 +47,6 @@ class EmailVerificationFragment : Fragment() {
             emailVerificationFragment = this@EmailVerificationFragment
         }
 
-        resendEmail()
         observeEmailVerified()
     }
 
