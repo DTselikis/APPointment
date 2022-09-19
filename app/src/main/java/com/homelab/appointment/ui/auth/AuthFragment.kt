@@ -50,8 +50,8 @@ class AuthFragment : Fragment() {
     private fun createSignInIntent() {
         // Choose authentication providers
         val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.EmailBuilder().build()
         )
 
         // Create and launch sign-in intent
