@@ -226,7 +226,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="@dimen/profile_edit_edit_text_width"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/profile_items_margin_top"
+                    android:layout_marginTop="100dp"
                     android:text="@{viewModel.isFacebookAccountLinked ? @string/fb_login_unlink_account: @string/fb_login_link_account}"
                     app:icon="@drawable/facebook_logo"
                     app:layout_constraintEnd_toEndOf="parent"
