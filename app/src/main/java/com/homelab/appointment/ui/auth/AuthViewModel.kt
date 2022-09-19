@@ -81,7 +81,8 @@ class AuthViewModel : ViewModel() {
             phone = phone,
             email = email,
             registered = true,
-            profilePic = profilePic
+            profilePic = profilePic,
+            activeNotifications = 0
         )
     }
 
