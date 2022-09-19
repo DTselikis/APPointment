@@ -233,7 +233,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/gender_group"
                     app:startIconDrawable="@drawable/ic_account_circle_36"
-                    tools:text="Link account" />
+                    tools:text="@string/fb_login_link_account" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/logout_btn"
