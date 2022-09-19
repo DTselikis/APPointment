@@ -82,15 +82,6 @@ class AuthFragment : Fragment() {
         }
     }
 
-    private fun navigateToProfile() {
-        if (viewModel.user?.activeNotifications!! > 0)
-            activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-                ?.getOrCreateBadge(R.id.profileFragment)?.number =
-                viewModel.user?.activeNotifications!!
-
-        findNavController().navigate(R.id.action_authFragment_to_profileFragment)
-    }
-
     private fun navigateToBusinessInfo() {
         if (viewModel.user?.activeNotifications!! > 0)
             activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
@@ -100,12 +91,17 @@ class AuthFragment : Fragment() {
         findNavController().navigate(R.id.action_authFragment_to_businessInfoFragment)
     }
 
+    private fun navigateToEmailVerification() {
+        val action = AuthFragmentDirections.actionAuthFragmentToEmailVerificationFragment(viewModel.user!!)
+        findNavController().navigate(action)
+    }
+
     private fun observeUserStored() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userStored.collectLatest { stored ->
                 if (stored) {
                     sharedViewModel.user = viewModel.user!!
-                    storeFcmTokenIfNotStored { navigateToProfile() }
+                    storeFcmTokenIfNotStored { navigateToEmailVerification() }
                 }
             }
         }

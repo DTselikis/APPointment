@@ -11,13 +11,13 @@
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_authFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
+            android:id="@+id/action_authFragment_to_businessInfoFragment"
+            app:destination="@id/businessInfoFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_authFragment_to_businessInfoFragment"
-            app:destination="@id/businessInfoFragment"
+            android:id="@+id/action_authFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
