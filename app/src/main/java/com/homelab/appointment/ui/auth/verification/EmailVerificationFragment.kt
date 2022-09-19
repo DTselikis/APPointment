@@ -43,10 +43,11 @@ class EmailVerificationFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            emailVerificationText.text = args.user.email
+            user = args.user
             emailVerificationFragment = this@EmailVerificationFragment
         }
 
+        resendEmail()
         observeEmailVerified()
     }
 
