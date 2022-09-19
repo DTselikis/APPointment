@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="user"
+            type="com.homelab.appointment.model.User" />
+        <variable
             name="emailVerificationFragment"
             type="com.homelab.appointment.ui.auth.verification.EmailVerificationFragment" />
     </data>
@@ -33,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="@string/email_verification_txt_msg"
+            android:text="@{@string/email_verification_txt_msg(user.email)}"
             app:layout_constraintEnd_toEndOf="@id/email_verification_icon"
             app:layout_constraintStart_toStartOf="@id/email_verification_icon"
             app:layout_constraintTop_toBottomOf="@id/email_verification_icon"
