@@ -52,7 +52,7 @@
     <string name="fb_login_profile_pic_title">Φωτογραφία προφίλ Facebook</string>
     <string name="fb_login_profile_pic_msg">Θέλετε να χρησιμοποιείστε τη φωτογραφίας προφίλ σας στο Facebook ως φωτογραφία προφίλ;</string>
     <string name="notifications_title">Ειδοποιήσεις</string>
-    <string name="no_notifications">Δεν υπάρχει ειδοποιήσεις</string>
+    <string name="no_notifications">Δεν υπάρχουν ειδοποιήσεις</string>
     <string name="menu_store_item_title">Πληροφορίες</string>
     <string name="menu_account_item_title">Λογαριασμός</string>
     <string name="re_auth_title">Πρέπει να επαληθεύσετε το λογαριασμό σας προτού εκτελέσετε αυτήν την ενέργεια</string>
