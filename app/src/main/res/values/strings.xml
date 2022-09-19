@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">Litsa</string>
+    <string name="app_name" translatable="false">Litsa</string>
 
 
-    <string name="facebook_app_id">***REMOVED***</string>
-    <string name="fb_login_protocol_scheme">fb***REMOVED***</string>
-    <string name="facebook_client_token">***REMOVED***</string>
+    <string name="facebook_app_id" translatable="false">***REMOVED***</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb***REMOVED***</string>
+    <string name="facebook_client_token" translatable="false">***REMOVED***</string>
 
 
-    <string name="email_verification_txt_msg">A verification email have been send to\n<b>%s</b></string>
     <string name="email_verified_btn_txt">Email verified</string>
     <string name="resend_email">Resend email</string>
     <string name="resend_verification_email_toast">Verification Email send</string>
@@ -15,7 +14,7 @@
     <string name="firstname_hint">Firstname</string>
     <string name="lastname_hint">Lastname</string>
     <string name="phone_hint">Phone</string>
-    <string name="e_mail_hint">E-mail</string>
+    <string name="e_mail_hint" translatable="false">E-mail</string>
     <string name="fb_profile_hint">FB Profile</string>
     <string name="password_hint">Password</string>
     <string name="compress_img_err">Error while loading file</string>
@@ -30,7 +29,7 @@
     <string name="cancel">Cancel</string>
     <string name="verification_dialog_err_txt">Email was not verified. Please try again.</string>
     <string name="updated_email_store_failure">New email failed to store. 0x2232</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="phone_updated">Phone updated!</string>
@@ -45,8 +44,7 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="opening_hours">%s - %s</string>
-    <string name="store_closed">Closed</string>
+    <string name="opening_hours" translatable="false">%s - %s</string>
 
     <string name="dismiss_dialog">Dismiss</string>
     <string name="notification_channe_name">Notifications</string>
@@ -71,11 +69,12 @@
     <string name="menu_account_item_title">Account</string>
     <string name="re_auth_title">You need to authenticate in order to complete this action</string>
     <string name="value_updated">%s updated!</string>
-    <string name="value_not_updated">%s not updated!</string>
     <string name="gender">Gender</string>
-
     <string name="female_gender_btn">Female</string>
     <string name="male_gender_btn">Male</string>
     <string name="any_gender_btn">Any</string>
     <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="email_verification_txt_msg">A verification email have been send to <b>%s</b></string>
+    <string name="store_closed">Closed</string>
+    <string name="value_not_updated">%s not updated!</string>
 </resources>
