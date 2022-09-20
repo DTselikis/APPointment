@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.homelab.appointment.ui.auth.AuthFragment"
+        android:name="gr.evasscissors.appointment.ui.auth.AuthFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.homelab.appointment.ui.hub.profile.ProfileFragment"
+        android:name="gr.evasscissors.appointment.ui.hub.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <dialog
         android:id="@+id/reAuthFragment"
-        android:name="com.homelab.appointment.ui.auth.reauth.ReAuthFragment"
+        android:name="gr.evasscissors.appointment.ui.auth.reauth.ReAuthFragment"
         android:label="ReAuthFragment"
         tools:layout="@layout/fragment_re_auth">
         <argument
@@ -49,7 +49,7 @@
     </dialog>
     <fragment
         android:id="@+id/authLinkCatcherFragment"
-        android:name="com.homelab.appointment.ui.auth.catcher.AuthLinkCatcherFragment"
+        android:name="gr.evasscissors.appointment.ui.auth.catcher.AuthLinkCatcherFragment"
         android:label="fragment_auth_link_catcher"
         tools:layout="@layout/fragment_auth_link_catcher">
         <deepLink
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/startupFragment"
-        android:name="com.homelab.appointment.ui.startup.StartupFragment"
+        android:name="gr.evasscissors.appointment.ui.startup.StartupFragment"
         android:label="fragment_startup"
         tools:layout="@layout/fragment_startup" >
         <action
@@ -95,12 +95,12 @@
     </fragment>
     <fragment
         android:id="@+id/emailVerificationFragment"
-        android:name="com.homelab.appointment.ui.auth.verification.EmailVerificationFragment"
+        android:name="gr.evasscissors.appointment.ui.auth.verification.EmailVerificationFragment"
         android:label="EmailVerificationFragment"
         tools:layout="@layout/fragment_email_verification">
         <argument
             android:name="user"
-            app:argType="com.homelab.appointment.model.User" />
+            app:argType="gr.evasscissors.appointment.model.User" />
         <action
             android:id="@+id/action_emailVerificationFragment_to_profileFragment"
             app:destination="@id/profileFragment"
@@ -109,12 +109,12 @@
     </fragment>
     <fragment
         android:id="@+id/businessInfoFragment"
-        android:name="com.homelab.appointment.ui.hub.info.InfoFragment"
+        android:name="gr.evasscissors.appointment.ui.hub.info.InfoFragment"
         android:label="BusinessInfoFragment"
         tools:layout="@layout/fragment_business_info"/>
     <dialog
         android:id="@+id/manageNotificationsFragment"
-        android:name="com.homelab.appointment.ui.hub.profile.notification.ManageNotificationsFragment"
+        android:name="gr.evasscissors.appointment.ui.hub.profile.notification.ManageNotificationsFragment"
         android:label="ManageNotificationsFragment"
         tools:layout="@layout/fragment_manage_notifications">
         <argument

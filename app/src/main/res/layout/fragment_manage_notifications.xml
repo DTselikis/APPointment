@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointment.ui.hub.profile.notification.ManageNotificationsViewModel" />
+            type="gr.evasscissors.appointment.ui.hub.profile.notification.ManageNotificationsViewModel" />
     </data>
 
     <LinearLayout

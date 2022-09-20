@@ -11,7 +11,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.homelab.appointment"
+        applicationId "gr.evasscissors.appointment"
         minSdk 21
         targetSdk 32
         versionCode 1

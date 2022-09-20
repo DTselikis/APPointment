@@ -9,7 +9,7 @@
 
         <variable
             name="contactProviderInfo"
-            type="com.homelab.appointment.model.ContactProviderInfo" />
+            type="gr.evasscissors.appointment.model.ContactProviderInfo" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

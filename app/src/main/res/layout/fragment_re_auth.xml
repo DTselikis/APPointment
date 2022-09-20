@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointment.ui.auth.reauth.ReAuthViewModel" />
+            type="gr.evasscissors.appointment.ui.auth.reauth.ReAuthViewModel" />
 
         <variable
             name="fragmentReAuth"
-            type="com.homelab.appointment.ui.auth.reauth.ReAuthFragment" />
+            type="gr.evasscissors.appointment.ui.auth.reauth.ReAuthFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

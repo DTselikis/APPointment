@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.homelab.appointment.ui.hub.info.BusinessInfoViewModel" />
+            type="gr.evasscissors.appointment.ui.hub.info.BusinessInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

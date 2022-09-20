@@ -11,7 +11,7 @@
 
         <variable
             name="notification"
-            type="com.homelab.appointment.model.Notification" />
+            type="gr.evasscissors.appointment.model.Notification" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

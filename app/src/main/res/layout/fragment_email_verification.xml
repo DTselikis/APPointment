@@ -7,10 +7,10 @@
 
         <variable
             name="user"
-            type="com.homelab.appointment.model.User" />
+            type="gr.evasscissors.appointment.model.User" />
         <variable
             name="emailVerificationFragment"
-            type="com.homelab.appointment.ui.auth.verification.EmailVerificationFragment" />
+            type="gr.evasscissors.appointment.ui.auth.verification.EmailVerificationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

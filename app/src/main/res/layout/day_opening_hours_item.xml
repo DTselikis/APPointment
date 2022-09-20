@@ -7,7 +7,7 @@
 
         <variable
             name="dayOpeningHours"
-            type="com.homelab.appointment.model.helper.DayOpeningHours" />
+            type="gr.evasscissors.appointment.model.helper.DayOpeningHours" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
