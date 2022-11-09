@@ -5,25 +5,54 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id 'com.google.firebase.crashlytics'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+def googleApiPropertiesFile = rootProject.file("googleApi.properties")
+def googleApiProperties = new Properties()
+googleApiProperties.load(new FileInputStream(googleApiPropertiesFile))
+
 android {
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     compileSdk 33
 
     defaultConfig {
         applicationId "gr.evasscissors.appointment"
         minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        targetSdk 33
+        versionCode 12
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GOOGLE_API_WEB_CLIENT_ID", googleApiProperties["webClientId"])
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
         }
     }
     buildFeatures {
@@ -36,42 +65,50 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'gr.evasscissors.appointment'
 }
 
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Navigation
-    def nav_version = "2.5.2"
+    def nav_version = "2.5.3"
 
     // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     // Firebase
-    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
 
     // Firebase UI
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Coil
     implementation("io.coil-kt:coil:2.1.0")
-    
+
     implementation 'id.zelory:compressor:3.0.1'
 
     // FB login
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+
+    // Google Sign In
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+
+    // CountryCodePickerProject
+    implementation 'com.hbb20:ccp:2.6.1'
 }
