@@ -2,9 +2,10 @@
     <string name="app_name" translatable="false">Litsa</string>
 
 
-    <string name="facebook_app_id" translatable="false">***REMOVED***</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb***REMOVED***</string>
-    <string name="facebook_client_token" translatable="false">***REMOVED***</string>
+
+    <string name="facebook_app_id" translatable="false">@string/facebook_app_id_secret</string>
+    <string name="fb_login_protocol_scheme" translatable="false">@string/fb_login_protocol_scheme_secret</string>
+    <string name="facebook_client_token" translatable="false">@string/facebook_client_token_secret</string>
 
 
     <string name="email_verified_btn_txt">Email verified</string>
