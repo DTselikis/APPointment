@@ -211,7 +211,7 @@ Here is a brief summary of what technologies have been used for the app:
 -	[Firebase](https://github.com/firebase/FirebaseUI-Android) for authentication and storage
 -	[Coroutines](https://developer.android.com/kotlin/coroutines)
 -	[FCM](https://firebase.google.com/docs/cloud-messaging) for push notifications
--	[Retrofit](https://github.com/square/retrofit) and [Moshi](https://github.com/square/moshi) to communicate wirh the FCM API
+-	[Retrofit](https://github.com/square/retrofit) and [Moshi](https://github.com/square/moshi) to communicate with the FCM API
 -	[Google Sign-In for Android](https://developers.google.com/identity/sign-in/android) for Google One Tap sign-in
 -	[Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
 -	[Coil](https://github.com/coil-kt/coil) to load profile image
@@ -222,7 +222,7 @@ This software uses the following open source packages:
 - [Moshi](https://github.com/square/moshi)
 - [Coil](https://github.com/coil-kt/coil)
 - [FirebaseUI for Android](https://github.com/firebase/FirebaseUI-Android)
-- [CircleImageView](#https://github.com/hdodenhof/CircleImageView)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView)
 
 ## Companion app
 
